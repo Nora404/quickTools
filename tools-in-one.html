@@ -1,0 +1,508 @@
+<!-- 
+	VORWORT:
+	In dieser HTML-Seite werden verschiedene Tools angeboten, welche im Arbeitsalltag helfen möchten.
+	Zudem ist das Erstellen des Codes für mich eine Übung gewesen.
+	Der gesamte Code soll nur eine einzige Datei umfassen und muss daher eine hohe Qulität haben.
+	Also eine gute Struktur, sprechende Namen, effizenter und lesbarer Code, hilfreiche Kommentare.
+
+	TOOLS SIND MODULE:
+	Die verschiedenen Tools sind als eigenständige Module zu sehen. 
+	Jedes Tool hat einen eigenen CSS-Block, HTML-Block und einen SCRIPT-Block. 
+	Zudem gibt es die Globalen Blöcke mit allgemeinen Layouts oder Verhaltenweisen wie EventListener.
+	Die einzelnen Tools lassen sich per Button im Header ein- und ausblenden.
+	Wichtig dabei ist die Namensgebung: der Toolname + Btn für die id des Buttons
+	Der dazu gehörende div-Kontainer hat die id des Toolnamen (gleiches Wort wie beim Button)
+	Dann kann die beim Klick ausgeköste Funktion mit dem Toolnamen als Parameter die Sichtbarkeit des Tools ändern  
+
+	TOOLTIPS:
+	Obwohl das UI der Seite englisch sein sollte, sind die Tooltipps auf deutsch. Ich mag verständliche Anleitungen.
+	Jede Überschrift eines Tools hat einen (?) Button, der beim Hovern eine Anleitung zum Tool zeigt.
+	Dieser div-Kontainer einhält ein span-Element welcher die gleiche id haben muss wie die Variable inder sein Text gespeichert ist.
+	Durch verschiedene CSS Klassen und einer Funktion die beim Start ausgeführt wird, werden die Tooltipps erstellt.
+	Im Gegensatz zum HTML-Attribut <titel> erscheint der Text sofort und ist optisch anpassbar.
+		
+	TOOLS ÜBERSICHT:
+	- Projekt Timer:	Zwei Stoppuhren, eine für die gesamte Zeit und eine die man zurück setzten kann
+	- Projekt Note:		Notizen zu einem Projekt wie eine Aufgabenliste, eine Erweiterung zum Projekt Timer 
+	- Commit Message:	Formular zum Erstellen und Formatieren von Commits und Hilfe um die strengen Regeln einzuhalten
+	- Commit History:	Eine Liste der letzten Commits, eine Erweiterung zu den Commit Messages. Füllt sich automatisch
+	- Calenadar Note:	Zeigt die aktuelle Arbeitswoche und ermöglicht zu jedem Tag eine kurze Notiz
+	- Clipboard:		Speichert kleine Texte und kopiert diese per Klick in die Zwischenablage
+	
+	SPEICHERORT:
+	Die Werte der Tools werden im LocalStorage des Browsers gespeichert. 
+	Projekt Timer speichert den Namen des Projektes, seine id, seine Prio, die gemessenen Zeiten und sein Erstellungsdatum in "saveProjectTime"
+	Projekt Note speichert seinen Text und seine id (gleiche id wie die des Projekt Timers) in "saveProjectNote"
+	Commit History speichert seinen Namen (Commit Message aus dem Formular) Datum und Zeit seines Erstellens in "saveCommit"
+	Calendar Note speichert seinen Text und das Datum zudem die Notiz gehört in "saveCalendarNote"
+	Clipboard speichert seinen Namen und den Text welcher im Zwischenspeicher kopiert werden soll in "saveSnippet"
+-->
+<html>
+	<head>
+		<style id="globalCSS"> 
+			body {
+			  font-size: 1em;
+			  padding: 25px 0 25px 0;
+			}
+			
+			main, header {
+			  box-sizing: border-box;
+			  max-width: 1000px;			
+			  margin: auto;
+			} main {
+			  border: 3px dotted rgb(218, 218, 218);
+			  padding: 10px 10px 10px 10px;
+			  outline: 3px solid rgb(218, 218, 218);
+			} header {
+			  display: flex;
+			  padding: 5px 0 10px 8px;
+			  /* justify-content: center; */
+			}
+			
+			h3 {
+			  color: #6d7b8d; 
+			  font-size: 1.4em;
+			  margin: 15px 0 15px 0;
+			}
+
+			hr {
+			  height: 5px;
+			  border: none;
+			  background-color: rgb(218, 218, 218);
+			  margin: 20px 0 20px 0;
+			}
+			
+			button {
+			  background-color: rgb(218, 218, 218);
+			  border: 1px solid gray;
+			  font-family: "Courier New", Courier, monospace;
+			  font-size: 1em;
+			  margin: 5px 5px 5px 5px;
+			} button:hover {
+				filter: brightness(1.15);
+			}
+			
+			.greenBtn {
+			  background-color: rgb(175, 196, 145);
+			}
+			
+			.redBtn {
+			  background-color: rgb(221, 151, 151);
+			}
+
+			.hidden {
+			  display: none !important;
+			}
+
+			input,
+			option,
+			select,
+			textarea {
+			  font-family: "Courier New", Courier, monospace;
+			  font-weight: 500;
+			  font-size: small;
+			}
+
+			.container {
+				box-sizing: border-box;
+				padding: 10px;
+				border: 1px solid #d8e7f3;
+				background-color: #f3f8fc;
+			}
+			
+		</style>  
+		<style id="tooltipsCSS"> 
+			.helpText {
+			  float: left;
+			  text-align: center;
+			  border-radius: 50%;
+			  background-color: rgb(241, 241, 241);
+			  border: 1px solid rgb(185, 185, 185);
+			  color: #6d7b8d; 
+			  font-family: "Courier New", Courier, monospace;
+			  font-size: 1em;
+			  margin: 5px;
+			  margin-top: 17px;
+			  height: 18px;
+			  width: 18px;
+			}
+
+			.tooltip {
+			  position: relative;
+			  display: inline-block; 
+			}
+			
+			/* Tooltip text */
+			.tooltip .tooltiptext {
+			  visibility: hidden;
+			  min-width: 350px;
+			  background-color: #6d7b8d;
+			  border: 1px solid #3a3939;
+			  outline: 3px solid #fff;
+			  color: #fff;
+			  text-align: center;
+			  padding: 5px 0;
+			  border-radius: 6px;
+			 
+			  position: absolute;
+			  z-index: 1;
+			}
+			
+			.tooltip:hover .tooltiptext {
+			  visibility: visible;
+			}
+		</style>
+		<style id="timerCSS">  
+		</style>  
+		<style id="commitCSS"> 
+			#commit {
+				display: flex;
+      			justify-content: space-between;
+			}
+
+			#commitEditor, #commitHistory {
+				width: 48%;
+			}
+
+			#historyItemCount{
+				float: right;
+			}
+			#commit input,
+			#commit select,
+			#commit option,
+			#commitDescription {
+				box-sizing: border-box;
+				border: 2px solid gray;
+				background-color: #d8e7f3;
+				margin: 5px 0 5px 0;
+				padding: 5px;
+				resize: none;
+				height: 30px;
+			}
+			#commitType {
+				width: calc(25% - 8px); 
+			}
+			#commitDomain {
+				width: 75%;
+				float: right;
+			}
+			#commitMessage {
+				width: 90%;
+			}
+			#textCounter {
+				text-align: center;
+				background-color: #d7d8d8 !important;
+				width: calc(10% - 8px);
+				float: right;
+			}
+			#commit textarea {
+				height: 100px;
+				width: 100%;
+			}
+			#commitFooter {
+				width: 80%;
+			}
+			#readyBtn {
+				box-sizing: border-box;
+				float: right;
+				width: calc(20% - 8px);
+				margin: 5px 0 5px 0;
+				height: 30px;
+			}
+			#formatedCommitMessage {
+				box-sizing: border-box;
+				border: none;
+				background-color: #d7d8d8;
+				margin: 5px 0 5px 0;
+				padding: 5px;
+				resize: none;
+			}
+			#deEnBtn {
+				float: right;
+				margin-right: 0 !important;
+			}
+		</style>  
+		<style id="calendarCSS"> 
+			#calendarTable {
+				width: 100%;
+				margin: 0 0 15px 0;
+				background-color: #fff;
+			}
+			#calendar th, td {
+				border: 1px solid #ccc;
+				padding: 10px;
+				vertical-align: top;
+				padding: 5px;
+				box-sizing: border-box;
+				text-align: center;
+			}
+			#calendar th {
+				font-family: "Courier New", Courier, monospace;
+			  	font-size: 1.1em;
+				font-weight: 500;
+			}
+			#weeklySelection {
+				margin: 0 0 15px 2px;
+			}
+			#today {
+				background-color: #d8e7f3;
+			}
+			.noteArea {
+				width: 100%;
+				max-width: 100%;
+				min-height: 100px;
+				padding: 5px;
+				font-size: 1.1em;
+				font-weight: 500;
+				text-align: left;
+			}
+		</style>  
+		<style id="clipboardCSS"> 
+		</style>
+		
+		<script>  
+			window.addEventListener("load", () => {
+				// Funktionen die beim Laden der Seite ausgeführt werden sollen
+				setCurrentWeekToInput();
+				updateTable();
+				setToolTipText();
+			});
+		</script> 
+	</head>
+
+	<body>
+		<header> <!-- Sichtbarkeit der Tools ------------------------------>
+			<button id="timerBtn" class="greenBtn" onclick="changeVisibility('timer')">Project Timer</button>
+			<button id="timerBtn" class="redBtn">Project Notes</button>
+			<button id="commitBtn" class="greenBtn" onclick="changeVisibility('commit')">Commit Message</button>
+			<button id="calendarBtn" class="greenBtn" onclick="changeVisibility('calendar')">Calendar Notes</button>
+			<button id="clipboardBtn" class="greenBtn" onclick="changeVisibility('clipboard')">Clipboard</button>
+		</header>
+	
+	
+		<main>
+			<div id="timer" class="container"> <!-- TIMER HTML ------------------------------>
+				<div class="tooltip helpText">?
+					<span class="tooltiptext" id="timerToolTipp">Tooltip text</span>
+				</div>
+				
+				<h3>Project Timer</h3>
+				<button id="addProject">Add Project</button>
+					<ul id="projectList"></ul>
+			</div> 
+			<hr>
+
+			<div id="commit"> <!-- COMMIT HTML ---------------------------->
+				<div id="commitEditor" class="container">
+					<div class="tooltip helpText">?
+						<span class="tooltiptext" id="messageToolTipp">Tooltip text</span>
+					</div>
+
+					<h3>Commit Message</h3>
+					<form id="commitForm">
+						<select id="commitType"><option>Typ</option></select>
+						<input id="commitDomain" type="text" placeholder="Domain"><br>
+						<input id="commitMessage" type="text" maxlength="75" placeholder="Commit Message">
+						<input id="textCounter" value="75" disabled><br>
+						<textarea id="commitDescription" placeholder="Description"></textarea><br>
+						<input id="commitFooter" type="text" placeholder="Footer">
+						<button id="readyBtn">/ready</button><br>
+					</form>
+
+						<textarea id="formatedCommitMessage" placeholder="Formated Message" disabled></textarea><br>
+						<button id="copyBtn" onclick="copyToClipboard()">Copy to Clipboard</button>
+						<button id="deEnBtn" onclick="translateDeEn()">DE -> EN</button>
+				</div>
+
+				<div id="commitHistory" class="container">
+					<div class="tooltip helpText">?
+						<span class="tooltiptext" id="historyToolTipp">Tooltip text</span>
+					</div>
+
+					<h3>Commit History</h3>
+					<select id="historyItemCount">
+						<option value="3">3</option>
+						<option value="5" selected>5</option>
+						<option value="10">10</option>
+					  </select>
+					  <ul id="historyList"></ul>
+				</div>
+			</div> 
+			<hr>
+
+			<div id="calendar" class="container"> <!-- CALENDAR HTML ------------------------>
+				<div class="tooltip helpText">?
+					<span class="tooltiptext" id="calendarToolTipp">Tooltip text</span>
+				</div>
+
+				 <h3>Calendar Notes</h3>
+				 <input type="week" id="weeklySelection" onchange="updateTable()">
+				 <table id="calendarTable">
+					<tr id="th"></tr>
+        			<tr id="tb"></tr>
+				 </table>
+			</div> 
+			<hr>
+
+			<div id="clipboard" class="container"> <!-- CLIPBOARD HTML ------------------------>
+				<div class="tooltip helpText">?
+					<span class="tooltiptext" id="clipboardToolTipp"></span>
+				</div>
+
+				 <h3>Clipboard</h3>
+				 <button id="addSnippet">Add Snippet</button>
+				 <ul id="snippetList"></ul>
+			</div>
+		</main> 
+	
+	
+		<script id="globalJS"> 
+			function changeVisibility(container){
+				const element = document.getElementById(container);
+				const elementBtn = document.getElementById(container + "Btn");
+
+				if(element.classList.contains("hidden")) {
+					element.classList.remove("hidden");
+					elementBtn.classList.add("greenBtn");
+					elementBtn.classList.remove("redBtn");
+				} else {
+					element.classList.add("hidden");
+					elementBtn.classList.add("redBtn");
+					elementBtn.classList.remove("greenBtn");
+				}
+			}
+		
+		</script> 
+
+		<script id="tooltipsJS">
+			const tooltips = {
+				timerToolTipp: "Tooltip Text für Project Timer",
+				messageToolTipp: "Tooltip Text für Commit Message",
+				historyToolTipp: "Tooltip Text für Commit History",
+				calendarToolTipp: "Tooltip Text für Calendar Notes",
+				clipboardToolTipp: "Tooltip Text für Clipboard"
+			};
+
+			function setToolTipText() {
+				for (const id in tooltips) {
+					const element = document.getElementById(id);
+					if (element) { 
+						element.textContent = tooltips[id]; 
+					}
+				}
+			}
+		</script>
+
+		<script id="timerJS">
+		</script> 
+
+		<script id="commitJS"> 
+		</script> 
+
+		<script id="calendarJS">
+			const th = document.getElementById("th");
+			const tb = document.getElementById("tb");
+			const input = document.getElementById("weeklySelection");
+			const days = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+
+			/* Die erste Zeile der Tabelle wird mit den Wochentagen und dem Datum gefüllt
+			 * Dafür wird beim laden der Seite die Funktion updateTable() aufgerufen.
+			 * Indem dieser die fillTable() Funktion liegt welche Tabellenzeilen und -spalten erstellt
+			 * Dafür nutzt sie die Funktionen getDateHeadline(daysOffset)
+			 * daysOffset: 0 = Montag der ausgewählten Woche, 1 = Dienstag, ...
+			 * Um den Montag der ausgewählten Woche zu bekommen, wird die Funktion getLastMonday() aufgerufen
+			 * Das Datum wird mit formatDate(date) formatiert um immer zwei Ziffern für Tag und Monat zu haben
+			 * Mit der Funktion updateTable() wird die Tabelle aktualisiert, wenn der Nutzer eine neue Woche auswählt
+			 */
+
+			function setCurrentWeekToInput() {
+				const currentDate = new Date();
+				const currentYear = currentDate.getFullYear();
+				const firstDayOfYear = new Date(currentYear, 0, 1);
+				const pastDaysOfYear = (currentDate - firstDayOfYear) / 86400000;
+
+				let currentWeek = Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+				let weekValue = `${currentYear}-W${currentWeek < 10 ? "0" + currentWeek : currentWeek}`;
+
+				document.getElementById("weeklySelection").value = weekValue;
+			}
+
+			function fillTable(startDate) {
+				for (let i = 0; i < 5; i++) {
+					th.innerHTML += generateHeadline(i, startDate);           
+					tb.innerHTML += generateNoteArea(i);    
+				}
+			}
+
+			function generateHeadline(daysOffset = 0, startDate) {
+				let date = new Date(startDate.getTime()); // Eine Kopie von startDate
+				let thStart = "<th>";
+				date.setDate(date.getDate() + daysOffset); 
+
+				// Wenn das Datum heute ist, wird es mit einer anderen Farbe dargestellt
+				if(formatDate(date) === formatDate(new Date())){
+					thStart = "<th id='today'>";	
+				}
+				
+				const weekdayAndDate = `${days[date.getDay()]} (${formatDate(date)})`;
+				return `${thStart}${weekdayAndDate}</th>`;
+			}
+
+			function getLastMonday(date = new Date()) {
+				let resultDate = new Date(date); // Eine Kopie, um das Originaldatum nicht zu verändern
+				resultDate.setDate(resultDate.getDate() - (resultDate.getDay() || 7) + 1); // Korrektur für Sonntag
+				return resultDate;
+			}
+
+			function formatDate(date) {
+				return date.toLocaleDateString("de-DE", { year: '2-digit', month: '2-digit', day: '2-digit' });
+			}
+
+			function updateTable(){
+				let newDate = input.valueAsDate || new Date(); 
+				newDate = getLastMonday(newDate);
+
+				th.innerHTML = "";
+				tb.innerHTML = "";
+
+				fillTable(newDate);
+			}
+		
+			/* In der zweiten Zeile der Tabelle können Notizen eingetragen werden
+			 * Die Zellen werden mit der Funktion generateNoteArea() erstellt
+			 * Mit der Funktion getNote() wird die Notiz aus localStorage geladen
+			 * Wird auf eine Zelle geklickt, wird die Funktion editNote() aufgerufen
+			 * Diese tauscht das <div> mit einem Textfeld aus, in dem die Notiz bearbeitet werden kann
+			 * Ein Button zum Speichern der Notiz wird hinzugefügt
+			 * Wird auf den Button geklickt, wird die Funktion saveNote() aufgerufen
+			 * Diese tauscht das Textfeld mit dem <div> aus und speichert die Notiz in localStorage
+			 */
+
+			function generateNoteArea(index) {
+				const noteAreaElement = 
+					`<div class="noteArea" id="note${index}" onclick="editNote()">`
+				const noteAteaContent = getNote();
+
+				return `<td>${noteAreaElement}${noteAteaContent}</div></td>`;
+			}
+
+			function getNote(id = 0) {
+				const note = localStorage.getItem("noteArea" + id);
+				return note ? note : "Click to add note";
+			}
+
+			function editNote() {
+				console.log('editNote');
+			}
+
+			function saveNote() {
+
+			}
+
+		</script>
+		
+		<script id="clipboardJS"> 
+		</script>
+
+	</body>
+<html>
