@@ -37,3 +37,16 @@ Projekt Note speichert seinen Text und seine id (gleiche id wie die des Projekt 
 Commit History speichert seinen Namen (Commit Message aus dem Formular) Datum und Zeit seines Erstellens in "saveCommit"
 Calendar Note speichert seinen Text und das Datum zudem die Notiz gehört in "saveCalendarNote"
 Clipboard speichert seinen Namen und den Text welcher im Zwischenspeicher kopiert werden soll in "saveSnippet"
+
+---
+
+#### PROJEKT TIMER:
+Das Tool soll helfen die Zeit für eine bestimmte Aufgabe/Projekt im Blick zu behalten. 
+Dabei wird die gesamte Zeit festgehalten und eine "Teilzeit" die sich zurück setzten lässt.  
+``[Add Project]`` Neuer Eintrag  
+``[Go]`` Timer starten   
+``[Stop]`` Timer anhalten   
+``[Reset]`` Teilzeit Timer zurück setzten  
+``[Edit]`` Name und Id ändern  
+``[Prio]`` Priorität ändern  
+``[X]`` Eintrag löschen  
