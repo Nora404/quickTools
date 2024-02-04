@@ -23,19 +23,21 @@
 		
 	TOOLS ÜBERSICHT:
 	- Projekt Timer:	Zwei Stoppuhren, eine für die gesamte Zeit und eine die man zurück setzten kann
-	- Projekt Note:		Notizen zu einem Projekt wie eine Aufgabenliste, eine Erweiterung zum Projekt Timer 
+	- Projekt Note:		Notizen und einfache Checkliste zu einem Projekt, eine Erweiterung zum Projekt Timer 
 	- Commit Message:	Formular zum Erstellen und Formatieren von Commits und Hilfe um die strengen Regeln einzuhalten
 	- Commit History:	Eine Liste der letzten Commits, eine Erweiterung zu den Commit Messages. Füllt sich automatisch
 	- Calenadar Note:	Zeigt die aktuelle Arbeitswoche und ermöglicht zu jedem Tag eine kurze Notiz
 	- Clipboard:		Speichert kleine Texte und kopiert diese per Klick in die Zwischenablage
+	- Collection List:  Anlegen von Gruppen mit je mehreren kurzen Einträgen die verschiedene Eigenschaften haben können  
 	
 	SPEICHERORT:
 	Die Werte der Tools werden im LocalStorage des Browsers gespeichert. 
-	Projekt Timer speichert den Namen des Projektes, seine id, seine Prio, die gemessenen Zeiten und sein Erstellungsdatum in "saveProjectTime"
-	Projekt Note speichert seinen Text und seine id (gleiche id wie die des Projekt Timers) in "saveProjectNote"
+	Projekt Timer speichert den Namen des Projektes, seine id, seine Prio, die gemessenen Zeiten und sein Erstellungsdatum in "saveProject"
+	Projekt Note speichert seinen Text und seine Listen mit je Text und Status zu "saveProject" dazu
 	Commit History speichert seinen Namen (Commit Message aus dem Formular) Datum und Zeit seines Erstellens in "saveCommit"
 	Calendar Note speichert seinen Text und das Datum zudem die Notiz gehört in "saveCalendarNote"
 	Clipboard speichert seinen Namen und den Text welcher im Zwischenspeicher kopiert werden soll in "saveSnippet"
+	Collection List speichert seine Gruppen mit Namen, Id und Einträgen sowie deren Texte und Eigenschaften in "saveCollection" 
 
 	---
 
@@ -69,16 +71,19 @@
 			
 			main, header {
 			  box-sizing: border-box;
-			  max-width: 1000px;			
 			  margin: auto;
 			} main {
+			  display: flex;
+			  flex-wrap: nowrap;
+			  max-width: 1500px;
+			  width: auto;
 			  border: 3px dotted rgb(218, 218, 218);
 			  padding: 10px 10px 10px 10px;
 			  outline: 3px solid rgb(218, 218, 218);
 			} header {
 			  display: flex;
 			  padding: 5px 0 10px 8px;
-			  /* justify-content: center; */
+			  justify-content: center;
 			}
 			
 			h3 {
@@ -130,6 +135,15 @@
 				padding: 10px;
 				border: 1px solid #d8e7f3;
 				background-color: #f3f8fc;
+			}
+
+			#mainColumn1 {
+				flex: 0 1 1000px;
+			}
+			#mainColumn2 {
+				flex: 0 1 500px;
+				display: flex;
+				margin-left: 40px;
 			}
 			
 		</style>  
@@ -281,6 +295,11 @@
 		</style>  
 		<style id="clipboardCSS"> 
 		</style>
+		<style id="collectionCSS">
+			#collection{
+				width: 100%; 
+			}
+		</style>
 		
 		<script>  
 			window.addEventListener("load", () => {
@@ -299,10 +318,12 @@
 			<button id="commitBtn" class="greenBtn" onclick="changeVisibility('commit')">Commit Message</button>
 			<button id="calendarBtn" class="greenBtn" onclick="changeVisibility('calendar')">Calendar Notes</button>
 			<button id="clipboardBtn" class="greenBtn" onclick="changeVisibility('clipboard')">Clipboard</button>
+			<button id="collectionBtn" class="greenBtn" onclick="changeVisibility('collection')">Collection List</button>
 		</header>
 	
 	
 		<main>
+		<div id="mainColumn1">	
 			<div id="timer" class="container"> <!-- TIMER HTML ------------------------------>
 				<div class="tooltip helpText">?
 					<span class="tooltiptext" id="timerToolTipp">Tooltip text</span>
@@ -375,6 +396,16 @@
 				 <button id="addSnippet">Add Snippet</button>
 				 <ul id="snippetList"></ul>
 			</div>
+		</div>	
+		<div id="mainColumn2">
+			<div id="collection" class="container"> <!-- COLLECTION HTML ---------------------------->
+				<div class="tooltip helpText">?
+					<span class="tooltiptext" id="collectionToolTipp">Tooltip text</span>
+				</div>
+				
+				<h3>Collection List</h3>
+			</div>
+		</div>
 		</main> 
 	
 	
@@ -392,6 +423,52 @@
 					elementBtn.classList.add("redBtn");
 					elementBtn.classList.remove("greenBtn");
 				}
+				changeMainWidth();
+			}
+
+			function changeMainWidth(){
+				const main = document.querySelector('main');
+				const mainColumn1 = document.getElementById('mainColumn1');
+  				const mainColumn2 = document.getElementById('mainColumn2');
+
+				// Konvertiere die children-HTMLCollection in ein Array und filtere es
+				// Überprüfe, dass das Element nicht <hr> ist und nicht die Klasse 'hidden' hat
+				const haveTools1 = Array.from(mainColumn1.children).filter(function(el) {
+				return el.tagName !== 'HR' && !el.classList.contains('hidden');
+				});
+
+				const haveTools2 = Array.from(mainColumn2.children).filter(function(el) {
+				return el.tagName !== 'HR' && !el.classList.contains('hidden');
+				});
+
+
+				if(haveTools1.length >= 1 && haveTools2.length >= 1){  // links ja / rechts ja
+					mainColumn1.classList.remove("hidden")
+					mainColumn2.classList.remove("hidden")
+					main.style.maxWidth = '1500px';
+					mainColumn2.style.flex = "0 1 500px";
+					mainColumn2.style.marginLeft = "40px";
+				} 
+				
+				if(haveTools1.length >= 1 && haveTools2.length < 1){  // links ja / rechts nein
+					mainColumn2.classList.add("hidden");
+					mainColumn1.classList.remove("hidden")
+					main.style.maxWidth = '1000px';
+				}
+
+				if(haveTools1.length < 1 && haveTools2.length >= 1){  // links nein / rechts ja
+					mainColumn1.classList.add("hidden");
+					mainColumn2.classList.remove("hidden")
+					main.style.maxWidth = '700px';
+					mainColumn2.style.flex = "1 0 auto";
+					mainColumn2.style.marginLeft = "0";
+				} 
+				
+				if(haveTools1.length < 1 && haveTools2.length < 1){  // links nein / rechts nein
+					mainColumn1.classList.add("hidden");
+					mainColumn2.classList.add("hidden");
+					main.style.maxWidth = '500px';
+				}
 			}
 		
 		</script> 
@@ -402,7 +479,8 @@
 				messageToolTipp: "Tooltip Text für Commit Message",
 				historyToolTipp: "Tooltip Text für Commit History",
 				calendarToolTipp: "Tooltip Text für Calendar Notes",
-				clipboardToolTipp: "Tooltip Text für Clipboard"
+				clipboardToolTipp: "Tooltip Text für Clipboard",
+				collectionToolTipp: "Tooltip Text für Collection List"
 			};
 
 			function setToolTipText() {
