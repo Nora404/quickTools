@@ -28,7 +28,7 @@
 	- Commit History:	Eine Liste der letzten Commits, eine Erweiterung zu den Commit Messages. Füllt sich automatisch
 	- Calenadar Note:	Zeigt die aktuelle Arbeitswoche und ermöglicht zu jedem Tag eine kurze Notiz
 	- Clipboard:		Speichert kleine Texte und kopiert diese per Klick in die Zwischenablage
-	- Collection List:  Anlegen von Gruppen mit je mehreren kurzen Einträgen die verschiedene Eigenschaften haben können  
+	- Collection List:	Anlegen von Gruppen mit je mehreren kurzen Einträgen die verschiedene Eigenschaften haben können  
 	
 	SPEICHERORT:
 	Die Werte der Tools werden im LocalStorage des Browsers gespeichert. 
@@ -60,6 +60,8 @@
 	CALENDAR NOTE
 
 	CLIPBOARD
+
+	COLLECTION LIST
 -->
 <html>
 	<head>
@@ -100,10 +102,11 @@
 			}
 			
 			button {
-			  background-color: rgb(218, 218, 218);
+			  background-color: rgb(155, 169, 197);
 			  border: 1px solid gray;
 			  font-family: "Courier New", Courier, monospace;
 			  font-size: 1em;
+			  color: #fff;
 			  margin: 5px 5px 5px 5px;
 			} button:hover {
 				filter: brightness(1.15);
@@ -111,10 +114,12 @@
 			
 			.greenBtn {
 			  background-color: rgb(175, 196, 145);
+			  color: #1d2733; 
 			}
 			
 			.redBtn {
 			  background-color: rgb(221, 151, 151);
+			  color: #1d2733; 
 			}
 
 			.hidden {
@@ -189,6 +194,75 @@
 			}
 		</style>
 		<style id="timerCSS">  
+			.timerBtn{
+				box-sizing: border-box;
+				border: 1px solid gray;
+				margin: 3px 1px 3px 1px;
+				height: 25px;	
+			}
+			#timer select{
+				box-sizing: border-box;
+				background-color: rgb(155, 169, 197);
+			  	border: 1px solid gray;
+				color: #fff;
+				margin: 3px 1px 3px 1px;
+				height: 25px;
+			}
+			.prio1{
+				border: 2px solid rgb(221, 151, 151);
+				background-color: rgba(221, 151, 151, 0.2);
+				margin-bottom: 10px;
+				padding: 5px;
+			}
+			.prio2{
+				border: 2px solid rgb(221, 185, 151);
+				background-color: rgb(221, 185, 151, 0.2);
+				margin-bottom: 10px;
+				padding: 5px;
+			}
+			.prio3{
+				border: 2px solid rgb(220, 221, 151);
+				background-color: rgb(220, 221, 151, 0.2);
+				margin-bottom: 10px;
+				padding: 5px;
+			}
+			.prio4{
+				border: 2px solid rgb(175, 196, 145);
+				background-color: rgb(175, 196, 145, 0.2);
+				margin-bottom: 10px;
+				padding: 5px;
+			}
+			.prio5{
+				border: 2px solid rgb(155, 169, 197);
+				background-color: rgb(155, 169, 197, 0.2);
+				margin-bottom: 10px;
+				padding: 5px;
+			}
+			.timerEntry{
+				display: flex;
+				flex-direction: row;
+			}
+
+			/* Hier kommt eine Animation um den aktiven Eintrag hervor zu heben */
+
+			@keyframes pulse {
+				0% {
+					box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
+				}
+				50% {
+					box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+				}
+				100% {
+					box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
+				}
+			}
+
+			.pulsing-border {
+				background-color: white;
+				animation: pulse 2s infinite; /* Animation anwenden */
+				box-sizing: border-box;
+			}
+
 		</style>  
 		<style id="commitCSS"> 
 			#commit {
@@ -330,8 +404,80 @@
 				</div>
 				
 				<h3>Project Timer</h3>
-				<button id="addProject">Add Project</button>
-					<ul id="projectList"></ul>
+				<button id="addProject">Add Project</button><br><br>
+				
+				<div class="timerEntry prio1">
+				<button class="greenBtn timerBtn">Go</button>
+				<button class="timerBtn">Stop</button>
+				<button class="timerBtn">Reset</button>
+				<button class="timerBtn">Edit</button>
+				<select>
+					<option>Prio: 1</option>
+					<option>Prio: 2</option>
+					<option>Prio: 3</option>
+					<option selected>Prio: 4</option>
+					<option>Prio: 5</option>
+				</select>
+				<button class="redBtn timerBtn">Delete</button>
+				</div>
+				<div class="timerEntry prio2">
+					<button class="greenBtn timerBtn">Go</button>
+					<button class="timerBtn">Stop</button>
+					<button class="timerBtn">Reset</button>
+					<button class="timerBtn">Edit</button>
+					<select>
+						<option>Prio: 1</option>
+						<option>Prio: 2</option>
+						<option>Prio: 3</option>
+						<option selected>Prio: 4</option>
+						<option>Prio: 5</option>
+					</select>
+					<button class="redBtn timerBtn">Delete</button>
+					</div>
+					<div class="timerEntry prio3">
+						<button class="greenBtn timerBtn">Go</button>
+						<button class="timerBtn">Stop</button>
+						<button class="timerBtn">Reset</button>
+						<button class="timerBtn">Edit</button>
+						<select>
+							<option>Prio: 1</option>
+							<option>Prio: 2</option>
+							<option>Prio: 3</option>
+							<option selected>Prio: 4</option>
+							<option>Prio: 5</option>
+						</select>
+						<button class="redBtn timerBtn">Delete</button>
+						</div>
+						<div class="timerEntry prio4">
+							<button class="greenBtn timerBtn">Go</button>
+							<button class="timerBtn">Stop</button>
+							<button class="timerBtn">Reset</button>
+							<button class="timerBtn">Edit</button>
+							<select>
+								<option>Prio: 1</option>
+								<option>Prio: 2</option>
+								<option>Prio: 3</option>
+								<option selected>Prio: 4</option>
+								<option>Prio: 5</option>
+							</select>
+							<button class="redBtn timerBtn">Delete</button>
+							</div>
+							<div class="timerEntry prio5 pulsing-border">
+								<button class="greenBtn timerBtn">Go</button>
+								<button class="timerBtn">Stop</button>
+								<button class="timerBtn">Reset</button>
+								<button class="timerBtn">Edit</button>
+								<select>
+									<option>Prio: 1</option>
+									<option>Prio: 2</option>
+									<option>Prio: 3</option>
+									<option selected>Prio: 4</option>
+									<option>Prio: 5</option>
+								</select>
+								<button class="redBtn timerBtn">Delete</button>
+								</div>
+
+				<ul id="projectList"></ul>
 			</div> 
 			<hr>
 
