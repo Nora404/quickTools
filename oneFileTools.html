@@ -65,6 +65,17 @@
 -->
 <html>
 	<head>
+		<!--
+			dunkles Btn Blau:		rgb(155, 169, 197);
+			Hintergund-Blau hell:	rgb(243, 248, 252);
+			Hintergund-Blau mittel:	rgb(225, 232, 241);
+			Disable Input Grau:		rgb(215, 216, 216);
+			Rand Dunkel Grau:		gray
+			Text Blau:				rgb(29, 39, 51);
+			Grün:					rgb(175, 196, 145);
+			Rot:					rgb(221, 151, 151);
+			Sonderfarbe Lila:		rgb(179, 155, 197);
+		-->
 		<style id="globalCSS"> 
 			body {
 			  font-size: 1em;
@@ -74,7 +85,6 @@
 			main, header {
 			  box-sizing: border-box;
 			  margin: auto;
-			} main {
 			  display: flex;
 			  flex-wrap: nowrap;
 			  max-width: 1500px;
@@ -83,9 +93,8 @@
 			  padding: 10px 10px 10px 10px;
 			  outline: 3px solid rgb(218, 218, 218);
 			} header {
-			  display: flex;
-			  padding: 5px 0 10px 8px;
-			  justify-content: center;
+			  margin-bottom: 10px;
+			  background-color: #f3f8fc;
 			}
 			
 			h3 {
@@ -236,6 +245,26 @@
 				display: flex;
 				flex-direction: row;
 			}
+			.textTime{
+				display: inline-block;
+				box-sizing: border-box;
+				width: 100%;
+				text-align: left;
+				border: 1px dotted gray;
+				background-color: rgba(255, 255, 255, 0.75);
+				padding: 1px 0 0 6px;
+				height: 27px;
+				margin: 2px 4px 4px 10px;
+				font-size: 1.1em;
+				color: #1d2733;
+			}
+			.textName{
+				display: inline-block;
+				padding: 4px;
+				margin-top: 5px;
+				font-size: 1.1em;
+				color: #1d2733;
+			}
 
 			/* Hier kommt eine Animation um den aktiven Eintrag hervor zu heben */
 
@@ -277,7 +306,7 @@
 			#commitDescription {
 				box-sizing: border-box;
 				border: 2px solid gray;
-				background-color: #d8e7f3;
+				background-color: rgb(155, 169, 197, 0.2);
 				margin: 5px 0 5px 0;
 				padding: 5px;
 				resize: none;
@@ -407,35 +436,8 @@
 				<h3>Project Timer</h3>
 				<button id="addProject">Add Project</button><br><br>
 				
-				<div class="timerEntry prio1">
-				<button class="greenBtn timerBtn">Go</button>
-				<button class="timerBtn">Stop</button>
-				<button class="timerBtn">Reset</button>
-				<button class="timerBtn">Edit</button>
-				<select>
-					<option>Prio: 1</option>
-					<option>Prio: 2</option>
-					<option>Prio: 3</option>
-					<option selected>Prio: 4</option>
-					<option>Prio: 5</option>
-				</select>
-				<button class="redBtn timerBtn">Delete</button>
-				</div>
-				<div class="timerEntry prio2">
-					<button class="greenBtn timerBtn">Go</button>
-					<button class="timerBtn">Stop</button>
-					<button class="timerBtn">Reset</button>
-					<button class="timerBtn">Edit</button>
-					<select>
-						<option>Prio: 1</option>
-						<option>Prio: 2</option>
-						<option>Prio: 3</option>
-						<option selected>Prio: 4</option>
-						<option>Prio: 5</option>
-					</select>
-					<button class="redBtn timerBtn">Delete</button>
-					</div>
-					<div class="timerEntry prio3">
+				<div class="prio2">
+					<div class="timerEntry">
 						<button class="greenBtn timerBtn">Go</button>
 						<button class="timerBtn">Stop</button>
 						<button class="timerBtn">Reset</button>
@@ -444,40 +446,16 @@
 							<option>Prio: 1</option>
 							<option>Prio: 2</option>
 							<option>Prio: 3</option>
-							<option selected>Prio: 4</option>
-							<option>Prio: 5</option>
+							<option selected>Prio: 1</option>
 						</select>
 						<button class="redBtn timerBtn">Delete</button>
-						</div>
-						<div class="timerEntry prio4">
-							<button class="greenBtn timerBtn">Go</button>
-							<button class="timerBtn">Stop</button>
-							<button class="timerBtn">Reset</button>
-							<button class="timerBtn">Edit</button>
-							<select>
-								<option>Prio: 1</option>
-								<option>Prio: 2</option>
-								<option>Prio: 3</option>
-								<option selected>Prio: 4</option>
-								<option>Prio: 5</option>
-							</select>
-							<button class="redBtn timerBtn">Delete</button>
-							</div>
-							<div class="timerEntry prio1 pulsing-border">
-								<button class="greenBtn timerBtn">Go</button>
-								<button class="timerBtn">Stop</button>
-								<button class="timerBtn">Reset</button>
-								<button class="timerBtn">Edit</button>
-								<select>
-									<option>Prio: 1</option>
-									<option>Prio: 2</option>
-									<option>Prio: 3</option>
-									<option selected>Prio: 4</option>
-									<option>Prio: 5</option>
-								</select>
-								<button class="redBtn timerBtn">Delete</button>
-								</div>
-
+						<span class="textTime">Total: 00:00:00 = 0.0h</span>
+						<span class="textTime">Current: 00:00:00 = 0.0h</span>
+					</div>
+					<span class="textName">#11789</span>
+					<span class="textName">Hier steht der Name des Projektes</span>
+				</div>
+				
 				<ul id="projectList"></ul>
 			</div> 
 			<hr>
@@ -544,6 +522,7 @@
 				 <ul id="snippetList"></ul>
 			</div>
 		</div>	
+
 		<div id="mainColumn2">
 			<div id="collection" class="container"> <!-- COLLECTION HTML ---------------------------->
 				<div class="tooltip helpText">?
@@ -618,6 +597,14 @@
 				}
 			}
 		
+			function generateId(){
+				let id = "";
+				const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+				for (let i = 0; i < 12; i++) {
+					id += chars.charAt(Math.floor(Math.random() * chars.length));
+				}
+				return id;
+			}
 		</script> 
 
 		<script id="tooltipsJS">
@@ -641,6 +628,62 @@
 		</script>
 
 		<script id="timerJS">
+			let timerObjects = JSON.parse(localStorage.getItem("timers")) || {};
+			let timerInterval = null;
+
+			/** Da es in Vanilla keine Interfaces gibt, beschreibe ich hier das timerObjekt:
+			 *  {
+			 *    id: String        // generiert von generateID() in globalsJS
+			 *    name: String      // wird mit escapeHtml formatiert
+			 *    redmineNr: String // wird mit escapeHtml formatiert
+			 *    totalTime: Number // Sekunden
+			 *    partTime: Number  // Sekunden
+			 *    prio: Number      // [1-4]
+			 *  }
+			 */ 
+
+			// Diese Funktionen handeln die Eingaben des Users
+			// Sie sind nach den Buttons benannt, welche sie auslösen
+			function addProject(){}
+
+			function startTimer(){}
+
+			function resetTimer(){}
+
+			function editProject(){}
+
+			function changePrio(){}
+
+			function deleteProject(){}
+
+			// Im folgenen sind die Hilfsfunktionen des Timers
+			function escapeHtml(text) {
+				return text
+					.replace(/&/g, "&amp;")
+					.replace(/</g, "&lt;")
+					.replace(/>/g, "&gt;")
+					.replace(/"/g, "&quot;")
+					.replace(/'/g, "&#039;");
+			}
+
+			function formartTime(seconds){
+				if (isNaN(seconds)) return "00:00:00";
+
+				const hrs = Math.floor(seconds / 3600);
+				const mins = Math.floor((seconds % 3600) / 60);
+				const secs = seconds % 60;
+				const bruch = (hrs + mins / 60 + secs / 3600).toFixed(1);
+
+				return `${hrs.toString().padStart(2, "0")}:
+				${mins.toString().padStart(2, "0")}:
+				${secs.toString().padStart(2, "0")} = ${bruch}h`;
+			}
+
+			function renderTimerEntries(){
+				localStorage.setItem("timers", JSON.stringify(timers));
+				const list = document.getElementById("projectList");
+				      list.innerHTML = "";
+			}
 		</script> 
 
 		<script id="commitJS"> 
