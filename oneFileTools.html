@@ -144,6 +144,14 @@
 			  display: none !important;
 			}
 
+			.floatLeft {
+			  float: left;
+			}
+			.floatRight {
+			  float: right;
+			  margin-right: 10px;
+			}
+
 			input,
 			option,
 			select,
@@ -231,24 +239,28 @@
 				background-color: var(--prio4);
 				margin-bottom: 10px;
 				padding: 5px;
+				overflow: auto;
 			}
 			.prio3{
 				border: 2px solid var(--purple);
 				background-color: var(--prio3);
 				margin-bottom: 10px;
 				padding: 5px;
+				overflow: auto;
 			}
 			.prio2{
 				border: 2px solid var(--background-dark-blue);
 				background-color: var(--prio2);
 				margin-bottom: 10px;
 				padding: 5px;
+				overflow: auto;
 			}
 			.prio1{
 				border: 2px solid var(--medium-gray);
 				background-color: var(--prio1);
 				margin-bottom: 10px;
 				padding: 5px;
+				overflow: auto;
 			}
 			.timerEntry{
 				display: flex;
@@ -261,16 +273,17 @@
 				text-align: left;
 				border: 1px dotted var(--dark-gray);
 				background-color: rgba(255, 255, 255, 0.75);
-				padding: 1px 0 0 6px;
+				padding: 1px 6px 0 6px;
 				height: 27px;
 				margin: 2px 4px 4px 10px;
-				font-size: 1.1em;
+				font-size: 1.2em;
+				text-align: right;
 			}
 			.textName{
 				display: inline-block;
-				padding: 4px;
+				padding: 6px;
 				margin-top: 5px;
-				font-size: 1.1em;
+				font-size: 1.2em;
 			}
 
 			/* Hier kommt eine Animation um den aktiven Eintrag hervor zu heben */
@@ -449,7 +462,7 @@
 				<button id="addProject">Add Project</button><br><br>
 				
 				<div class="prio2">
-					<div class="timerEntry">
+					<div class="floatLeft">
 						<button class="greenBtn timerBtn">Go</button>
 						<button class="timerBtn">Stop</button>
 						<button class="timerBtn">Reset</button>
@@ -460,12 +473,14 @@
 							<option>Prio: 3</option>
 							<option selected>Prio: 1</option>
 						</select>
-						<button class="redBtn timerBtn">Delete</button>
-						<span class="textTime">Total: 00:00:00 = 0.0h</span>
+						<button class="redBtn timerBtn">Delete</button><br>
+						<span class="textName">#11789</span>
+						<span class="textName">Hier steht der Name des Projektes</span>
+					</div>
+					<div class="floatRight">
+						<span class="textTime">Total: 00:00:00 = 0.0h</span><br>
 						<span class="textTime">Current: 00:00:00 = 0.0h</span>
 					</div>
-					<span class="textName">#11789</span>
-					<span class="textName">Hier steht der Name des Projektes</span>
 				</div>
 				
 				<ul id="projectList"></ul>
