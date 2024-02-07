@@ -65,17 +65,20 @@
 -->
 <html>
 	<head>
-		<!--
-			dunkles Btn Blau:		rgb(155, 169, 197);
-			Hintergund-Blau hell:	rgb(243, 248, 252);
-			Hintergund-Blau mittel:	rgb(225, 232, 241);
-			Disable Input Grau:		rgb(215, 216, 216);
-			Rand Dunkel Grau:		gray
-			Text Blau:				rgb(29, 39, 51);
-			Grün:					rgb(175, 196, 145);
-			Rot:					rgb(221, 151, 151);
-			Sonderfarbe Lila:		rgb(179, 155, 197);
-		-->
+		<style id="colors"> 
+			:root {
+			--background-dark-blue: rgb(155, 169, 197);	/* Hintergundfarbe von Buttons */
+			--background-medium-blue: rgb(225, 232, 241);	/* Hintergundfarbe von Inputs */
+			--background-light-blue: rgb(243, 248, 252);	/* Hintergrundfarbe von Modulen */
+			--text-blue-dark: rgb(29, 39, 51);				/* Normale Textfarbe */
+			--text-blue-medium: rgb(109, 123, 141);		/* Textfarbe von Überschriften */
+			--medium-gray: rgb(215, 216, 216);				/* Inaktiv oder nicht Interaktiv */
+			--dark-gray: rgb(128, 128, 128);				/* Ränder von Formularen */
+			--green: rgb(175, 196, 145);					/* Bestätigen oder Starten */
+			--red: rgb(221, 151, 151);						/* Warnung, Löschen oder Abbrechen */
+			--purple: rgb(179, 155, 197);					/* Sonderfarbe */
+			}
+		</style>
 		<style id="globalCSS"> 
 			body {
 			  font-size: 1em;
@@ -98,7 +101,7 @@
 			}
 			
 			h3 {
-			  color: #6d7b8d; 
+			  color: var(--text-blue-medium);
 			  font-size: 1.4em;
 			  margin: 15px 0 15px 0;
 			}
