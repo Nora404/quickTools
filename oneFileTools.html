@@ -77,7 +77,12 @@
 			--dark-gray: rgb(128, 128, 128);				/* Ränder von Formularen */
 			--green: rgb(175, 196, 145);					/* Bestätigen oder Starten */
 			--red: rgb(221, 151, 151);						/* Warnung, Löschen oder Abbrechen */
-			--purple: rgb(179, 155, 197);					/* Sonderfarbe */
+			--purple: rgb(187, 155, 197);					/* Sonderfarbe */
+
+			--prio1: rgba(215, 216, 216, 0.15);
+			--prio2: rgba(155, 169, 197, 0.15);
+			--prio3: rgba(187, 155, 197, 0.15);
+			--prio4: rgba(221, 151, 151, 0.15);
 			}
 		</style>
 		<style id="globalCSS"> 
@@ -215,33 +220,33 @@
 			}
 			#timer select{
 				box-sizing: border-box;
-				background-color: rgb(155, 169, 197);
-			  	border: 1px solid gray;
+				background-color: var(--background-dark-blue);
+			  	border: 1px solid var(--dark-gray);
 				color: #fff;
 				margin: 3px 1px 3px 1px;
 				height: 25px;
 			}
 			.prio4{
-				border: 2px solid rgb(221, 151, 151);
-				background-color: rgba(221, 151, 151, 0.2);
+				border: 2px solid var(--red);
+				background-color: var(--prio4);
 				margin-bottom: 10px;
 				padding: 5px;
 			}
 			.prio3{
-				border: 2px solid rgb(179, 155, 197);
-				background-color: rgba(179, 155, 197, 0.2);
+				border: 2px solid var(--purple);
+				background-color: var(--prio3);
 				margin-bottom: 10px;
 				padding: 5px;
 			}
 			.prio2{
-				border: 2px solid rgb(155, 169, 197);
-				background-color: rgb(155, 169, 197, 0.2);
+				border: 2px solid var(--background-dark-blue);
+				background-color: var(--prio2);
 				margin-bottom: 10px;
 				padding: 5px;
 			}
 			.prio1{
-				border: 2px solid rgb(200, 204, 212);
-				background-color: rgb(200, 204, 212, 0.2);
+				border: 2px solid var(--medium-gray);
+				background-color: var(--prio1);
 				margin-bottom: 10px;
 				padding: 5px;
 			}
@@ -254,20 +259,18 @@
 				box-sizing: border-box;
 				width: 100%;
 				text-align: left;
-				border: 1px dotted gray;
+				border: 1px dotted var(--dark-gray);
 				background-color: rgba(255, 255, 255, 0.75);
 				padding: 1px 0 0 6px;
 				height: 27px;
 				margin: 2px 4px 4px 10px;
 				font-size: 1.1em;
-				color: #1d2733;
 			}
 			.textName{
 				display: inline-block;
 				padding: 4px;
 				margin-top: 5px;
 				font-size: 1.1em;
-				color: #1d2733;
 			}
 
 			/* Hier kommt eine Animation um den aktiven Eintrag hervor zu heben */
@@ -309,8 +312,8 @@
 			#commit option,
 			#commitDescription {
 				box-sizing: border-box;
-				border: 2px solid gray;
-				background-color: rgb(155, 169, 197, 0.2);
+				border: 2px solid var(--dark-gray);
+				background-color: var(--background-medium-blue);
 				margin: 5px 0 5px 0;
 				padding: 5px;
 				resize: none;
@@ -328,7 +331,7 @@
 			}
 			#textCounter {
 				text-align: center;
-				background-color: #d7d8d8 !important;
+				background-color: var(--medium-gray) !important;
 				width: calc(10% - 8px);
 				float: right;
 			}
@@ -349,7 +352,7 @@
 			#formatedCommitMessage {
 				box-sizing: border-box;
 				border: none;
-				background-color: #d7d8d8;
+				background-color: var(--medium-gray);
 				margin: 5px 0 5px 0;
 				padding: 5px;
 				resize: none;
@@ -366,7 +369,7 @@
 				background-color: #fff;
 			}
 			#calendar th, td {
-				border: 1px solid #ccc;
+				border: 1px solid var(--medium-gray);
 				padding: 10px;
 				vertical-align: top;
 				padding: 5px;
@@ -379,8 +382,8 @@
 				font-weight: 500;
 			}
 			#weeklySelection {
-				background-color: rgb(155, 169, 197);
-			  	border: 1px solid gray;
+				background-color: var(--background-dark-blue);
+			  	border: 1px solid var(--dark-gray);
 			 	color: #fff;
 				margin: 0 0 15px 2px;
 				padding: 5px;
@@ -389,7 +392,9 @@
 				width: 19.9%;
 			}
 			#today {
-				background-color: #d8e7f3;
+				box-sizing: border-box;
+				border: 2px solid var(--background-dark-blue) !important;
+				background-color: var(--background-medium-blue);
 			}
 			.noteArea {
 				width: 100%;
