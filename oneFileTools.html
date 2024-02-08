@@ -234,6 +234,10 @@
 				margin: 3px 1px 3px 1px;
 				height: 25px;
 			}
+			#projectList {
+				list-style-type: none;
+				padding: 0;
+			}
 			.prio4{
 				border: 2px solid var(--red);
 				background-color: var(--prio4);
@@ -436,6 +440,7 @@
 				setCurrentWeekToInput();
 				updateTable();
 				setToolTipText();
+				renderTimerEntries();
 			});
 		</script> 
 	</head>
@@ -459,7 +464,7 @@
 				</div>
 				
 				<h3>Project Timer</h3>
-				<button id="addProject">Add Project</button><br><br>
+				<button id="addProjectBtn">Add Project</button><br><br>
 				
 				<div class="prio2">
 					<div class="floatLeft">
@@ -623,15 +628,6 @@
 					main.style.maxWidth = '500px';
 				}
 			}
-		
-			function generateId(){
-				let id = "";
-				const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-				for (let i = 0; i < 12; i++) {
-					id += chars.charAt(Math.floor(Math.random() * chars.length));
-				}
-				return id;
-			}
 		</script> 
 
 		<script id="tooltipsJS">
@@ -654,36 +650,47 @@
 			}
 		</script>
 
-		<script id="timerJS">
-			let timerObjects = JSON.parse(localStorage.getItem("timers")) || {};
-			let timerInterval = null;
+		<script id="utilityJS">
+			// Gibt eine zufällige Folge von Zeichen zurück
+			function generateId(){
+				let id = "";
+				const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+				for (let i = 0; i < 16; i++) {
+					id += chars.charAt(Math.floor(Math.random() * chars.length));
+				}
+				return id;
+			}
 
-			/** Da es in Vanilla keine Interfaces gibt, beschreibe ich hier das timerObjekt:
-			 *  {
-			 *    id: String        // generiert von generateID() in globalsJS
-			 *    name: String      // wird mit escapeHtml formatiert
-			 *    redmineNr: String // wird mit escapeHtml formatiert
-			 *    totalTime: Number // Sekunden
-			 *    partTime: Number  // Sekunden
-			 *    prio: Number      // [1-4]
-			 *  }
-			 */ 
+			// Erstellt Buttons mit einem EventListener, eingebaut werden sie so:
+			// element.appendChild(createButton('btn name', 'css namen', () => fn(z.B. eine id)));
+			function createButton(text, className, onClick) {
+				const button = document.createElement('button');
+				button.className = className;
+				button.textContent = text;
+				button.addEventListener('click', onClick);
+				return button;
+			}
 
-			// Diese Funktionen handeln die Eingaben des Users
-			// Sie sind nach den Buttons benannt, welche sie auslösen
-			function addProject(){}
+			// Erstellt ein Select Element mit Opions die als Array mitgegeben werden 
+			function createSelect(options, selectedValue, onChange) {
+				const select = document.createElement('select');
+				
+				options.forEach((optionValue) => {
+					const option = document.createElement('option');
+					option.textContent = optionValue;
+					option.value = optionValue;
+					if (optionValue === selectedValue) {
+						option.selected = true;
+					}
+					select.appendChild(option);
+				});
 
-			function startTimer(){}
+				select.addEventListener('change', onChange);
 
-			function resetTimer(){}
+				return select;
+			}
 
-			function editProject(){}
-
-			function changePrio(){}
-
-			function deleteProject(){}
-
-			// Im folgenen sind die Hilfsfunktionen des Timers
+			// Alle Eingaben des Users müssen hier durch
 			function escapeHtml(text) {
 				return text
 					.replace(/&/g, "&amp;")
@@ -692,6 +699,67 @@
 					.replace(/"/g, "&quot;")
 					.replace(/'/g, "&#039;");
 			}
+
+			function createSpan(text, className) {
+				const span = document.createElement('span');
+				span.className = className;
+				span.textContent = text;
+				return span;
+			}
+		</script>
+
+		<script id="timerJS">
+			let timerObjects = JSON.parse(localStorage.getItem("timers")) || {};
+			let timerInterval = null;
+
+			/** Da es in Vanilla keine Interfaces gibt, beschreibe ich hier das timerObjekt:
+			 *  {
+			 *    id: String           // generiert von generateID() in globalsJS
+			 *    name: String         // wird mit escapeHtml formatiert
+			 *    redmineNr: String    // wird mit escapeHtml formatiert
+			 * 	  createdAt: Date	   // Erstellungsdatum, wird zum sortieren genutzt
+			 *    totalTime: Number    // Sekunden
+			 *    sessionTime: Number  // Sekunden
+			 *    prio: Number         // [1-4] Zum sortieren und Farbdarstellung
+			 *  }
+			 */ 
+
+			// Diese Funktionen handeln die Eingaben des Users
+			// Sie sind nach den Buttons benannt, welche sie auslösen
+			// addProject erstellt nur einen neuen Eintrag mit Default-Werten
+			function addProject(){
+				const id = generateId();
+				const newTimerObj = {
+					id: id,
+					name: "Project Name",
+					redmineNr: "123456",
+					createdAt: Date.now(),
+					totalTime: 0,
+					sessionTime: 0,
+					prio: 2,
+				};
+				timerObjects[id] = newTimerObj;
+				renderTimerEntries();
+			}
+			const addProjectBtn = document.getElementById("addProjectBtn");
+				  addProjectBtn.addEventListener("click", ()=>{
+					addProject();
+				  })
+
+			function startTimer(projectId){}
+
+			function stopTimer(projectId){}
+
+			function resetTimer(projectId){}
+
+			function editProject(projectId){
+				console.log("edit");
+			}
+
+			function changePrio(projectId){}
+
+			function deleteProject(projectId){}
+
 
 			function formartTime(seconds){
 				if (isNaN(seconds)) return "00:00:00";
@@ -706,10 +774,67 @@
 				${secs.toString().padStart(2, "0")} = ${bruch}h`;
 			}
 
+			/* Das Timerlayout muss für jedes Element generiert werden
+			*  Unter <script id="utility"> gibt es dafür ein paar Hilfsfunktionen
+			*  Nach dem Vorbild des Builder Pattern wird das Layout über mehrere fn aufgebaut
+			*  Die Datei aus dem LocalStorage wird in ein Array verwandelt und sortiert
+			*  nach Priorität (absteigend) und Erstellungsdatum (aufsteigend)
+			*/
 			function renderTimerEntries(){
-				localStorage.setItem("timers", JSON.stringify(timers));
+				localStorage.setItem("timers", JSON.stringify(timerObjects));
+				const timersArray = Object.values(timerObjects);
 				const list = document.getElementById("projectList");
 				      list.innerHTML = "";
+								
+				timersArray.sort((a, b) => {
+					if (a.prio === b.prio) {
+						return a.createdAt - b.createdAt; 
+					}
+					return b.prio - a.prio;
+				});	
+				timersArray.forEach(timerObj => {
+					list.appendChild(createTimerEntry(timerObj));
+				});
+			}
+
+			/* Das Layout liegt in einem Listenelement und besteht aus einem Kontainer
+			 * Indem links und recht nebeneinander ein weitere Kontainer liegt
+			 * Im linken Kontainer liegen die Buttons und der Name wie Redmine Nummer
+			 * Im rechten Kontainer sind die beiden Stoppuhren
+ 			 */
+			function createTimerEntry(timerObj){
+				const li = document.createElement("li");
+				li.id = timerObj.id;
+				
+				const projectDiv = document.createElement('div');
+				projectDiv.className = `prio${timerObj.prio}`; 
+
+				const floatLeftDiv = document.createElement('div');
+				floatLeftDiv.className = 'floatLeft';
+				
+				const floatRightDiv = document.createElement('div');
+    			floatRightDiv.className = 'floatRight';
+
+				floatLeftDiv.appendChild(createButton('Go', 'greenBtn timerBtn', ()=> startTimer(timerObj.id)));
+				floatLeftDiv.appendChild(createButton('Stop', 'timerBtn', () => stopTimer(timerObj.id)));
+				floatLeftDiv.appendChild(createButton('Reset', 'timerBtn', () => resetTimer(timerObj.id)));
+				floatLeftDiv.appendChild(createButton('Edit', 'timerBtn', () => editProject(timerObj.id)));
+				floatLeftDiv.appendChild(createSelect([1,2,3,4],timerObj.prio, () => changePrio(timerObj.id)));
+				floatLeftDiv.appendChild(createButton('Delete', 'redBtn timerBtn', () => deleteProject(timerObj.id)));
+				
+				// Erstelle die Span-Elemente für die Redmine-Nummer und den Projektnamen
+				floatLeftDiv.appendChild(createSpan(timerObj.redmineNr, 'textName'));
+    			floatLeftDiv.appendChild(createSpan(timerObj.name, 'textName'));
+
+    			// Erstelle die Span-Elemente für Total und Session-Zeiten
+    			floatRightDiv.appendChild(createSpan(`Total: ${formartTime(timerObj.totalTime)}`, 'textTime'));
+    			floatRightDiv.appendChild(createSpan(`Session: ${formartTime(timerObj.partTime)}`, 'textTime'));				
+				
+				// Fügt beide Divs zum Haupt-Div hinzu
+				projectDiv.appendChild(floatLeftDiv);
+    			projectDiv.appendChild(floatRightDiv);
+
+    			return projectDiv;
 			}
 		</script> 
 
