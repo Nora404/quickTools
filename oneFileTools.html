@@ -466,28 +466,6 @@
 				<h3>Project Timer</h3>
 				<button id="addProjectBtn">Add Project</button><br><br>
 				
-				<div class="prio2">
-					<div class="floatLeft">
-						<button class="greenBtn timerBtn">Go</button>
-						<button class="timerBtn">Stop</button>
-						<button class="timerBtn">Reset</button>
-						<button class="timerBtn">Edit</button>
-						<select>
-							<option>Prio: 1</option>
-							<option>Prio: 2</option>
-							<option>Prio: 3</option>
-							<option selected>Prio: 1</option>
-						</select>
-						<button class="redBtn timerBtn">Delete</button><br>
-						<span class="textName">#11789</span>
-						<span class="textName">Hier steht der Name des Projektes</span>
-					</div>
-					<div class="floatRight">
-						<span class="textTime">Total: 00:00:00 = 0.0h</span><br>
-						<span class="textTime">Session: 00:00:00 = 0.0h</span>
-					</div>
-				</div>
-				
 				<ul id="projectList"></ul>
 			</div> 
 			<hr>
@@ -834,7 +812,8 @@
 				projectDiv.appendChild(floatLeftDiv);
     			projectDiv.appendChild(floatRightDiv);
 
-    			return projectDiv;
+				li.appendChild(projectDiv);
+    			return li;
 			}
 		</script> 
 
