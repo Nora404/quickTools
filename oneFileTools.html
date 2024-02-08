@@ -657,7 +657,7 @@
 					const option = document.createElement('option');
 					option.textContent = optionValue;
 					option.value = optionValue;
-					if (optionValue === selectedValue) {
+					if (optionValue.toString() === selectedValue.toString()) {
 						option.selected = true;
 					}
 					select.appendChild(option);
