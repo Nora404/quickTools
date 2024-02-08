@@ -126,6 +126,7 @@
 			  font-family: "Courier New", Courier, monospace;
 			  font-size: 1em;
 			  margin: 5px 5px 5px 5px;
+			  height: 25px;
 			} button:hover {
 				filter: brightness(1.15);
 			}
@@ -231,7 +232,7 @@
 				background-color: var(--background-dark-blue);
 			  	border: 1px solid var(--dark-gray);
 				color: #fff;
-				margin: 3px 1px 3px 1px;
+				margin: 5px 1px 5px 1px;
 				height: 25px;
 			}
 			#projectList {
@@ -283,10 +284,9 @@
 				font-size: 1.2em;
 				text-align: right;
 			}
-			.textName{
+			.textName, .textNumber{
 				display: inline-block;
-				padding: 6px;
-				margin-top: 5px;
+				margin: 5px 10px 5px 5px;
 				font-size: 1.2em;
 			}
 
@@ -709,8 +709,8 @@
 				const id = generateId();
 				const newTimerObj = {
 					id: id,
-					name: "Project Name",
-					redmineNr: "123456",
+					name: "ProjectName",
+					redmineNr: "RedmineNr",
 					createdAt: Date.now(),
 					totalTime: 0,
 					sessionTime: 0,
@@ -731,12 +731,29 @@
 			function resetTimer(projectId){}
 
 			function editProject(projectId){
-				console.log("edit");
+				const obj = timerObjects[projectId];
+				const entry = document.getElementById(obj.id);
+				const nr = entry.querySelector('.textNumber').innerText;
+				const name = entry.querySelector('.textName').innerText;
+
+				console.log(nr);
+				console.log(name);
 			}
 
-			function changePrio(projectId){}
+			function changePrio(projectId){
+				const obj = timerObjects[projectId];
+				const entry = document.getElementById(obj.id);
+				const prio = entry.querySelector('select');
 
-			function deleteProject(projectId){}
+				obj.prio = prio.value;
+				timerObjects[projectId] = obj;
+				renderTimerEntries();
+			}
+
+			function deleteProject(projectId){
+				delete timerObjects[projectId];
+				renderTimerEntries();
+			}
 
 
 			function formartTime(seconds){
@@ -799,13 +816,15 @@
 				floatLeftDiv.appendChild(createButton('Edit', 'timerBtn', () => editProject(timerObj.id)));
 				floatLeftDiv.appendChild(createSelect([1,2,3,4],timerObj.prio, () => changePrio(timerObj.id)));
 				floatLeftDiv.appendChild(createButton('Delete', 'redBtn timerBtn', () => deleteProject(timerObj.id)));
+				floatLeftDiv.appendChild(document.createElement("br"));
 				
 				// Erstelle die Span-Elemente für die Redmine-Nummer und den Projektnamen
-				floatLeftDiv.appendChild(createSpan(timerObj.redmineNr, 'textName'));
+				floatLeftDiv.appendChild(createSpan(timerObj.redmineNr, 'textNumber'));
     			floatLeftDiv.appendChild(createSpan(timerObj.name, 'textName'));
 
     			// Erstelle die Span-Elemente für Total und Session-Zeiten
     			floatRightDiv.appendChild(createSpan(`Total: ${formartTime(timerObj.totalTime)}`, 'textTime'));
+				floatRightDiv.appendChild(document.createElement("br"));
     			floatRightDiv.appendChild(createSpan(`Session: ${formartTime(timerObj.partTime)}`, 'textTime'));				
 				
 				// Fügt beide Divs zum Haupt-Div hinzu
