@@ -448,7 +448,7 @@
 	<body>
 		<header> <!-- Sichtbarkeit der Tools ------------------------------>
 			<button id="timerBtn" class="greenBtn" onclick="changeVisibility('timer')">Project Timer</button>
-			<button id="timerBtn" class="redBtn">Project Notes</button>
+			<button id="noteBtn" class="greenBtn" onclick="changeVisibility('note')">Project Notes</button>
 			<button id="commitBtn" class="greenBtn" onclick="changeVisibility('commit')">Commit Message</button>
 			<button id="calendarBtn" class="greenBtn" onclick="changeVisibility('calendar')">Calendar Notes</button>
 			<button id="clipboardBtn" class="greenBtn" onclick="changeVisibility('clipboard')">Clipboard</button>
@@ -534,6 +534,15 @@
 		</div>	
 
 		<div id="mainColumn2">
+			<div id="note" class="container"> <!-- COLLECTION HTML ---------------------------->
+				<div class="tooltip helpText">?
+					<span class="tooltiptext" id="noteToolTipp">Project Note</span>
+				</div>
+				
+				<h3>Project Note</h3>
+			</div>
+			<hr>
+
 			<div id="collection" class="container"> <!-- COLLECTION HTML ---------------------------->
 				<div class="tooltip helpText">?
 					<span class="tooltiptext" id="collectionToolTipp">Tooltip text</span>
@@ -615,7 +624,8 @@
 				historyToolTipp: "Tooltip Text für Commit History",
 				calendarToolTipp: "Tooltip Text für Calendar Notes",
 				clipboardToolTipp: "Tooltip Text für Clipboard",
-				collectionToolTipp: "Tooltip Text für Collection List"
+				collectionToolTipp: "Tooltip Text für Collection List",
+				noteToolTipp: "Tooltip Text für Project Note"
 			};
 
 			function setToolTipText() {
