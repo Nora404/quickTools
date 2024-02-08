@@ -696,6 +696,19 @@
 				span.textContent = text;
 				return span;
 			}
+
+			function createRadioButton(name, text, isChecked, onChangeCallback) {
+				const label = document.createElement('label');
+				const radioButton = document.createElement('input');
+				radioButton.type = 'radio';
+				radioButton.name = name;
+				radioButton.checked = isChecked;
+				radioButton.addEventListener('change', onChangeCallback);
+
+				label.appendChild(radioButton);
+				label.appendChild(document.createTextNode(text));
+				return label;
+			}
 		</script>
 
 		<script id="timerJS">
@@ -789,19 +802,24 @@
 			*/
 			function renderTimerEntries(){
 				localStorage.setItem("timers", JSON.stringify(timerObjects));
-				const timersArray = Object.values(timerObjects);
 				const list = document.getElementById("projectList");
 				      list.innerHTML = "";
-								
-				timersArray.sort((a, b) => {
-					if (a.prio === b.prio) {
-						return a.createdAt - b.createdAt; 
-					}
-					return b.prio - a.prio;
-				});	
-				timersArray.forEach(timerObj => {
+						
+				let sortObjects = sortByPrio();	  
+
+				sortObjects.forEach(timerObj => {
 					list.appendChild(createTimerEntry(timerObj));
 				});
+			}
+
+			function sortByPrio() {
+				const timersArray = Object.values(timerObjects);
+				return timersArray.sort((a, b) => b.prio - a.prio);
+			}
+
+			function sortByDate() {
+				const timersArray = Object.values(timerObjects);
+				return timersArray.sort((a, b) => a.createdAt - b.createdAt);
 			}
 
 			/* Das Layout liegt in einem Listenelement und besteht aus einem Kontainer
