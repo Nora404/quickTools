@@ -441,6 +441,7 @@
 				updateTable();
 				setToolTipText();
 				renderTimerEntries();
+				renderSortTimerRadio();
 			});
 		</script> 
 	</head>
@@ -464,9 +465,8 @@
 				</div>
 				
 				<h3>Project Timer</h3>
-				<button id="addProjectBtn">Add Project</button>
-				<button id="sortPrioBtn">Sort by Prio</button>
-				<button id="sortDateBtn">Sort by Date</button><br>
+				<button id="addProjectBtn">Add Timer</button>
+				<span id="sortTimerRadio"></span><br>
 				
 				<ul id="projectList"></ul>
 			</div> 
@@ -800,12 +800,19 @@
 			*  Die Datei aus dem LocalStorage wird in ein Array verwandelt und sortiert
 			*  nach Priorität (absteigend) und Erstellungsdatum (aufsteigend)
 			*/
+			function renderSortTimerRadio(){
+				const span = document.getElementById("sortTimerRadio");
+
+				span.appendChild(createRadioButton('sort', 'Sort by Prio', false, sortByPrio));
+				span.appendChild(createRadioButton('sort', 'Sort by Date', true, sortByDate));
+			}
+
 			function renderTimerEntries(){
 				localStorage.setItem("timers", JSON.stringify(timerObjects));
 				const list = document.getElementById("projectList");
 				      list.innerHTML = "";
 						
-				let sortObjects = sortByPrio();	  
+				let sortObjects = sortByDate();	  
 
 				sortObjects.forEach(timerObj => {
 					list.appendChild(createTimerEntry(timerObj));
