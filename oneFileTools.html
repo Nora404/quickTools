@@ -177,7 +177,15 @@
 				display: flex;
 				margin-left: 40px;
 			}
-			
+			input[type="radio"] {
+				width: 20px;
+				height: 20px;
+				background-color: var(--background-medium-blue);
+				border: 1px solid var(--dark-gray);
+			}
+			/* input[type="radio"]:focus { */
+			/* CSS-Regeln hier */
+			/* } */
 		</style>  
 		<style id="tooltipsCSS"> 
 			.helpText {
@@ -442,7 +450,7 @@
 				updateTable();
 				setToolTipText();
 				renderTimerEntries();
-				renderSortTimerRadio();
+				renderSortTimerBtn();
 			});
 
 		// Die Seite merkt sich verschiedene Einstellungen zu den Tools
@@ -455,27 +463,30 @@
 		 *		calendarBtn = boolean
 		 *		clipboardBtn = boolean
 		 *		collectionBtn = boolean
-		 *		timerSort = 1 | 0 	// Date oder Prio
+		 *		timerSort = string
 		 *		commitHistorySelect = number
 		 *	}
 		 */
 			let store = {};
-			function loadStore(){
-				store = localStorage.getItem("toolStore");
-				if(!store){
+			function loadStore() {
+				const storedData = localStorage.getItem("toolStore");
+				store = storedData ? JSON.parse(storedData) : {};
+
+				if (!store || Object.keys(store).length === 0) {
 					store = {
-						timerBtn: true,
-						noteBtn: false,
-						commitBtn: true,
-						calendarBtn: true,
-						clipboardBtn: true,
-						collectionBtn: true,
-						timerSort: 1,
-						commitHistorySelect: 3,
-					}
-					localStorage.setItem("toolStore", store);
+					timerBtn: true,
+					noteBtn: false,
+					commitBtn: true,
+					calendarBtn: true,
+					clipboardBtn: true,
+					collectionBtn: true,
+					timerSort: "Date",
+					commitHistorySelect: 3,
+					};
+					localStorage.setItem("toolStore", JSON.stringify(store));
 				}
 			}
+
 		</script> 
 	</head>
 
@@ -503,7 +514,7 @@
 				
 				<h3>Project Timer</h3>
 				<button id="addProjectBtn">Add Timer</button>
-				<span id="sortTimerRadio"></span><br>
+				<span id="sortTimer">Sort by</span><br>
 				
 				<ul id="projectList"></ul>
 			</div> 
@@ -737,18 +748,6 @@
 				return span;
 			}
 
-			function createRadioButton(name, text, isChecked, onChangeCallback) {
-				const label = document.createElement('label');
-				const radioButton = document.createElement('input');
-				radioButton.type = 'radio';
-				radioButton.name = name;
-				radioButton.checked = isChecked;
-				radioButton.addEventListener('change', onChangeCallback);
-
-				label.appendChild(radioButton);
-				label.appendChild(document.createTextNode(text));
-				return label;
-			}
 		</script>
 
 		<script id="timerJS">
@@ -840,11 +839,16 @@
 			*  Die Datei aus dem LocalStorage wird in ein Array verwandelt und sortiert
 			*  nach Priorität (absteigend) und Erstellungsdatum (aufsteigend)
 			*/
-			function renderSortTimerRadio(){
-				const span = document.getElementById("sortTimerRadio");
+			function renderSortTimerBtn(){
+				console.log(store.timerSort);
+				const currentSortby = store.timerSort == "Date" ? "Date" : "Prio";
+				const newSortby = store.timerSort == "Date" ? "Prio" : "Date";
 
-				span.appendChild(createRadioButton('sort', 'Sort by Prio', false, sortByPrio));
-				span.appendChild(createRadioButton('sort', 'Sort by Date', true, sortByDate));
+				const span = document.getElementById("sortTimer");		
+				span.innerHTML = "Sort by";	
+				const sortBtn = createButton(currentSortby, "", ()=> setTimerSort(newSortby))
+
+				span.appendChild(sortBtn);
 			}
 
 			function renderTimerEntries(){
@@ -852,11 +856,18 @@
 				const list = document.getElementById("projectList");
 				      list.innerHTML = "";
 						
-				let sortObjects = sortByDate();	  
+				let sortObjects = store.timerSort == "Date" ? sortByDate() : sortByPrio();	  
 
 				sortObjects.forEach(timerObj => {
 					list.appendChild(createTimerEntry(timerObj));
 				});
+			}
+
+			function setTimerSort(value){
+				store.timerSort = value;
+				localStorage.setItem("toolStore", JSON.stringify(store));
+				renderTimerEntries();
+				renderSortTimerBtn();
 			}
 
 			function sortByPrio() {
