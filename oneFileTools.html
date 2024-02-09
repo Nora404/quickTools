@@ -435,14 +435,47 @@
 		</style>
 		
 		<script id="loadJS">  
-			window.addEventListener("load", () => {
+			 window.addEventListener("load", () => {
 				// Funktionen die beim Laden der Seite ausgeführt werden sollen
+				loadStore();
 				setCurrentWeekToInput();
 				updateTable();
 				setToolTipText();
 				renderTimerEntries();
 				renderSortTimerRadio();
 			});
+
+		// Die Seite merkt sich verschiedene Einstellungen zu den Tools
+		// Diese werden im LocalStorage gespeichert.
+
+		/* toolStore = {
+		 *		timerBtn = boolean
+		 *		noteBtn = boolean
+		 *		commitBtn = boolean
+		 *		calendarBtn = boolean
+		 *		clipboardBtn = boolean
+		 *		collectionBtn = boolean
+		 *		timerSort = 1 | 0 	// Date oder Prio
+		 *		commitHistorySelect = number
+		 *	}
+		 */
+			let store = {};
+			function loadStore(){
+				store = localStorage.getItem("toolStore");
+				if(!store){
+					store = {
+						timerBtn: true,
+						noteBtn: false,
+						commitBtn: true,
+						calendarBtn: true,
+						clipboardBtn: true,
+						collectionBtn: true,
+						timerSort: 1,
+						commitHistorySelect: 3,
+					}
+					localStorage.setItem("toolStore", store);
+				}
+			}
 		</script> 
 	</head>
 
