@@ -174,7 +174,7 @@
 			}
 			#mainColumn2 {
 				flex: 0 1 500px;
-				display: flex;
+				/* display: flex;   */
 				margin-left: 40px;
 			}
 			input[type="radio"] {
@@ -497,11 +497,12 @@
 	<body>
 		<header> <!-- Sichtbarkeit der Tools ------------------------------>
 			<button id="timerBtn" class="greenBtn" onclick="changeVisibility('timer')">Project Timer</button>
-			<button id="noteBtn" class="greenBtn" onclick="changeVisibility('note')">Project Notes</button>
 			<button id="commitBtn" class="greenBtn" onclick="changeVisibility('commit')">Commit Message</button>
 			<button id="calendarBtn" class="greenBtn" onclick="changeVisibility('calendar')">Calendar Notes</button>
-			<button id="clipboardBtn" class="greenBtn" onclick="changeVisibility('clipboard')">Clipboard</button>
+			
+			<button id="noteBtn" class="greenBtn" onclick="changeVisibility('note')">Project Notes</button>
 			<button id="collectionBtn" class="greenBtn" onclick="changeVisibility('collection')">Collection List</button>
+			<button id="clipboardBtn" class="greenBtn" onclick="changeVisibility('clipboard')">Clipboard</button>
 		</header>
 	
 	
@@ -570,6 +571,27 @@
         			<tr id="tb"></tr>
 				 </table>
 			</div> 
+		</div>	
+
+		<div id="mainColumn2">
+			<div id="note" class="container"> <!-- COLLECTION HTML ---------------------------->
+				<div class="tooltip helpText">?
+					<span class="tooltiptext" id="noteToolTipp">Project Note</span>
+				</div>
+				
+				<h3>Project Note</h3>
+				<button id="addNote">Add Note</button>
+			</div>
+			<hr>
+
+			<div id="collection" class="container"> <!-- COLLECTION HTML ---------------------------->
+				<div class="tooltip helpText">?
+					<span class="tooltiptext" id="collectionToolTipp">Tooltip text</span>
+				</div>
+				
+				<h3>Collection List</h3>
+				<button id="addList">Add List</button>
+			</div>
 			<hr>
 
 			<div id="clipboard" class="container"> <!-- CLIPBOARD HTML ------------------------>
@@ -580,25 +602,6 @@
 				 <h3>Clipboard</h3>
 				 <button id="addSnippet">Add Snippet</button>
 				 <ul id="snippetList"></ul>
-			</div>
-		</div>	
-
-		<div id="mainColumn2">
-			<div id="note" class="container"> <!-- COLLECTION HTML ---------------------------->
-				<div class="tooltip helpText">?
-					<span class="tooltiptext" id="noteToolTipp">Project Note</span>
-				</div>
-				
-				<h3>Project Note</h3>
-			</div>
-			<hr>
-
-			<div id="collection" class="container"> <!-- COLLECTION HTML ---------------------------->
-				<div class="tooltip helpText">?
-					<span class="tooltiptext" id="collectionToolTipp">Tooltip text</span>
-				</div>
-				
-				<h3>Collection List</h3>
 			</div>
 		</div>
 		</main> 
