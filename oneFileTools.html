@@ -519,7 +519,7 @@
 				
 				<ul id="projectList"></ul>
 			</div> 
-			<hr>
+			<hr id="timerHr">
 
 			<div id="commit"> <!-- COMMIT HTML ---------------------------->
 				<div id="commitEditor" class="container">
@@ -557,7 +557,7 @@
 					  <ul id="historyList"></ul>
 				</div>
 			</div> 
-			<hr>
+			<hr id="commitHr">
 
 			<div id="calendar" class="container"> <!-- CALENDAR HTML ------------------------>
 				<div class="tooltip helpText">?
@@ -582,7 +582,7 @@
 				<h3>Project Note</h3>
 				<button id="addNote">Add Note</button>
 			</div>
-			<hr>
+			<hr id="noteHr">
 
 			<div id="collection" class="container"> <!-- COLLECTION HTML ---------------------------->
 				<div class="tooltip helpText">?
@@ -592,7 +592,7 @@
 				<h3>Collection List</h3>
 				<button id="addList">Add List</button>
 			</div>
-			<hr>
+			<hr id="collectionHr">
 
 			<div id="clipboard" class="container"> <!-- CLIPBOARD HTML ------------------------>
 				<div class="tooltip helpText">?
@@ -614,15 +614,22 @@
 			function changeVisibility(container){
 				const element = document.getElementById(container);
 				const elementBtn = document.getElementById(container + "Btn");
+				const elementHr = document.getElementById(container + "Hr");
 
 				if(element.classList.contains("hidden")) {
 					element.classList.remove("hidden");
 					elementBtn.classList.add("greenBtn");
 					elementBtn.classList.remove("redBtn");
+					if(elementHr){
+						elementHr.classList.remove("hidden");
+					}
 				} else {
 					element.classList.add("hidden");
 					elementBtn.classList.add("redBtn");
 					elementBtn.classList.remove("greenBtn");
+					if(elementHr){
+						elementHr.classList.add("hidden");
+					}
 				}
 				changeMainWidth();
 			}
