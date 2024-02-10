@@ -1,3 +1,4 @@
+<!doctype html>
 <!-- 
 	VORWORT:
 	In dieser HTML-Seite werden verschiedene Tools angeboten, welche im Arbeitsalltag helfen möchten.
@@ -151,6 +152,7 @@
 			.floatRight {
 			  float: right;
 			  margin-right: 10px;
+			  text-align: right;
 			}
 
 			input,
@@ -243,6 +245,9 @@
 				margin: 5px 1px 5px 1px;
 				height: 25px;
 			}
+			#timer li{
+				margin-bottom: 15px;
+			}
 			#projectList {
 				list-style-type: none;
 				padding: 0;
@@ -250,28 +255,24 @@
 			.prio4{
 				border: 2px solid var(--red);
 				background-color: var(--prio4);
-				margin-bottom: 10px;
 				padding: 5px;
 				overflow: auto;
 			}
 			.prio3{
 				border: 2px solid var(--purple);
 				background-color: var(--prio3);
-				margin-bottom: 10px;
 				padding: 5px;
 				overflow: auto;
 			}
 			.prio2{
 				border: 2px solid var(--background-dark-blue);
 				background-color: var(--prio2);
-				margin-bottom: 10px;
 				padding: 5px;
 				overflow: auto;
 			}
 			.prio1{
 				border: 2px solid var(--medium-gray);
 				background-color: var(--prio1);
-				margin-bottom: 10px;
 				padding: 5px;
 				overflow: auto;
 			}
@@ -282,15 +283,13 @@
 			.textTime{
 				display: inline-block;
 				box-sizing: border-box;
-				width: 100%;
-				text-align: left;
+				/* width: 100%; */
 				border: 1px dotted var(--dark-gray);
 				background-color: rgba(255, 255, 255, 0.75);
 				padding: 1px 6px 0 6px;
 				height: 27px;
-				margin: 2px 4px 4px 10px;
+				margin: 2px 4px 4px 5px;
 				font-size: 1.2em;
-				text-align: right;
 			}
 			.textName, .textNumber{
 				display: inline-block;
@@ -313,9 +312,14 @@
 			}
 
 			.pulsing-border {
-				background-color: white;
+				outline: 2px solid var(--medium-gray);
 				animation: pulse 2s infinite; /* Animation anwenden */
-				box-sizing: border-box;
+			} 
+			.pulsing-border .prio1,
+			.pulsing-border .prio2,
+			.pulsing-border .prio3,
+			.pulsing-border .prio4{
+				background-color: #fff;
 			}
 
 		</style>  
@@ -758,6 +762,32 @@
 				return span;
 			}
 
+			function formartTime(seconds){
+				if (isNaN(seconds)) return "00:00:00";
+
+				const timeParts = splitSecondsIntoHMS(seconds);
+				const result = `
+					${timeParts[0].toString().padStart(2, "0")}:${timeParts[1].toString().padStart(2, "0")}:${timeParts[2].toString().padStart(2, "0")}`;
+
+				return result;
+			}
+
+			function secondsToHoursDecimal(seconds){
+				if (isNaN(seconds)) return "00.0";
+
+				const timeParts = splitSecondsIntoHMS(seconds);
+				const result = (timeParts[0] + timeParts[1] / 60 + timeParts[2] / 3600).toFixed(1);
+				return result.padStart(4, '0') + "h";
+			}
+
+			function splitSecondsIntoHMS(seconds){
+				const hrs = Math.floor(seconds / 3600);
+				const mins = Math.floor((seconds % 3600) / 60);
+				const secs = seconds % 60;
+
+				return [hrs, mins, secs];
+			}
+
 		</script>
 
 		<script id="timerJS">
@@ -804,7 +834,7 @@
 				
 				timerActiv = projectId;
 				timerInterval = setInterval(()=>{
-					timerObjects[projectId].totalTimer++;
+					timerObjects[projectId].totalTime++;
 					timerObjects[projectId].sessionTime++;
 					renderTimerEntries();
 				}, 1000);
@@ -829,9 +859,6 @@
 				const entry = document.getElementById(obj.id);
 				const nr = entry.querySelector('.textNumber').innerText;
 				const name = entry.querySelector('.textName').innerText;
-
-				console.log(nr);
-				console.log(name);
 			}
 
 			function changePrio(projectId){
@@ -847,20 +874,6 @@
 			function deleteProject(projectId){
 				delete timerObjects[projectId];
 				renderTimerEntries();
-			}
-
-
-			function formartTime(seconds){
-				if (isNaN(seconds)) return "00:00:00";
-
-				const hrs = Math.floor(seconds / 3600);
-				const mins = Math.floor((seconds % 3600) / 60);
-				const secs = seconds % 60;
-				const bruch = (hrs + mins / 60 + secs / 3600).toFixed(1);
-
-				return `${hrs.toString().padStart(2, "0")}:
-				${mins.toString().padStart(2, "0")}:
-				${secs.toString().padStart(2, "0")} = ${bruch}h`;
 			}
 
 			/* Das Timerlayout muss für jedes Element generiert werden
@@ -920,6 +933,9 @@
 				
 				const projectDiv = document.createElement('div');
 				projectDiv.className = `prio${timerObj.prio}`; 
+				if(timerObj.id == timerActiv) {
+					li.classList = 'pulsing-border';
+				}
 
 				const floatLeftDiv = document.createElement('div');
 				floatLeftDiv.className = 'floatLeft';
@@ -940,9 +956,18 @@
     			floatLeftDiv.appendChild(createSpan(timerObj.name, 'textName'));
 
     			// Erstelle die Span-Elemente für Total und Session-Zeiten
-    			floatRightDiv.appendChild(createSpan(`Total: ${formartTime(timerObj.totalTime)}`, 'textTime'));
+				const totalTime = formartTime(timerObj.totalTime);
+				const totalDec = secondsToHoursDecimal(timerObj.totalTime);
+				const sessionTime = formartTime(timerObj.sessionTime);
+				const sessionDec = secondsToHoursDecimal(timerObj.sessionTime);
+
+    			floatRightDiv.appendChild(createSpan(`Total:`, ''));
+				floatRightDiv.appendChild(createSpan(totalTime, 'textTime'));
+				floatRightDiv.appendChild(createSpan(totalDec, 'textTime'));
 				floatRightDiv.appendChild(document.createElement("br"));
-    			floatRightDiv.appendChild(createSpan(`Session: ${formartTime(timerObj.partTime)}`, 'textTime'));				
+    			floatRightDiv.appendChild(createSpan(`Session:`, ''));	
+				floatRightDiv.appendChild(createSpan(sessionTime, 'textTime'));
+				floatRightDiv.appendChild(createSpan(sessionDec, 'textTime'));			
 				
 				// Fügt beide Divs zum Haupt-Div hinzu
 				projectDiv.appendChild(floatLeftDiv);
