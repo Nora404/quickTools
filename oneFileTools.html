@@ -763,6 +763,7 @@
 		<script id="timerJS">
 			let timerObjects = JSON.parse(localStorage.getItem("timers")) || {};
 			let timerInterval = null;
+			let timerActiv = null;
 
 			/** Da es in Vanilla keine Interfaces gibt, beschreibe ich hier das timerObjekt:
 			 *  {
@@ -798,11 +799,30 @@
 					addProject();
 				  })
 
-			function startTimer(projectId){}
+			function startTimer(projectId){
+				if(timerInterval) clearInterval(timerInterval);
+				
+				timerActiv = projectId;
+				timerInterval = setInterval(()=>{
+					timerObjects[projectId].totalTimer++;
+					timerObjects[projectId].sessionTime++;
+					renderTimerEntries();
+				}, 1000);
 
-			function stopTimer(projectId){}
+				renderTimerEntries();
+			}
 
-			function resetTimer(projectId){}
+			function stopTimer(projectId){
+				clearInterval(timerInterval);
+				timerInterval = null;
+				timerActiv = null;
+				renderTimerEntries();
+			}
+
+			function resetTimer(projectId){
+				timerObjects[projectId].sessionTime = 0;
+				renderTimerEntries();
+			}
 
 			function editProject(projectId){
 				const obj = timerObjects[projectId];
