@@ -755,6 +755,7 @@
 					.replace(/'/g, "&#039;");
 			}
 
+			// Erstellt ein <span> Tag mit einer css Klasse und einem Text-Inhalt
 			function createSpan(text, className) {
 				const span = document.createElement('span');
 				span.className = className;
@@ -762,6 +763,7 @@
 				return span;
 			}
 
+			// Die Sekunden werden in "00:00:00" (hh:mm:ss) zurück gegeben
 			function formartTime(seconds){
 				if (isNaN(seconds)) return "00:00:00";
 
@@ -772,6 +774,8 @@
 				return result;
 			}
 
+			// Sekunden werden in 00.0h zurück gegeben
+			// Es ist ein Bruch, 90min wären 01.5h 
 			function secondsToHoursDecimal(seconds){
 				if (isNaN(seconds)) return "00.0";
 
@@ -780,6 +784,8 @@
 				return result.padStart(4, '0') + "h";
 			}
 
+			// Zerlegt Sekunden in ein Array mit drei Werten
+			// [0] sind Stunden [1] sind Minuten [2] sind Sekunden
 			function splitSecondsIntoHMS(seconds){
 				const hrs = Math.floor(seconds / 3600);
 				const mins = Math.floor((seconds % 3600) / 60);
@@ -787,6 +793,63 @@
 
 				return [hrs, mins, secs];
 			}
+
+			// Das elementId wird gegen changeTo ausgetauscht
+			function toggleElement(elementId, makeEditable, editableElementType = 'textarea') {
+				const element = document.getElementById(elementId);
+				if (!element) return;
+
+				const currentValue = 
+					element.tagName.toLowerCase() === 'input' || 
+					element.tagName.toLowerCase() === 'textarea' ? 
+					element.value : element.textContent;
+				
+				let newElement;
+
+				if (makeEditable) {
+					newElement = createElementWithValue(editableElementType, currentValue);
+				} else {
+					const tagName = element.tagName.toLowerCase();
+					newElement = createElementWithValue(tagName, currentValue);
+					console.log(newElement);
+				}
+
+				// Klassen und ID vom Original übernehmen
+				newElement.className = element.className;
+				newElement.id = elementId;
+
+				// Event-Listener hinzufügen
+				addToggleEvent(newElement, elementId, makeEditable, editableElementType);
+
+				// Element ersetzen
+				element.parentNode.replaceChild(newElement, element);
+			}
+
+			function createElementWithValue(tag, value, type = "text") {
+				const element = document.createElement(tag);
+				if (tag === 'input' || tag === 'textarea') {
+					element.value = value; 
+					element.setAttribute('type', type);
+				} else {
+					element.textContent = value; 
+				}
+				return element;
+			}
+
+			function addToggleEvent(element, elementId, isEditable, editableElementType) {
+				if (isEditable) {
+					element.addEventListener('keyup', function(event) {
+						if (event.key === "Enter") {
+							toggleElement(elementId, false, editableElementType);
+						}
+					});
+				} else {
+					element.addEventListener('dblclick', function() {
+						toggleElement(elementId, true, editableElementType);
+					});
+				}
+			}
+
 
 		</script>
 
@@ -952,8 +1015,15 @@
 				floatLeftDiv.appendChild(document.createElement("br"));
 				
 				// Erstelle die Span-Elemente für die Redmine-Nummer und den Projektnamen
-				floatLeftDiv.appendChild(createSpan(timerObj.redmineNr, 'textNumber'));
-    			floatLeftDiv.appendChild(createSpan(timerObj.name, 'textName'));
+				const redmineNrSpan = createSpan(timerObj.redmineNr, 'textNumber');
+					  redmineNrSpan.id = "redmineNr" + timerObj.id;
+					  redmineNrSpan.addEventListener("dblclick", () => toggleElement("redmineNr" + timerObj.id, true, "input"));
+
+				const textNameSpan = createSpan(timerObj.name, 'textName');
+					  textNameSpan.id = "textNameNr" + timerObj.id;
+					  textNameSpan.addEventListener("dblclick", () => toggleElement("textNameNr" + timerObj.id, true, "input"));
+				floatLeftDiv.appendChild(redmineNrSpan);
+    			floatLeftDiv.appendChild(textNameSpan);
 
     			// Erstelle die Span-Elemente für Total und Session-Zeiten
 				const totalTime = formartTime(timerObj.totalTime);
