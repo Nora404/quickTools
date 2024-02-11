@@ -795,35 +795,41 @@
 			}
 
 			// Das elementId wird gegen changeTo ausgetauscht
-			function toggleElement(elementId, changeTo, inputType = '') {
-				const element = document.getElementById(elementId);
+			// const config = {
+			// 		objId: key für den LocalStorage
+			// 		elementId: html-Element
+			// 		changeTo: neues html-Tag
+			// 		changeAttr: attr des geändert werden soll
+			// 		inputType: fals Input sein type
+			// 		callback: funktion zum speichern
+			// 	}
+			
+			/*  Funktionsweise von toggelElement:
+			 *  Eine Editfunktion muss die oben genannten Daten sammeln und damit toggleElement aufrufen
+			 *  Diese beginnt aus dem config-Daten die notwendigen Variabeln zu extrahieren
+			 *  Dazu gehört der Tag-Name, sein Inhalt und das neue HTML-Element
+			 *  Dem neuen Element wird gleiche id wie dem vorherigen Tag gegeben um es beim zurück
+			 *  tauschen wiederzufinden. Dafür braucht das Element noch den passenden EventListener
+			 *  Der ruft das toggelElement erneut auf, braucht daher die komplette neue config
+			 *  Das Event speichert auch den neuen Wert, sollte Enter gedrückt werden 
+			 *  Genaugenommen ruft es den Callback auf mit der objId, dessen geändertem Attribut und Wert
+			 */ 
+			function toggleElement(config) {
+				const element = document.getElementById(config.elementId);
 				if (!element) return;
 
 				const currentTagName = element.tagName.toLowerCase();
-				const currentValue = 
-					element.tagName.toLowerCase() === 'input' || 
-					element.tagName.toLowerCase() === 'textarea' ? 
-					element.value : element.textContent;
-				
-				const newElement = createElementWithValue(changeTo, currentValue, inputType);
+				const isEditmode =  currentTagName === 'input' ||  currentTagName === 'textarea' ? true : false;
+				const currentValue = isEditmode ? element.value : element.textContent;
+				const newElement = createElementWithValue(config.changeTo, currentValue, config.inputType);
 
-				// if (changeTo === 'input' || changeTo === 'textarea') {
-				// 	newElement = createElementWithValue(changeTo, currentValue, inputType);
-				// } else {
-				// 	const tagName = element.tagName.toLowerCase();
-				// 	newElement = createElementWithValue(tagName, currentValue);
-				// 	console.log(newElement);
-				// }
-
-				// Klassen und ID vom Original übernehmen
 				newElement.className = element.className;
-				newElement.id = elementId;
+				newElement.id = config.elementId;
 
-				// Event-Listener hinzufügen
-				addToggleEvent(newElement, elementId, currentTagName, inputType);
+				addToggleEvent(newElement, currentValue, {...config, changeTo: currentTagName});
 
-				// Element ersetzen
 				element.parentNode.replaceChild(newElement, element);
+				newElement.focus();
 			}
 
 			function createElementWithValue(tag, value, inputType) {
@@ -837,17 +843,25 @@
 				return element;
 			}
 
-			function addToggleEvent(element, elementId, changeTo, inputType) {
+			function addToggleEvent(element, value, config) {
 				const tag = element.tagName.toLowerCase();
+				
 				if (tag === 'input' || tag === 'textarea') {
+					
 					element.addEventListener('keyup', function(event) {
 						if (event.key === "Enter") {
-							toggleElement(elementId, changeTo, inputType);
+							toggleElement(config);
+							if (typeof config.callback === 'function' && element.value) {
+								config.callback(config.objId, config.changeAttr, element.value);
+							}
 						}
+					});
+					element.addEventListener('blur', () =>{
+							toggleElement(config)
 					});
 				} else {
 					element.addEventListener('dblclick', function() {
-						toggleElement(elementId, changeTo, inputType);
+						toggleElement(config);
 					});
 				}
 			}
@@ -919,11 +933,19 @@
 				renderTimerEntries();
 			}
 
-			function editProject(projectId){
-				const obj = timerObjects[projectId];
-				const entry = document.getElementById(obj.id);
-				const nr = entry.querySelector('.textNumber').innerText;
-				const name = entry.querySelector('.textName').innerText;
+			function editProject(attr, objId){
+				const obj = timerObjects[objId];
+				const elementId = attr + objId;
+				const config = {
+					objId: objId,
+					elementId: elementId,
+					changeTo: "input",
+					changeAttr: attr,
+					inputType: "text",
+					callback: saveTimerObj,
+				}
+				
+				toggleElement(config);
 			}
 
 			function changePrio(projectId){
@@ -931,13 +953,20 @@
 				const entry = document.getElementById(obj.id);
 				const prio = entry.querySelector('select');
 
-				obj.prio = prio.value;
-				timerObjects[projectId] = obj;
-				renderTimerEntries();
+				saveTimerObj(projectId, "prio", prio.value);
 			}
 
 			function deleteProject(projectId){
 				delete timerObjects[projectId];
+				localStorage.setItem("timers", JSON.stringify(timerObjects));
+				renderTimerEntries();
+			}
+
+			function saveTimerObj(timerId, attr, value){
+				const obj = timerObjects[timerId];
+				obj[attr] = value;
+				timerObjects[timerId] = obj;
+				localStorage.setItem("timers", JSON.stringify(timerObjects));
 				renderTimerEntries();
 			}
 
@@ -959,7 +988,6 @@
 			}
 
 			function renderTimerEntries(){
-				localStorage.setItem("timers", JSON.stringify(timerObjects));
 				const list = document.getElementById("projectList");
 				      list.innerHTML = "";
 						
@@ -1011,7 +1039,6 @@
 				floatLeftDiv.appendChild(createButton('Go', 'greenBtn timerBtn', ()=> startTimer(timerObj.id)));
 				floatLeftDiv.appendChild(createButton('Stop', 'timerBtn', () => stopTimer(timerObj.id)));
 				floatLeftDiv.appendChild(createButton('Reset', 'timerBtn', () => resetTimer(timerObj.id)));
-				floatLeftDiv.appendChild(createButton('Edit', 'timerBtn', () => editProject(timerObj.id)));
 				floatLeftDiv.appendChild(createSelect([1,2,3,4],timerObj.prio, () => changePrio(timerObj.id)));
 				floatLeftDiv.appendChild(createButton('Delete', 'redBtn timerBtn', () => deleteProject(timerObj.id)));
 				floatLeftDiv.appendChild(document.createElement("br"));
@@ -1019,11 +1046,11 @@
 				// Erstelle die Span-Elemente für die Redmine-Nummer und den Projektnamen
 				const redmineNrSpan = createSpan(timerObj.redmineNr, 'textNumber');
 					  redmineNrSpan.id = "redmineNr" + timerObj.id;
-					  redmineNrSpan.addEventListener("dblclick", () => toggleElement("redmineNr" + timerObj.id, "input", "text"));
+					  redmineNrSpan.addEventListener("dblclick", () => editProject("redmineNr", timerObj.id));
 
 				const textNameSpan = createSpan(timerObj.name, 'textName');
-					  textNameSpan.id = "textNameNr" + timerObj.id;
-					  textNameSpan.addEventListener("dblclick", () => toggleElement("textNameNr" + timerObj.id, "input", "text"));
+					  textNameSpan.id = "name" + timerObj.id;
+					  textNameSpan.addEventListener("dblclick", () => editProject("name", timerObj.id));
 				floatLeftDiv.appendChild(redmineNrSpan);
     			floatLeftDiv.appendChild(textNameSpan);
 
