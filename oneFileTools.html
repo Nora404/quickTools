@@ -795,57 +795,59 @@
 			}
 
 			// Das elementId wird gegen changeTo ausgetauscht
-			function toggleElement(elementId, makeEditable, editableElementType = 'textarea') {
+			function toggleElement(elementId, changeTo, inputType = '') {
 				const element = document.getElementById(elementId);
 				if (!element) return;
 
+				const currentTagName = element.tagName.toLowerCase();
 				const currentValue = 
 					element.tagName.toLowerCase() === 'input' || 
 					element.tagName.toLowerCase() === 'textarea' ? 
 					element.value : element.textContent;
 				
-				let newElement;
+				const newElement = createElementWithValue(changeTo, currentValue, inputType);
 
-				if (makeEditable) {
-					newElement = createElementWithValue(editableElementType, currentValue);
-				} else {
-					const tagName = element.tagName.toLowerCase();
-					newElement = createElementWithValue(tagName, currentValue);
-					console.log(newElement);
-				}
+				// if (changeTo === 'input' || changeTo === 'textarea') {
+				// 	newElement = createElementWithValue(changeTo, currentValue, inputType);
+				// } else {
+				// 	const tagName = element.tagName.toLowerCase();
+				// 	newElement = createElementWithValue(tagName, currentValue);
+				// 	console.log(newElement);
+				// }
 
 				// Klassen und ID vom Original übernehmen
 				newElement.className = element.className;
 				newElement.id = elementId;
 
 				// Event-Listener hinzufügen
-				addToggleEvent(newElement, elementId, makeEditable, editableElementType);
+				addToggleEvent(newElement, elementId, currentTagName, inputType);
 
 				// Element ersetzen
 				element.parentNode.replaceChild(newElement, element);
 			}
 
-			function createElementWithValue(tag, value, type = "text") {
+			function createElementWithValue(tag, value, inputType) {
 				const element = document.createElement(tag);
 				if (tag === 'input' || tag === 'textarea') {
 					element.value = value; 
-					element.setAttribute('type', type);
+					element.setAttribute('type', inputType);
 				} else {
 					element.textContent = value; 
 				}
 				return element;
 			}
 
-			function addToggleEvent(element, elementId, isEditable, editableElementType) {
-				if (isEditable) {
+			function addToggleEvent(element, elementId, changeTo, inputType) {
+				const tag = element.tagName.toLowerCase();
+				if (tag === 'input' || tag === 'textarea') {
 					element.addEventListener('keyup', function(event) {
 						if (event.key === "Enter") {
-							toggleElement(elementId, false, editableElementType);
+							toggleElement(elementId, changeTo, inputType);
 						}
 					});
 				} else {
 					element.addEventListener('dblclick', function() {
-						toggleElement(elementId, true, editableElementType);
+						toggleElement(elementId, changeTo, inputType);
 					});
 				}
 			}
@@ -1017,11 +1019,11 @@
 				// Erstelle die Span-Elemente für die Redmine-Nummer und den Projektnamen
 				const redmineNrSpan = createSpan(timerObj.redmineNr, 'textNumber');
 					  redmineNrSpan.id = "redmineNr" + timerObj.id;
-					  redmineNrSpan.addEventListener("dblclick", () => toggleElement("redmineNr" + timerObj.id, true, "input"));
+					  redmineNrSpan.addEventListener("dblclick", () => toggleElement("redmineNr" + timerObj.id, "input", "text"));
 
 				const textNameSpan = createSpan(timerObj.name, 'textName');
 					  textNameSpan.id = "textNameNr" + timerObj.id;
-					  textNameSpan.addEventListener("dblclick", () => toggleElement("textNameNr" + timerObj.id, true, "input"));
+					  textNameSpan.addEventListener("dblclick", () => toggleElement("textNameNr" + timerObj.id, "input", "text"));
 				floatLeftDiv.appendChild(redmineNrSpan);
     			floatLeftDiv.appendChild(textNameSpan);
 
