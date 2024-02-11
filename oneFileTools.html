@@ -902,7 +902,7 @@
 				const id = generateId();
 				const newTimerObj = {
 					id: id,
-					name: "ProjectName",
+					name: "ProjectName (Doubleclick to edit Text)",
 					redmineNr: "RedmineNr",
 					createdAt: Date.now(),
 					totalTime: 0,
@@ -910,6 +910,7 @@
 					prio: 2,
 				};
 				timerObjects[id] = newTimerObj;
+				localStorage.setItem("timers", JSON.stringify(timerObjects));
 				renderTimerEntries();
 			}
 			const addProjectBtn = document.getElementById("addProjectBtn");
