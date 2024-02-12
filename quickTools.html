@@ -213,15 +213,15 @@
 			/* Tooltip text */
 			.tooltip .tooltiptext {
 			  visibility: hidden;
-			  min-width: 350px;
+			  min-width: 500px;
 			  background-color: var(--text-blue-medium);
 			  border: 1px solid var(--text-blue-dark);
 			  outline: 3px solid #fff;
 			  color: var(--text-blue-light);
-			  text-align: center;
-			  padding: 5px 0;
+			  text-align: left;
+			  padding: 8px;
 			  border-radius: 6px;
-			 
+			  font-size: 0.9em;
 			  position: absolute;
 			  z-index: 1;
 			}
@@ -704,7 +704,7 @@
 
 		<script id="tooltipsJS">
 			const tooltips = {
-				timerToolTipp: "Tooltip Text für Project Timer",
+				timerToolTipp: "<b>Project Timer</b></br><br>Dieses Tool bietet für jeden Eintrag zwei Stoppuhren: Eine misst die gesamte Zeit, während die andere sich zurücksetzen lässt. Jeder Timer kann mit einem Namen versehen werden – sei es ein beliebiger Text, eine Ticketnummer oder eine spezifische Aufgabe.<ul><li>Mit [Go] starten beide Timer gleichzeitig, mit [Stop] werden beide angehalten.</li><li>Über das Dropdown-Menü lässt sich eine Priorität für jeden Eintrag festlegen, wobei 1 die niedrigste und 4 die höchste Priorität bedeutet.</li><li>Die Einträge können nach Erstellungsdatum oder Priorität sortiert werden.</li><li>Um den Text eines Eintrags zu ändern, genügt ein Doppelklick darauf. Es erscheint ein Eingabefeld, in dem der neue Text eingegeben werden kann. Mit der Enter-Taste wird der neue Inhalt gespeichert. Verliert das Eingabefeld den Fokus, ohne dass Enter gedrückt wurde, wird die Bearbeitung abgebrochen.</li><li>Mit [Delete] wird der Eintrag gelöscht.</li></ul>",
 				messageToolTipp: "Tooltip Text für Commit Message",
 				historyToolTipp: "Tooltip Text für Commit History",
 				calendarToolTipp: "Tooltip Text für Calendar Notes",
@@ -717,7 +717,7 @@
 				for (const id in tooltips) {
 					const element = document.getElementById(id);
 					if (element) { 
-						element.textContent = tooltips[id]; 
+						element.innerHTML = tooltips[id]; 
 					}
 				}
 			}
