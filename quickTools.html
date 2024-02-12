@@ -68,37 +68,38 @@
 		<title>quickTools</title>
 		<style id="colors"> 
 			:root {
-			--ground: rgb(255, 255, 255);					/* allgemeine Hintergundfarbe */
-			--background-3: rgb(155, 169, 197);			/* Hintergundfarbe von Buttons */
-			--background-2: rgb(189, 201, 216);		/* Hintergundfarbe von Inputs */
-			--background-1: rgb(243, 248, 252);		/* Hintergrundfarbe von Modulen */
+			--ground: rgb(255, 255, 255);			/* Allgemeine Hintergundfarbe */
+			--input: rgb(241, 241, 241);			/* Hintergrund der Inputfelder */
+			--background-3: rgb(155, 169, 197);	/* Hintergundfarbe von Buttons */
+			--background-2: rgb(189, 201, 216);	/* Hintergundfarbe als Akzent */
+			--background-1: rgb(243, 248, 252);	/* Hintergrundfarbe von Modulen */
 
-			--text-3: rgb(29, 39, 51);					/* Normale Textfarbe */
-			--text-2: rgb(92, 94, 110);				/* Textfarbe von Überschriften */
-			--text-1: rgb(244, 244, 245);				/* Textfarbe von Tooltipps */
+			--text-3: rgb(29, 39, 51);				/* Normale Textfarbe */
+			--text-2: rgb(92, 94, 110);			/* Textfarbe von Überschriften */
+			--text-1: rgb(244, 244, 245);			/* Textfarbe von Tooltipps */
 
-			--gray-3: rgb(172, 172, 172);				/* Ränder von Formularen */
-			--gray-2: rgb(215, 216, 216);				/* Inaktiv oder nicht Interaktiv */
-			--gray-1: rgb(215, 216, 216);
-			--input: rgb(241, 241, 241);
+			--gray-3: rgb(172, 172, 172);			/* Ränder von Formularen */
+			--gray-2: rgb(215, 216, 216);			/* Inaktiv oder nicht Interaktiv */
+			--gray-1: rgb(215, 216, 216);			/* Noch kein Einsatz */
 
-			--green: rgb(175, 196, 145);					/* Bestätigen oder Starten */
-			--red: rgb(221, 151, 151);						/* Warnung, Löschen oder Abbrechen */
-			--purple: rgb(187, 155, 197);					/* Sonderfarbe */
+			--green: rgb(175, 196, 145);			/* Bestätigen oder Starten */
+			--red: rgb(221, 151, 151);				/* Warnung, Löschen oder Abbrechen */
+			--purple: rgb(187, 155, 197);			/* Sonderfarbe z.B bei der Prioanzeige */
 
-			--shadow: rgba(0, 0, 0, 0);
-			--shadow-glas: rgba(0, 0, 0, 0.2);
-			--glas: rgba(255, 255, 255, 0.75);
+			--shadow: rgba(0, 0, 0, 0);			/* Schatten z.B bei der Animation */
+			--shadow-glas: rgba(0, 0, 0, 0.2);		/* Durchsichtiger Schatten */
+			--glas: rgba(255, 255, 255, 0.75);		/* Durchsichtiger Hintergund wie Glas */
 
-			--prio1: rgba(215, 216, 216, 0.15);
-			--prio2: rgba(155, 169, 197, 0.15);
-			--prio3: rgba(187, 155, 197, 0.15);
-			--prio4: rgba(221, 151, 151, 0.15);
+			--prio1: rgba(215, 216, 216, 0.15);	/* Hintergrund der geringsten Prio */
+			--prio2: rgba(155, 169, 197, 0.15);	/* Hintergrund der standard Prio */
+			--prio3: rgba(187, 155, 197, 0.15);	/* Hintergrund der höheren Prio */
+			--prio4: rgba(221, 151, 151, 0.15);	/* Hintergrund der höchsten Prio */
 			}
 		</style>
 		<style id="darkMode"> 
 			.dark-mode {
 			--ground: rgb(19, 19, 19);				
+			--input: rgb(68, 68, 68);
 			--background-3: rgb(103, 112, 108);	
 			--background-2: rgb(38, 59, 65);		
 			--background-1: rgb(30, 33, 34);			
@@ -110,7 +111,6 @@
 			--gray-3: rgb(110, 110, 110);	
 			--gray-2: rgb(32, 32, 32);			
 			--gray-1: rgb(32, 32, 32);
-			--input: rgb(68, 68, 68);
 
 			--green: rgb(54, 73, 28);					
 			--red: rgb(88, 43, 43);						
@@ -119,7 +119,7 @@
 			--shadow: rgba(255, 255, 255, 0);
 			--shadow-glas: rgba(255, 255, 255, 0.3);
 			--glas: rgba(0, 0, 0, 0.25);
-			
+
 			--prio1: rgb(44, 44, 44);
 			--prio2: rgb(31, 43, 43);	
 			--prio3: rgb(38, 32, 39);		
