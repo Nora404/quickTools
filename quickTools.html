@@ -45,8 +45,7 @@
 	PROJEKT TIMER
 	Das Tool soll helfen die Zeit für eine bestimmte Aufgabe/Projekt im Blick zu behalten. 
 	Dabei wird die gesamte Zeit festgehalten und eine session Zeit die sich zurück setzten lässt.
-	Mit [Add Project] lässt sich ein neuer Eintrag erstellen. Angegeben werden Name und eine Id
-	Diese Id kann zum Beispiel die Nummer des Redmine-Tickets sein.
+	Mit [Add Project] lässt sich ein neuer Eintrag erstellen.
 	Mit [Go] wird der Timer gestartet und mit [Stop] angehalten. 
 	Der Session-Timer lässt sich mit [Reset] auf null zurück setzten.
 	[X] Löscht den Eintag aus der Liste, mit [Edit] kann Name und Id verändert werden
@@ -308,11 +307,11 @@
 				background-color: var(--background-medium-blue);
 				border: 2px solid var(--background-dark-blue);
 				outline: 0;
-				height: 23px;
+				height: 27px;
 				width: 100%;
 				padding: 2px 5px 2px 8px;
 				height: 20px;
-				margin: 0;
+				margin: 4px 0 0 2px;
 				font-size: 1em;
 			}
 
@@ -895,7 +894,6 @@
 			 *  {
 			 *    id: String           // generiert von generateID() in globalsJS
 			 *    name: String         // wird mit escapeHtml formatiert
-			 *    redmineNr: String    // wird mit escapeHtml formatiert
 			 * 	  createdAt: Date	   // Erstellungsdatum, wird zum sortieren genutzt
 			 *    totalTime: Number    // Sekunden
 			 *    sessionTime: Number  // Sekunden
@@ -911,7 +909,6 @@
 				const newTimerObj = {
 					id: id,
 					name: "ProjectName (Doubleclick to edit Text)",
-					redmineNr: "RedmineNr",
 					createdAt: Date.now(),
 					totalTime: 0,
 					sessionTime: 0,
@@ -1035,7 +1032,6 @@
 
 			/* Das Layout liegt in einem Listenelement und besteht aus einem Kontainer
 			 * Indem links und recht nebeneinander ein weitere Kontainer liegt
-			 * Im linken Kontainer liegen die Buttons und der Name wie Redmine Nummer
 			 * Im rechten Kontainer sind die beiden Stoppuhren
  			 */
 			function createTimerEntry(timerObj){
@@ -1061,15 +1057,9 @@
 				floatLeftDiv.appendChild(createButton('Delete', 'redBtn timerBtn', () => deleteProject(timerObj.id)));
 				floatLeftDiv.appendChild(document.createElement("br"));
 				
-				// Erstelle die Span-Elemente für die Redmine-Nummer und den Projektnamen
-				const redmineNrSpan = createSpan(timerObj.redmineNr, 'textNumber');
-					  redmineNrSpan.id = "redmineNr" + timerObj.id;
-					  redmineNrSpan.addEventListener("dblclick", () => editProject("redmineNr", timerObj.id));
-
 				const textNameSpan = createSpan(timerObj.name, 'textName');
 					  textNameSpan.id = "name" + timerObj.id;
 					  textNameSpan.addEventListener("dblclick", () => editProject("name", timerObj.id));
-				floatLeftDiv.appendChild(redmineNrSpan);
     			floatLeftDiv.appendChild(textNameSpan);
 
     			// Erstelle die Span-Elemente für Total und Session-Zeiten
