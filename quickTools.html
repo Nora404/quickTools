@@ -81,6 +81,33 @@
 			--red: rgb(221, 151, 151);						/* Warnung, Löschen oder Abbrechen */
 			--purple: rgb(187, 155, 197);					/* Sonderfarbe */
 
+			--shadow: rgba(0, 0, 0, 0);
+			--shadow-glas: rgba(0, 0, 0, 0.2);
+			--glas: rgba(255, 255, 255, 0.75);
+			--prio1: rgba(215, 216, 216, 0.15);
+			--prio2: rgba(155, 169, 197, 0.15);
+			--prio3: rgba(187, 155, 197, 0.15);
+			--prio4: rgba(221, 151, 151, 0.15);
+			}
+		</style>
+		<style id="darkMode"> 
+			.dark-mode {
+			--ground: rgb(32, 32, 32);				
+			--background-light: rgb(34, 41, 43);			
+			--background-medium: rgb(63, 86, 102);		
+			--background-dark: rgb(106, 135, 155);		
+			--text-light: rgb(36, 61, 30);					
+			--text-medium: rgb(154, 172, 150);				
+			--text-dark: rgb(209, 216, 208);				
+			--medium-gray: rgb(100, 100, 100);			
+			--dark-gray: rgb(156, 156, 156);				
+			--green: rgb(54, 73, 28);					
+			--red: rgb(119, 51, 51);						
+			--purple: rgb(72, 51, 78);			
+
+			--shadow: rgba(255, 255, 255, 0);
+			--shadow-glas: rgba(255, 255, 255, 0.5);
+			--glas: rgba(0, 0, 0, 0.25);
 			--prio1: rgba(215, 216, 216, 0.15);
 			--prio2: rgba(155, 169, 197, 0.15);
 			--prio3: rgba(187, 155, 197, 0.15);
@@ -294,7 +321,7 @@
 				display: inline-block;
 				box-sizing: border-box;
 				border: 1px dotted var(--dark-gray);
-				background-color: rgba(255, 255, 255, 0.75);
+				background-color: var(--glas);
 				padding: 1px 6px 0 6px;
 				height: 27px;
 				margin: 2px 4px 4px 5px;
@@ -321,13 +348,13 @@
 
 			@keyframes pulse {
 				0% {
-					box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
+					box-shadow: 0 0 0 0 var(--shadow-glas);
 				}
 				50% {
-					box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+					box-shadow: 0 0 0 10px var(--shadow);
 				}
 				100% {
-					box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
+					box-shadow: 0 0 0 0 var(--shadow-glas);
 				}
 			}
 
@@ -472,6 +499,7 @@
 			 window.addEventListener("load", () => {
 				// Funktionen die beim Laden der Seite ausgeführt werden sollen
 				loadStore();
+				loadCss();
 				setCurrentWeekToInput();
 				updateTable();
 				setToolTipText();
@@ -491,6 +519,7 @@
 		 *		collectionBtn = boolean
 		 *		timerSort = string
 		 *		commitHistorySelect = number
+		 *		cssMode = string
 		 *	}
 		 */
 			let store = {};
@@ -508,8 +537,16 @@
 					collectionBtn: true,
 					timerSort: "Date",
 					commitHistorySelect: 3,
+					cssMode: "default"
 					};
 					localStorage.setItem("toolStore", JSON.stringify(store));
+				}
+			}
+
+			function loadCss(){
+				const cssMode = store.cssMode;
+				if(cssMode === "dark-mode"){
+					document.body.classList.toggle('dark-mode');
 				}
 			}
 
@@ -529,6 +566,8 @@
 			<button id="noteBtn" class="greenBtn" onclick="changeVisibility('note')">Project Notes</button>
 			<button id="collectionBtn" class="greenBtn" onclick="changeVisibility('collection')">Collection List</button>
 			<button id="clipboardBtn" class="greenBtn" onclick="changeVisibility('clipboard')">Clipboard</button>
+
+			<button id="toggelCssBtn" onclick="toggleDarkMode()">Toggel CSS</button>
 		</header>
 	
 	
@@ -706,6 +745,17 @@
 					main.style.maxWidth = '500px';
 				}
 			}
+
+			const toggleDarkMode = () => {
+				document.body.classList.toggle('dark-mode');
+				const currentCssMode = store.cssMode;
+				if(currentCssMode === "default"){
+					store.cssMode = "dark-mode";
+				} else {
+					store.cssMode = "default";
+				}
+				localStorage.setItem("toolStore", JSON.stringify(store));
+			};
 		</script> 
 
 		<script id="tooltipsJS">
