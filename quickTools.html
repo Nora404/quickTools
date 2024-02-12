@@ -74,7 +74,7 @@
 			--background-2: rgb(189, 201, 216);	/* Hintergundfarbe als Akzent */
 			--background-1: rgb(243, 248, 252);	/* Hintergrundfarbe von Modulen */
 
-			--text-3: rgb(29, 39, 51);				/* Normale Textfarbe */
+			--text-3: rgb(43, 53, 66);				/* Normale Textfarbe */
 			--text-2: rgb(92, 94, 110);			/* Textfarbe von Überschriften */
 			--text-1: rgb(244, 244, 245);			/* Textfarbe von Tooltipps */
 
@@ -109,8 +109,8 @@
 			--text-1: rgb(33, 44, 30);					
 
 			--gray-3: rgb(110, 110, 110);	
-			--gray-2: rgb(32, 32, 32);			
-			--gray-1: rgb(32, 32, 32);
+			--gray-2: rgb(46, 46, 46);			
+			--gray-1: rgb(15, 15, 15);
 
 			--green: rgb(54, 73, 28);					
 			--red: rgb(88, 43, 43);						
@@ -172,7 +172,9 @@
 			} button:hover {
 				filter: brightness(1.25);
 			} button:active {
-				filter: brightness(1.80);
+				filter: brightness(1.5);
+				border: 1px solid var(--gray-1);
+				color: var(--text-2);
 			}
 			
 			.greenBtn {
@@ -249,7 +251,7 @@
 			/* Tooltip text */
 			.tooltip .tooltiptext {
 			  visibility: hidden;
-			  min-width: 500px;
+			  min-width: 400px;
 			  background-color: var(--text-2);
 			  border: 1px solid var(--text-3);
 			  outline: 3px solid var(--ground);
@@ -446,10 +448,10 @@
 			#calendarTable {
 				width: 100%;
 				margin: 0 0 15px 0;
-				background-color: var(--ground);
+				background-color: var(--glas);
 			}
 			#calendar th, td {
-				border: 1px solid var(--gray-2);
+				border: 2px solid var(--gray-2);
 				padding: 10px;
 				vertical-align: top;
 				padding: 5px;
@@ -572,6 +574,9 @@
 			<button id="clipboardBtn" class="greenBtn" onclick="changeVisibility('clipboard')">Clipboard</button>
 
 			<button id="toggelCssBtn" onclick="toggleDarkMode()">Toggel CSS</button>
+			<button class="tooltip">Help
+				<span class="tooltiptext" id="helpToolTipp">Tooltip text</span>
+			</button>
 		</header>
 	
 	
@@ -764,13 +769,14 @@
 
 		<script id="tooltipsJS">
 			const tooltips = {
-				timerToolTipp: "<b>Project Timer</b></br><br>Dieses Tool bietet für jeden Eintrag zwei Stoppuhren: Eine misst die gesamte Zeit, während die andere sich zurücksetzen lässt. Jeder Timer kann mit einem Namen versehen werden – sei es ein beliebiger Text, eine Ticketnummer oder eine spezifische Aufgabe.<ul><li>Mit [Go] starten beide Timer gleichzeitig, mit [Stop] werden beide angehalten.</li><li>Über das Dropdown-Menü lässt sich eine Priorität für jeden Eintrag festlegen, wobei 1 die niedrigste und 4 die höchste Priorität bedeutet.</li><li>Die Einträge können nach Erstellungsdatum oder Priorität sortiert werden.</li><li>Um den Text eines Eintrags zu ändern, genügt ein Doppelklick darauf. Es erscheint ein Eingabefeld, in dem der neue Text eingegeben werden kann. Mit der Enter-Taste wird der neue Inhalt gespeichert. Verliert das Eingabefeld den Fokus, ohne dass Enter gedrückt wurde, wird die Bearbeitung abgebrochen.</li><li>Mit [Delete] wird der Eintrag gelöscht.</li></ul>",
+				timerToolTipp: "<b>Project Timer</b><br><br>Dieses Tool bietet für jeden Eintrag zwei Stoppuhren: Eine misst die gesamte Zeit, während die andere sich zurücksetzen lässt. Jeder Timer kann mit einem Namen versehen werden – sei es ein beliebiger Text, eine Ticketnummer oder eine spezifische Aufgabe.<ul><li>Mit [Go] starten beide Timer gleichzeitig, mit [Stop] werden beide angehalten.</li><li>Über das Dropdown-Menü lässt sich eine Priorität für jeden Eintrag festlegen, wobei 1 die niedrigste und 4 die höchste Priorität bedeutet.</li><li>Die Einträge können nach Erstellungsdatum oder Priorität sortiert werden.</li><li>Um den Text eines Eintrags zu ändern, genügt ein Doppelklick darauf. Es erscheint ein Eingabefeld, in dem der neue Text eingegeben werden kann. Mit der Enter-Taste wird der neue Inhalt gespeichert. Verliert das Eingabefeld den Fokus, ohne dass Enter gedrückt wurde, wird die Bearbeitung abgebrochen.</li><li>Mit [Delete] wird der Eintrag gelöscht.</li></ul>",
 				messageToolTipp: "Tooltip Text für Commit Message",
 				historyToolTipp: "Tooltip Text für Commit History",
 				calendarToolTipp: "Tooltip Text für Calendar Notes",
 				clipboardToolTipp: "Tooltip Text für Clipboard",
 				collectionToolTipp: "Tooltip Text für Collection List",
-				noteToolTipp: "Tooltip Text für Project Note"
+				noteToolTipp: "Tooltip Text für Project Note",
+				helpToolTipp: "<b>Vorwort</b><br><br>In dieser HTML-Seite werden verschiedene Tools angeboten, welche im Arbeitsalltag helfen möchten. Zudem ist das Erstellen des Codes für mich eine Übung gewesen. Der gesamte Code soll nur eine einzige Datei umfassen und muss daher eine hohe Qulität haben. Also eine gute Struktur, sprechende Namen, effizenter und lesbarer Code, hilfreiche Kommentare.<br><br><b>Anleitung</b><br><br>Tools können ein und ausgeblendet werden, mithilfe der oberen Buttons ..."
 			};
 
 			function setToolTipText() {
