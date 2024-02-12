@@ -68,12 +68,13 @@
 		<title>quickTools</title>
 		<style id="colors"> 
 			:root {
-			--background-dark-blue: rgb(155, 169, 197);	/* Hintergundfarbe von Buttons */
-			--background-medium-blue: rgb(225, 232, 241);	/* Hintergundfarbe von Inputs */
-			--background-light-blue: rgb(243, 248, 252);	/* Hintergrundfarbe von Modulen */
-			--text-blue-dark: rgb(29, 39, 51);				/* Normale Textfarbe */
-			--text-blue-medium: rgb(109, 123, 141);		/* Textfarbe von Überschriften */
-			--text-blue-light: rgb(244, 244, 245);			/* Textfarbe von Tooltipps */
+			--ground: rgb(243, 248, 252);					/* allgemeine Hintergundfarbe */
+			--background-dark: rgb(155, 169, 197);			/* Hintergundfarbe von Buttons */
+			--background-medium: rgb(225, 232, 241);		/* Hintergundfarbe von Inputs */
+			--background-light: rgb(243, 248, 252);		/* Hintergrundfarbe von Modulen */
+			--text-dark: rgb(29, 39, 51);					/* Normale Textfarbe */
+			--text-medium: rgb(255, 255, 255);				/* Textfarbe von Überschriften */
+			--text-light: rgb(244, 244, 245);				/* Textfarbe von Tooltipps */
 			--medium-gray: rgb(215, 216, 216);				/* Inaktiv oder nicht Interaktiv */
 			--dark-gray: rgb(128, 128, 128);				/* Ränder von Formularen */
 			--green: rgb(175, 196, 145);					/* Bestätigen oder Starten */
@@ -90,7 +91,8 @@
 			body {
 			  font-size: 1em;
 			  padding: 25px 0 25px 0;
-			  color: var(--text-blue-dark);
+			  color: var(--text-dark);
+			  background-color: var(--ground);
 			}
 			
 			main, header {
@@ -105,11 +107,11 @@
 			  outline: 3px solid var(--medium-gray);
 			} header {
 			  margin-bottom: 10px;
-			  background-color: var(--background-light-blue);
+			  background-color: var(--background-light);
 			}
 			
 			h3 {
-			  color: var(--text-blue-medium);
+			  color: var(--text-medium);
 			  font-size: 1.4em;
 			  margin: 15px 0 15px 0;
 			}
@@ -121,9 +123,9 @@
 			}
 			
 			button {
-			  background-color: var(--background-dark-blue);
+			  background-color: var(--background-dark);
 			  border: 1px solid var(--dark-gray);
-			  color: var(--text-blue-light);
+			  color: var(--text-light);
 			  font-family: "Courier New", Courier, monospace;
 			  font-size: 1em;
 			  margin: 5px 5px 5px 5px;
@@ -134,12 +136,12 @@
 			
 			.greenBtn {
 			  background-color: var(--green);
-			  color: var(--text-blue-dark); 
+			  color: var(--text-dark); 
 			}
 			
 			.redBtn {
 			  background-color: var(--red);
-			  color: var(--text-blue-dark); 
+			  color: var(--text-dark); 
 			}
 
 			.hidden {
@@ -167,8 +169,8 @@
 			.container {
 				box-sizing: border-box;
 				padding: 10px;
-				border: 1px solid var(--background-medium-blue);
-				background-color: var(--background-light-blue);
+				border: 1px solid var(--background-medium);
+				background-color: var(--background-light);
 			}
 
 			#mainColumn1 {
@@ -182,7 +184,7 @@
 			input[type="radio"] {
 				width: 20px;
 				height: 20px;
-				background-color: var(--background-medium-blue);
+				background-color: var(--background-medium);
 				border: 1px solid var(--dark-gray);
 			}
 			/* input[type="radio"]:focus { */
@@ -194,9 +196,9 @@
 			  float: left;
 			  text-align: center;
 			  border-radius: 50%;
-			  background-color: var(--text-blue-light);
+			  background-color: var(--text-light);
 			  border: 1px solid var(--dark-gray);
-			  color: var(--text-blue-dark); 
+			  color: var(--text-dark); 
 			  font-family: "Courier New", Courier, monospace;
 			  font-size: 1em;
 			  margin: 5px;
@@ -214,10 +216,10 @@
 			.tooltip .tooltiptext {
 			  visibility: hidden;
 			  min-width: 500px;
-			  background-color: var(--text-blue-medium);
-			  border: 1px solid var(--text-blue-dark);
-			  outline: 3px solid #fff;
-			  color: var(--text-blue-light);
+			  background-color: var(--text-medium);
+			  border: 1px solid var(--text-dark);
+			  outline: 3px solid var(--ground);
+			  color: var(--text-light);
 			  text-align: left;
 			  padding: 8px;
 			  border-radius: 6px;
@@ -239,9 +241,9 @@
 			}
 			#timer select{
 				box-sizing: border-box;
-				background-color: var(--background-dark-blue);
+				background-color: var(--background-dark);
 			  	border: 1px solid var(--dark-gray);
-				color: #fff;
+				color: var(--ground);
 				margin: 5px 1px 5px 1px;
 				height: 25px;
 			}
@@ -265,7 +267,7 @@
 				overflow: auto;
 			}
 			.prio2{
-				border: 2px solid var(--background-dark-blue);
+				border: 2px solid var(--background-dark);
 				background-color: var(--prio2);
 				padding: 5px;
 				overflow: auto;
@@ -304,8 +306,8 @@
 				font-size: 1.2em;
 			}
 			input.textName:focus, input.textNumber:focus{
-				background-color: var(--background-medium-blue);
-				border: 2px solid var(--background-dark-blue);
+				background-color: var(--background-medium);
+				border: 2px solid var(--background-dark);
 				outline: 0;
 				height: 27px;
 				width: 100%;
@@ -337,7 +339,7 @@
 			.pulsing-border .prio2,
 			.pulsing-border .prio3,
 			.pulsing-border .prio4{
-				background-color: #fff;
+				background-color: var(--ground);
 			}
 
 		</style>  
@@ -360,7 +362,7 @@
 			#commitDescription {
 				box-sizing: border-box;
 				border: 2px solid var(--dark-gray);
-				background-color: var(--background-medium-blue);
+				background-color: var(--background-medium);
 				margin: 5px 0 5px 0;
 				padding: 5px;
 				resize: none;
@@ -413,7 +415,7 @@
 			#calendarTable {
 				width: 100%;
 				margin: 0 0 15px 0;
-				background-color: #fff;
+				background-color: var(--ground);
 			}
 			#calendar th, td {
 				border: 1px solid var(--medium-gray);
@@ -429,12 +431,14 @@
 				font-weight: 500;
 			}
 			#weeklySelection {
-				background-color: var(--background-dark-blue);
+				box-sizing: border-box;
+				background-color: var(--background-dark);
 			  	border: 1px solid var(--dark-gray);
-			 	color: #fff;
-				margin: 0 0 15px 2px;
-				padding: 5px;
-				font-size: 1.1em;
+				outline: 0;
+			 	color: var(--ground);
+				margin: 0 0 15px 0;
+				padding: 0 5px 0 5px;
+				font-size: 1em;
 				height: 25px;
 				width: 19.9%;
 			} #weeklySelection:hover {
@@ -443,8 +447,8 @@
 
 			#today {
 				box-sizing: border-box;
-				border: 2px solid var(--background-dark-blue) !important;
-				background-color: var(--background-medium-blue);
+				border: 2px solid var(--background-dark) !important;
+				background-color: var(--background-medium);
 			}
 			.noteArea {
 				width: 100%;
@@ -587,7 +591,9 @@
 				</div>
 
 				 <h3>Calendar Notes</h3>
+				 <button id="lastWeekBtn" onclick="changeWeek(-1)">Last</button>
 				 <input type="week" id="weeklySelection" onchange="updateTable()">
+				 <button id="nextWeekBtn" onclick="changeWeek(+1)">Next</button>
 				 <table id="calendarTable">
 					<tr id="th"></tr>
         			<tr id="tb"></tr>
@@ -1108,13 +1114,14 @@
 			 * Mit der Funktion updateTable() wird die Tabelle aktualisiert, wenn der Nutzer eine neue Woche auswählt
 			 */
 
-			function setCurrentWeekToInput() {
-				const currentDate = new Date();
+			function setCurrentWeekToInput(currentDate = new Date()) {
+				// const currentDate = new Date();
 				const currentYear = currentDate.getFullYear();
 				const firstDayOfYear = new Date(currentYear, 0, 1);
 				const pastDaysOfYear = (currentDate - firstDayOfYear) / 86400000;
 
 				let currentWeek = Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+				// Muss folgendes Format haben: YYYY-WWW zum Beispiel 2024-W01
 				let weekValue = `${currentYear}-W${currentWeek < 10 ? "0" + currentWeek : currentWeek}`;
 
 				document.getElementById("weeklySelection").value = weekValue;
@@ -1159,6 +1166,20 @@
 				tb.innerHTML = "";
 
 				fillTable(newDate);
+			}
+
+			// Da in Firefox das Inputfeld "week" nicht funktioniert, füge ich zwei Buttons hinzu
+			// Eine um zur letzten Woche zu gelangen (-1), eine für die nächste Woche (+1)
+			// Dafür nehme ich den Wert des Inputfeldes ...
+			function changeWeek(change){
+				const weeklySelection = document.getElementById('weeklySelection');
+				const value = weeklySelection.value;
+				const year = parseInt(value.substring(0, 4), 10);
+    			const week = (parseInt(value.substring(6), 10))+change;
+
+				const currentDate = new Date(year, 0, 1 + (week - 1) * 7);
+				setCurrentWeekToInput(currentDate);
+				updateTable();
 			}
 		
 			/* In der zweiten Zeile der Tabelle können Notizen eingetragen werden
