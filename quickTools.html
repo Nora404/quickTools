@@ -69,22 +69,27 @@
 		<style id="colors"> 
 			:root {
 			--ground: rgb(255, 255, 255);					/* allgemeine Hintergundfarbe */
-			--background-dark: rgb(155, 169, 197);			/* Hintergundfarbe von Buttons */
-			--background-medium: rgb(189, 201, 216);		/* Hintergundfarbe von Inputs */
-			--background-light: rgb(243, 248, 252);		/* Hintergrundfarbe von Modulen */
-			--text-dark: rgb(29, 39, 51);					/* Normale Textfarbe */
-			--text-medium: rgb(92, 94, 110);				/* Textfarbe von Überschriften */
-			--text-light: rgb(244, 244, 245);				/* Textfarbe von Tooltipps */
-			--medium-gray: rgb(215, 216, 216);				/* Inaktiv oder nicht Interaktiv */
-			--dark-gray: rgb(172, 172, 172);				/* Ränder von Formularen */
+			--background-3: rgb(155, 169, 197);			/* Hintergundfarbe von Buttons */
+			--background-2: rgb(189, 201, 216);		/* Hintergundfarbe von Inputs */
+			--background-1: rgb(243, 248, 252);		/* Hintergrundfarbe von Modulen */
+
+			--text-3: rgb(29, 39, 51);					/* Normale Textfarbe */
+			--text-2: rgb(92, 94, 110);				/* Textfarbe von Überschriften */
+			--text-1: rgb(244, 244, 245);				/* Textfarbe von Tooltipps */
+
+			--gray-3: rgb(172, 172, 172);				/* Ränder von Formularen */
+			--gray-2: rgb(215, 216, 216);				/* Inaktiv oder nicht Interaktiv */
+			--gray-1: rgb(215, 216, 216);
+			--input: rgb(241, 241, 241);
+
 			--green: rgb(175, 196, 145);					/* Bestätigen oder Starten */
 			--red: rgb(221, 151, 151);						/* Warnung, Löschen oder Abbrechen */
 			--purple: rgb(187, 155, 197);					/* Sonderfarbe */
 
-			--input: rgb(241, 241, 241);
 			--shadow: rgba(0, 0, 0, 0);
 			--shadow-glas: rgba(0, 0, 0, 0.2);
 			--glas: rgba(255, 255, 255, 0.75);
+
 			--prio1: rgba(215, 216, 216, 0.15);
 			--prio2: rgba(155, 169, 197, 0.15);
 			--prio3: rgba(187, 155, 197, 0.15);
@@ -94,22 +99,27 @@
 		<style id="darkMode"> 
 			.dark-mode {
 			--ground: rgb(19, 19, 19);				
-			--background-light: rgb(30, 33, 34);			
-			--background-medium: rgb(38, 59, 65);		
-			--background-dark: rgb(97, 114, 114);		
-			--text-light: rgb(33, 44, 30);					
-			--text-medium: rgb(117, 133, 113);				
-			--text-dark: rgb(167, 177, 165);				
-			--medium-gray: rgb(32, 32, 32);			
-			--dark-gray: rgb(110, 110, 110);				
+			--background-3: rgb(103, 112, 108);	
+			--background-2: rgb(38, 59, 65);		
+			--background-1: rgb(30, 33, 34);			
+
+			--text-3: rgb(167, 177, 165);		
+			--text-2: rgb(117, 133, 113);				
+			--text-1: rgb(33, 44, 30);					
+
+			--gray-3: rgb(110, 110, 110);	
+			--gray-2: rgb(32, 32, 32);			
+			--gray-1: rgb(32, 32, 32);
+			--input: rgb(68, 68, 68);
+
 			--green: rgb(54, 73, 28);					
 			--red: rgb(88, 43, 43);						
 			--purple: rgb(72, 51, 78);			
 
-			--input: rgb(68, 68, 68);
 			--shadow: rgba(255, 255, 255, 0);
 			--shadow-glas: rgba(255, 255, 255, 0.3);
 			--glas: rgba(0, 0, 0, 0.25);
+			
 			--prio1: rgb(44, 44, 44);
 			--prio2: rgb(31, 43, 43);	
 			--prio3: rgb(38, 32, 39);		
@@ -120,7 +130,7 @@
 			body {
 			  font-size: 1em;
 			  padding: 25px 0 25px 0;
-			  color: var(--text-dark);
+			  color: var(--text-3);
 			  background-color: var(--ground);
 			}
 			
@@ -131,16 +141,16 @@
 			  flex-wrap: nowrap;
 			  max-width: 1500px;
 			  width: auto;
-			  border: 3px dotted var(--medium-gray);
+			  border: 3px dotted var(--gray-2);
 			  padding: 10px 10px 10px 10px;
-			  outline: 3px solid var(--medium-gray);
+			  outline: 3px solid var(--gray-2);
 			} header {
 			  margin-bottom: 10px;
-			  background-color: var(--background-light);
+			  background-color: var(--background-1);
 			}
 			
 			h3 {
-			  color: var(--text-medium);
+			  color: var(--text-2);
 			  font-size: 1.4em;
 			  margin: 15px 0 15px 0;
 			}
@@ -152,9 +162,9 @@
 			}
 			
 			button {
-			  background-color: var(--background-dark);
-			  border: 1px solid var(--dark-gray);
-			  color: var(--text-light);
+			  background-color: var(--background-3);
+			  border: 1px solid var(--gray-3);
+			  color: var(--text-1);
 			  font-family: "Courier New", Courier, monospace;
 			  font-size: 1em;
 			  margin: 5px 5px 5px 5px;
@@ -167,12 +177,12 @@
 			
 			.greenBtn {
 			  background-color: var(--green);
-			  color: var(--text-dark); 
+			  color: var(--text-3); 
 			}
 			
 			.redBtn {
 			  background-color: var(--red);
-			  color: var(--text-dark); 
+			  color: var(--text-3); 
 			}
 
 			.hidden {
@@ -195,16 +205,16 @@
 			  font-family: "Courier New", Courier, monospace;
 			  font-weight: 500;
 			  font-size: small;
-			  color: var(--text-dark);
+			  color: var(--text-3);
 			  background-color: var(--input);
-			  border: 2px solid var(--dark-gray);
+			  border: 2px solid var(--gray-3);
 			}
 
 			.container {
 				box-sizing: border-box;
 				padding: 10px;
-				border: 1px solid var(--background-medium);
-				background-color: var(--background-light);
+				border: 1px solid var(--background-2);
+				background-color: var(--background-1);
 			}
 
 			#mainColumn1 {
@@ -220,9 +230,9 @@
 			  float: left;
 			  text-align: center;
 			  border-radius: 50%;
-			  background-color: var(--text-light);
-			  border: 1px solid var(--dark-gray);
-			  color: var(--text-dark); 
+			  background-color: var(--text-1);
+			  border: 1px solid var(--gray-3);
+			  color: var(--text-3); 
 			  font-family: "Courier New", Courier, monospace;
 			  font-size: 1em;
 			  margin: 5px;
@@ -240,10 +250,10 @@
 			.tooltip .tooltiptext {
 			  visibility: hidden;
 			  min-width: 500px;
-			  background-color: var(--text-medium);
-			  border: 1px solid var(--text-dark);
+			  background-color: var(--text-2);
+			  border: 1px solid var(--text-3);
 			  outline: 3px solid var(--ground);
-			  color: var(--text-light);
+			  color: var(--text-1);
 			  text-align: left;
 			  padding: 8px;
 			  border-radius: 6px;
@@ -259,14 +269,14 @@
 		<style id="timerCSS">  
 			.timerBtn{
 				box-sizing: border-box;
-				border: 1px solid var(--dark-gray);
+				border: 1px solid var(--gray-3);
 				margin: 3px 1px 3px 1px;
 				height: 25px;	
 			}
 			#timer select{
 				box-sizing: border-box;
-				background-color: var(--background-dark);
-			  	border: 1px solid var(--dark-gray);
+				background-color: var(--background-3);
+			  	border: 1px solid var(--gray-3);
 				color: var(--ground);
 				margin: 5px 1px 5px 1px;
 				height: 25px;
@@ -291,13 +301,13 @@
 				overflow: auto;
 			}
 			.prio2{
-				border: 2px solid var(--background-medium);
+				border: 2px solid var(--background-2);
 				background-color: var(--prio2);
 				padding: 5px;
 				overflow: auto;
 			}
 			.prio1{
-				border: 2px solid var(--medium-gray);
+				border: 2px solid var(--gray-2);
 				background-color: var(--prio1);
 				padding: 5px;
 				overflow: auto;
@@ -317,7 +327,7 @@
 			.textTime{
 				display: inline-block;
 				box-sizing: border-box;
-				border: 1px dotted var(--dark-gray);
+				border: 1px dotted var(--gray-3);
 				background-color: var(--glas);
 				padding: 1px 6px 0 6px;
 				height: 27px;
@@ -354,7 +364,7 @@
 			}
 
 			.pulsing-border {
-				outline: 2px solid var(--medium-gray);
+				outline: 2px solid var(--gray-2);
 				animation: pulse 2s infinite; /* Animation anwenden */
 			} 
 			.pulsing-border .prio1,
@@ -401,7 +411,7 @@
 			}
 			#textCounter {
 				text-align: center;
-				background-color: var(--medium-gray) !important;
+				background-color: var(--gray-2) !important;
 				width: calc(10% - 8px);
 				float: right;
 			}
@@ -422,7 +432,7 @@
 			#formatedCommitMessage {
 				box-sizing: border-box;
 				border: none;
-				background-color: var(--medium-gray);
+				background-color: var(--gray-2);
 				margin: 5px 0 5px 0;
 				padding: 5px;
 				resize: none;
@@ -439,7 +449,7 @@
 				background-color: var(--ground);
 			}
 			#calendar th, td {
-				border: 1px solid var(--medium-gray);
+				border: 1px solid var(--gray-2);
 				padding: 10px;
 				vertical-align: top;
 				padding: 5px;
@@ -453,8 +463,8 @@
 			}
 			#weeklySelection {
 				box-sizing: border-box;
-				background-color: var(--background-dark);
-			  	border: 1px solid var(--dark-gray);
+				background-color: var(--background-3);
+			  	border: 1px solid var(--gray-3);
 				outline: 0;
 			 	color: var(--ground);
 				margin: 0 0 15px 0;
@@ -468,8 +478,8 @@
 
 			#today {
 				box-sizing: border-box;
-				border: 2px solid var(--background-dark) !important;
-				background-color: var(--background-medium);
+				border: 2px solid var(--background-3) !important;
+				background-color: var(--background-2);
 			}
 			.noteArea {
 				width: 100%;
