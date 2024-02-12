@@ -875,7 +875,10 @@
 						}
 					});
 					element.addEventListener('blur', () =>{
-							toggleElement(config)
+							toggleElement(config);
+							if (typeof config.callback === 'function' && element.value) {
+								config.callback(config.objId, config.changeAttr, value);
+							}
 					});
 				} else {
 					element.addEventListener('dblclick', function() {
@@ -1050,6 +1053,7 @@
 				const floatRightDiv = document.createElement('div');
     			floatRightDiv.classList = 'floatRight timerRight';
 
+				// Linke Seite mit Buttons und Textfeld
 				floatLeftDiv.appendChild(createButton('Go', 'greenBtn timerBtn', ()=> startTimer(timerObj.id)));
 				floatLeftDiv.appendChild(createButton('Stop', 'timerBtn', () => stopTimer(timerObj.id)));
 				floatLeftDiv.appendChild(createButton('Reset', 'timerBtn', () => resetTimer(timerObj.id)));
@@ -1062,7 +1066,7 @@
 					  textNameSpan.addEventListener("dblclick", () => editProject("name", timerObj.id));
     			floatLeftDiv.appendChild(textNameSpan);
 
-    			// Erstelle die Span-Elemente für Total und Session-Zeiten
+				// Rechte Seite mit Anzeige der Timer
 				const totalTime = formartTime(timerObj.totalTime);
 				const totalDec = secondsToHoursDecimal(timerObj.totalTime);
 				const sessionTime = formartTime(timerObj.sessionTime);
