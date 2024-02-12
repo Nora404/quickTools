@@ -1,3 +1,4 @@
+<!doctype html>
 <!-- 
 	VORWORT:
 	In dieser HTML-Seite werden verschiedene Tools angeboten, welche im Arbeitsalltag helfen möchten.
@@ -151,6 +152,7 @@
 			.floatRight {
 			  float: right;
 			  margin-right: 10px;
+			  text-align: right;
 			}
 
 			input,
@@ -243,6 +245,9 @@
 				margin: 5px 1px 5px 1px;
 				height: 25px;
 			}
+			#timer li{
+				margin-bottom: 15px;
+			}
 			#projectList {
 				list-style-type: none;
 				padding: 0;
@@ -250,28 +255,24 @@
 			.prio4{
 				border: 2px solid var(--red);
 				background-color: var(--prio4);
-				margin-bottom: 10px;
 				padding: 5px;
 				overflow: auto;
 			}
 			.prio3{
 				border: 2px solid var(--purple);
 				background-color: var(--prio3);
-				margin-bottom: 10px;
 				padding: 5px;
 				overflow: auto;
 			}
 			.prio2{
 				border: 2px solid var(--background-dark-blue);
 				background-color: var(--prio2);
-				margin-bottom: 10px;
 				padding: 5px;
 				overflow: auto;
 			}
 			.prio1{
 				border: 2px solid var(--medium-gray);
 				background-color: var(--prio1);
-				margin-bottom: 10px;
 				padding: 5px;
 				overflow: auto;
 			}
@@ -282,20 +283,29 @@
 			.textTime{
 				display: inline-block;
 				box-sizing: border-box;
-				width: 100%;
-				text-align: left;
+				/* width: 100%; */
 				border: 1px dotted var(--dark-gray);
 				background-color: rgba(255, 255, 255, 0.75);
 				padding: 1px 6px 0 6px;
 				height: 27px;
-				margin: 2px 4px 4px 10px;
+				margin: 2px 4px 4px 5px;
 				font-size: 1.2em;
-				text-align: right;
 			}
 			.textName, .textNumber{
 				display: inline-block;
 				margin: 5px 10px 5px 5px;
 				font-size: 1.2em;
+			}
+			input.textName:focus, input.textNumber:focus{
+				background-color: var(--background-medium-blue);
+				border: 2px solid var(--background-dark-blue);
+				outline: 0;
+				/* width: 100px; */
+				height: 23px;
+				padding: 2px;
+				height: 20px;
+				margin: 0;
+				font-size: 1em;
 			}
 
 			/* Hier kommt eine Animation um den aktiven Eintrag hervor zu heben */
@@ -313,9 +323,14 @@
 			}
 
 			.pulsing-border {
-				background-color: white;
+				outline: 2px solid var(--medium-gray);
 				animation: pulse 2s infinite; /* Animation anwenden */
-				box-sizing: border-box;
+			} 
+			.pulsing-border .prio1,
+			.pulsing-border .prio2,
+			.pulsing-border .prio3,
+			.pulsing-border .prio4{
+				background-color: #fff;
 			}
 
 		</style>  
@@ -751,6 +766,7 @@
 					.replace(/'/g, "&#039;");
 			}
 
+			// Erstellt ein <span> Tag mit einer css Klasse und einem Text-Inhalt
 			function createSpan(text, className) {
 				const span = document.createElement('span');
 				span.className = className;
@@ -758,11 +774,114 @@
 				return span;
 			}
 
+			// Die Sekunden werden in "00:00:00" (hh:mm:ss) zurück gegeben
+			function formartTime(seconds){
+				if (isNaN(seconds)) return "00:00:00";
+
+				const timeParts = splitSecondsIntoHMS(seconds);
+				const result = `
+					${timeParts[0].toString().padStart(2, "0")}:${timeParts[1].toString().padStart(2, "0")}:${timeParts[2].toString().padStart(2, "0")}`;
+
+				return result;
+			}
+
+			// Sekunden werden in 00.0h zurück gegeben
+			// Es ist ein Bruch, 90min wären 01.5h 
+			function secondsToHoursDecimal(seconds){
+				if (isNaN(seconds)) return "00.0";
+
+				const timeParts = splitSecondsIntoHMS(seconds);
+				const result = (timeParts[0] + timeParts[1] / 60 + timeParts[2] / 3600).toFixed(1);
+				return result.padStart(4, '0') + "h";
+			}
+
+			// Zerlegt Sekunden in ein Array mit drei Werten
+			// [0] sind Stunden [1] sind Minuten [2] sind Sekunden
+			function splitSecondsIntoHMS(seconds){
+				const hrs = Math.floor(seconds / 3600);
+				const mins = Math.floor((seconds % 3600) / 60);
+				const secs = seconds % 60;
+
+				return [hrs, mins, secs];
+			}
+
+			// Das elementId wird gegen changeTo ausgetauscht
+			// const config = {
+			// 		objId: key für den LocalStorage
+			// 		elementId: html-Element
+			// 		changeTo: neues html-Tag
+			// 		changeAttr: attr des geändert werden soll
+			// 		inputType: fals Input sein type
+			// 		callback: funktion zum speichern
+			// 	}
+			
+			/*  Funktionsweise von toggelElement:
+			 *  Eine Editfunktion muss die oben genannten Daten sammeln und damit toggleElement aufrufen
+			 *  Diese beginnt aus dem config-Daten die notwendigen Variabeln zu extrahieren
+			 *  Dazu gehört der Tag-Name, sein Inhalt und das neue HTML-Element
+			 *  Dem neuen Element wird gleiche id wie dem vorherigen Tag gegeben um es beim zurück
+			 *  tauschen wiederzufinden. Dafür braucht das Element noch den passenden EventListener
+			 *  Der ruft das toggelElement erneut auf, braucht daher die komplette neue config
+			 *  Das Event speichert auch den neuen Wert, sollte Enter gedrückt werden 
+			 *  Genaugenommen ruft es den Callback auf mit der objId, dessen geändertem Attribut und Wert
+			 */ 
+			function toggleElement(config) {
+				const element = document.getElementById(config.elementId);
+				if (!element) return;
+
+				const currentTagName = element.tagName.toLowerCase();
+				const isEditmode =  currentTagName === 'input' ||  currentTagName === 'textarea' ? true : false;
+				const currentValue = isEditmode ? element.value : element.textContent;
+				const newElement = createElementWithValue(config.changeTo, currentValue, config.inputType);
+
+				newElement.className = element.className;
+				newElement.id = config.elementId;
+
+				addToggleEvent(newElement, currentValue, {...config, changeTo: currentTagName});
+
+				element.parentNode.replaceChild(newElement, element);
+				newElement.focus();
+			}
+
+			function createElementWithValue(tag, value, inputType) {
+				const element = document.createElement(tag);
+				if (tag === 'input' || tag === 'textarea') {
+					element.value = value; 
+					element.setAttribute('type', inputType);
+				} else {
+					element.textContent = value; 
+				}
+				return element;
+			}
+
+			function addToggleEvent(element, value, config) {
+				const tag = element.tagName.toLowerCase();
+				
+				if (tag === 'input' || tag === 'textarea') {
+					
+					element.addEventListener('keyup', function(event) {
+						if (event.key === "Enter") {
+							toggleElement(config);
+							if (typeof config.callback === 'function' && element.value) {
+								config.callback(config.objId, config.changeAttr, element.value);
+							}
+						}
+					});
+					element.addEventListener('blur', () =>{
+							toggleElement(config)
+					});
+				} else {
+					element.addEventListener('dblclick', function() {
+						toggleElement(config);
+					});
+				}
+			}
 		</script>
 
 		<script id="timerJS">
 			let timerObjects = JSON.parse(localStorage.getItem("timers")) || {};
 			let timerInterval = null;
+			let timerActiv = null;
 
 			/** Da es in Vanilla keine Interfaces gibt, beschreibe ich hier das timerObjekt:
 			 *  {
@@ -783,7 +902,7 @@
 				const id = generateId();
 				const newTimerObj = {
 					id: id,
-					name: "ProjectName",
+					name: "ProjectName (Doubleclick to edit Text)",
 					redmineNr: "RedmineNr",
 					createdAt: Date.now(),
 					totalTime: 0,
@@ -791,6 +910,7 @@
 					prio: 2,
 				};
 				timerObjects[id] = newTimerObj;
+				localStorage.setItem("timers", JSON.stringify(timerObjects));
 				renderTimerEntries();
 			}
 			const addProjectBtn = document.getElementById("addProjectBtn");
@@ -798,20 +918,44 @@
 					addProject();
 				  })
 
-			function startTimer(projectId){}
+			function startTimer(projectId){
+				if(timerInterval) clearInterval(timerInterval);
+				
+				timerActiv = projectId;
+				timerInterval = setInterval(()=>{
+					timerObjects[projectId].totalTime++;
+					timerObjects[projectId].sessionTime++;
+					renderTimerEntries();
+				}, 1000);
 
-			function stopTimer(projectId){}
+				renderTimerEntries();
+			}
 
-			function resetTimer(projectId){}
+			function stopTimer(projectId){
+				clearInterval(timerInterval);
+				timerInterval = null;
+				timerActiv = null;
+				renderTimerEntries();
+			}
 
-			function editProject(projectId){
-				const obj = timerObjects[projectId];
-				const entry = document.getElementById(obj.id);
-				const nr = entry.querySelector('.textNumber').innerText;
-				const name = entry.querySelector('.textName').innerText;
+			function resetTimer(projectId){
+				timerObjects[projectId].sessionTime = 0;
+				renderTimerEntries();
+			}
 
-				console.log(nr);
-				console.log(name);
+			function editProject(attr, objId){
+				const obj = timerObjects[objId];
+				const elementId = attr + objId;
+				const config = {
+					objId: objId,
+					elementId: elementId,
+					changeTo: "input",
+					changeAttr: attr,
+					inputType: "text",
+					callback: saveTimerObj,
+				}
+				
+				toggleElement(config);
 			}
 
 			function changePrio(projectId){
@@ -819,28 +963,21 @@
 				const entry = document.getElementById(obj.id);
 				const prio = entry.querySelector('select');
 
-				obj.prio = prio.value;
-				timerObjects[projectId] = obj;
-				renderTimerEntries();
+				saveTimerObj(projectId, "prio", prio.value);
 			}
 
 			function deleteProject(projectId){
 				delete timerObjects[projectId];
+				localStorage.setItem("timers", JSON.stringify(timerObjects));
 				renderTimerEntries();
 			}
 
-
-			function formartTime(seconds){
-				if (isNaN(seconds)) return "00:00:00";
-
-				const hrs = Math.floor(seconds / 3600);
-				const mins = Math.floor((seconds % 3600) / 60);
-				const secs = seconds % 60;
-				const bruch = (hrs + mins / 60 + secs / 3600).toFixed(1);
-
-				return `${hrs.toString().padStart(2, "0")}:
-				${mins.toString().padStart(2, "0")}:
-				${secs.toString().padStart(2, "0")} = ${bruch}h`;
+			function saveTimerObj(timerId, attr, value){
+				const obj = timerObjects[timerId];
+				obj[attr] = value;
+				timerObjects[timerId] = obj;
+				localStorage.setItem("timers", JSON.stringify(timerObjects));
+				renderTimerEntries();
 			}
 
 			/* Das Timerlayout muss für jedes Element generiert werden
@@ -861,7 +998,6 @@
 			}
 
 			function renderTimerEntries(){
-				localStorage.setItem("timers", JSON.stringify(timerObjects));
 				const list = document.getElementById("projectList");
 				      list.innerHTML = "";
 						
@@ -900,6 +1036,9 @@
 				
 				const projectDiv = document.createElement('div');
 				projectDiv.className = `prio${timerObj.prio}`; 
+				if(timerObj.id == timerActiv) {
+					li.classList = 'pulsing-border';
+				}
 
 				const floatLeftDiv = document.createElement('div');
 				floatLeftDiv.className = 'floatLeft';
@@ -910,19 +1049,34 @@
 				floatLeftDiv.appendChild(createButton('Go', 'greenBtn timerBtn', ()=> startTimer(timerObj.id)));
 				floatLeftDiv.appendChild(createButton('Stop', 'timerBtn', () => stopTimer(timerObj.id)));
 				floatLeftDiv.appendChild(createButton('Reset', 'timerBtn', () => resetTimer(timerObj.id)));
-				floatLeftDiv.appendChild(createButton('Edit', 'timerBtn', () => editProject(timerObj.id)));
 				floatLeftDiv.appendChild(createSelect([1,2,3,4],timerObj.prio, () => changePrio(timerObj.id)));
 				floatLeftDiv.appendChild(createButton('Delete', 'redBtn timerBtn', () => deleteProject(timerObj.id)));
 				floatLeftDiv.appendChild(document.createElement("br"));
 				
 				// Erstelle die Span-Elemente für die Redmine-Nummer und den Projektnamen
-				floatLeftDiv.appendChild(createSpan(timerObj.redmineNr, 'textNumber'));
-    			floatLeftDiv.appendChild(createSpan(timerObj.name, 'textName'));
+				const redmineNrSpan = createSpan(timerObj.redmineNr, 'textNumber');
+					  redmineNrSpan.id = "redmineNr" + timerObj.id;
+					  redmineNrSpan.addEventListener("dblclick", () => editProject("redmineNr", timerObj.id));
+
+				const textNameSpan = createSpan(timerObj.name, 'textName');
+					  textNameSpan.id = "name" + timerObj.id;
+					  textNameSpan.addEventListener("dblclick", () => editProject("name", timerObj.id));
+				floatLeftDiv.appendChild(redmineNrSpan);
+    			floatLeftDiv.appendChild(textNameSpan);
 
     			// Erstelle die Span-Elemente für Total und Session-Zeiten
-    			floatRightDiv.appendChild(createSpan(`Total: ${formartTime(timerObj.totalTime)}`, 'textTime'));
+				const totalTime = formartTime(timerObj.totalTime);
+				const totalDec = secondsToHoursDecimal(timerObj.totalTime);
+				const sessionTime = formartTime(timerObj.sessionTime);
+				const sessionDec = secondsToHoursDecimal(timerObj.sessionTime);
+
+    			floatRightDiv.appendChild(createSpan(`Total:`, ''));
+				floatRightDiv.appendChild(createSpan(totalTime, 'textTime'));
+				floatRightDiv.appendChild(createSpan(totalDec, 'textTime'));
 				floatRightDiv.appendChild(document.createElement("br"));
-    			floatRightDiv.appendChild(createSpan(`Session: ${formartTime(timerObj.partTime)}`, 'textTime'));				
+    			floatRightDiv.appendChild(createSpan(`Session:`, ''));	
+				floatRightDiv.appendChild(createSpan(sessionTime, 'textTime'));
+				floatRightDiv.appendChild(createSpan(sessionDec, 'textTime'));			
 				
 				// Fügt beide Divs zum Haupt-Div hinzu
 				projectDiv.appendChild(floatLeftDiv);
