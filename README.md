@@ -1,4 +1,4 @@
-# OneFileTools
+# quickTools
 
 #### VORWORT:
 In dieser HTML-Seite werden verschiedene Tools angeboten, welche im Arbeitsalltag helfen möchten.
@@ -15,17 +15,3 @@ Also eine gute Struktur, sprechende Namen, effizenter und lesbarer Code, hilfrei
 - **Calenadar Note**:	Zeigt die aktuelle Arbeitswoche und ermöglicht zu jedem Tag eine kurze Notiz
 - **Clipboard**:		Speichert kleine Texte und kopiert diese per Klick in die Zwischenablage
 - **Collection List**:  Anlegen von Gruppen mit je mehreren kurzen Einträgen die verschiedene Eigenschaften haben können  
-
-
----
-
-#### PROJEKT TIMER:
-Das Tool soll helfen die Zeit für eine bestimmte Aufgabe/Projekt im Blick zu behalten. 
-Dabei wird die gesamte Zeit festgehalten und eine "Teilzeit" die sich zurück setzten lässt.  
-``[Add Project]`` Neuer Eintrag  
-``[Go]`` Timer starten   
-``[Stop]`` Timer anhalten   
-``[Reset]`` Teilzeit Timer zurück setzten  
-``[Edit]`` Name und Id ändern  
-``[Prio]`` Priorität ändern  
-``[X]`` Eintrag löschen  
