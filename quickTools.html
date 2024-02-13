@@ -129,12 +129,12 @@
 		<style id="globalCSS"> 
 			body {
 			  font-size: 1em;
-			  padding: 25px 0 25px 0;
+			  padding: 0 0 25px 0;
 			  color: var(--text-3);
 			  background-color: var(--ground);
 			}
 			
-			main, header {
+			main {
 			  box-sizing: border-box;
 			  margin: auto;
 			  display: flex;
@@ -145,8 +145,15 @@
 			  padding: 10px 10px 10px 10px;
 			  outline: 3px solid var(--gray-2);
 			} header {
-			  margin-bottom: 10px;
+			  margin: auto;
+			  margin-bottom: 15px;
+			  width: 98%;
+			  text-align: center;
 			  background-color: var(--background-1);
+			  padding: 5px;
+			  border: 3px dotted var(--gray-2);
+			  outline: 3px solid var(--gray-2);
+			  z-index: 2;
 			}
 			
 			h3 {
@@ -210,6 +217,11 @@
 			  color: var(--text-3);
 			  background-color: var(--input);
 			  border: 2px solid var(--gray-3);
+			} 
+			input:focus,
+			textarea:focus,
+			select:focus{
+				border: 2px solid var(--purple);
 			}
 
 			.container {
