@@ -830,7 +830,7 @@
 					const option = document.createElement('option');
 					option.textContent = optionValue;
 					option.value = optionValue;
-					if (optionValue.toString() === selectedValue.toString()) {
+					if (String(optionValue) === String(selectedValue)) {
 						option.selected = true;
 					}
 					select.appendChild(option);
