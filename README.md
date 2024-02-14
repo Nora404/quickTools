@@ -16,7 +16,7 @@ Also eine gute Struktur, sprechende Namen, effizenter und lesbarer Code, hilfrei
 - **Clipboard**:		Speichert kleine Texte und kopiert diese per Klick in die Zwischenablage
 - **Collection List**:  Anlegen von Gruppen mit je mehreren kurzen Einträgen die verschiedene Eigenschaften haben können  
 
----
+
 
 #### ANLEITUNG:
 **Project Timer**  
@@ -44,16 +44,27 @@ Dieses Tool hilft bei der Erstellung von Commits, indem es die Einhaltung von Re
 
 ---
 
-**Commit History**
+**Commit History**  
+Sobald ein Commit in die Zwischenablage kopiert wird, wird er der History hinzugefügt.
+Es werden die letzten 10 Commits gespeichert, mit ihren Namen, dem Datum und der Zeit.
+- Mit [X] wird der Eintrag gelöscht.
+- Es können die letzten 3, 5 oder 10 Commits angezeigt werden.
 
 ---
 
-**Calendar Note**
+**Calendar Note**  
+Mit diesem Tool lassen sich kurze Notizen zu jedem Tag erstellen. Der Kalender zeigt die aktuelle Arbeitswoche an, der aktuelle Tag wird farblich markiert. Es kann genutzt werden um die wichtigsten Aufgaben des Tages zu notieren.
+- Mit [Last] und [Next] kann zwischen den Wochen gewechselt werden.
+- Der Button dazwischen zeigt die aktuelle Woche und das Jahr an.
+- Mit einem Doppelklick auf den Text unter dem Datum öffnet sich ein Eingabefeld, in dem die Notiz eingegeben werden kann. Mit der Enter-Taste wird die Notiz gespeichert. Verliert das Eingabefeld den Fokus, ohne dass Enter gedrückt wurde, wird die Bearbeitung abgebrochen. 
 
 ---
 
 **Clipboard**  
 Dieses Tool bietet die Möglichkeit, mehrere kurze Texte zu speichern und per Klick in die Zwischenablage zu kopieren. Das eignet sich beispielsweise, um häufig verwendete Texte wie URLs, Ticketnummern oder Befehle zu speichern und schnell in andere Anwendungen zu kopieren.
+- Mit [Add Snippet] wird ein neuer Eintrag erstellt, mit [Delete] neben dem Eintrag wird dieser gelöscht.
+- Mit [Copy] wird der Text in die Zwischenablage kopiert.
+- Mit einem Doppelklick auf den Text öffnet sich ein Eingabefeld, in dem der neue Text eingegeben werden kann. Mit der Enter-Taste wird der neue Inhalt gespeichert. Verliert das Eingabefeld den Fokus, ohne dass Enter gedrückt wurde, wird die Bearbeitung abgebrochen.
 
 ---
 
