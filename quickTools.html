@@ -129,9 +129,10 @@
 		<style id="globalCSS"> 
 			body {
 			  font-size: 1em;
-			  padding: 0 0 25px 0;
+			  padding: 0;
 			  color: var(--text-3);
 			  background-color: var(--ground);
+			  margin: 0;
 			}
 			
 			main {
@@ -146,12 +147,12 @@
 			  outline: 3px solid var(--gray-2);
 			} header {
 			  margin: auto;
-			  margin-bottom: 15px;
-			  width: 98%;
+			  margin-bottom: 20px;
+			  width: 100%;
 			  text-align: center;
 			  background-color: var(--background-1);
 			  padding: 5px;
-			  border: 3px dotted var(--gray-2);
+			  border-bottom: 3px dotted var(--gray-2);
 			  outline: 3px solid var(--gray-2);
 			  z-index: 2;
 			}
@@ -967,7 +968,7 @@
 		</script>
 
 		<script id="timerJS">
-			let timerObjects = JSON.parse(localStorage.getItem("timers")) || {};
+			let timerObjects = JSON.parse(localStorage.getItem("toolTimers")) || {};
 			let timerInterval = null;
 			let timerActiv = null;
 
@@ -996,7 +997,7 @@
 					prio: 2,
 				};
 				timerObjects[id] = newTimerObj;
-				localStorage.setItem("timers", JSON.stringify(timerObjects));
+				localStorage.setItem("toolTimers", JSON.stringify(timerObjects));
 				renderTimerEntries();
 			}
 			const addProjectBtn = document.getElementById("addProjectBtn");
@@ -1054,7 +1055,7 @@
 
 			function deleteProject(projectId){
 				delete timerObjects[projectId];
-				localStorage.setItem("timers", JSON.stringify(timerObjects));
+				localStorage.setItem("toolTimers", JSON.stringify(timerObjects));
 				renderTimerEntries();
 			}
 
@@ -1062,7 +1063,7 @@
 				const obj = timerObjects[timerId];
 				obj[attr] = value;
 				timerObjects[timerId] = obj;
-				localStorage.setItem("timers", JSON.stringify(timerObjects));
+				localStorage.setItem("toolTimers", JSON.stringify(timerObjects));
 				renderTimerEntries();
 			}
 
