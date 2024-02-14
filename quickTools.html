@@ -24,7 +24,7 @@
 		
 	TOOLS ÜBERSICHT:
 	- Projekt Timer:	Zwei Stoppuhren, eine für die gesamte Zeit und eine die man zurück setzten kann
-	- Projekt Note:		Notizen und einfache Checkliste zu einem Projekt, eine Erweiterung zum Projekt Timer 
+	- Memory Note:		Notizen mit der Möglichkeit eine Erinnerung zu erstellen die sich farblich bemerkbar macht
 	- Commit Message:	Formular zum Erstellen und Formatieren von Commits und Hilfe um die strengen Regeln einzuhalten
 	- Commit History:	Eine Liste der letzten Commits, eine Erweiterung zu den Commit Messages. Füllt sich automatisch
 	- Calenadar Note:	Zeigt die aktuelle Arbeitswoche und ermöglicht zu jedem Tag eine kurze Notiz
@@ -33,35 +33,8 @@
 	
 	SPEICHERORT:
 	Die Werte der Tools werden im LocalStorage des Browsers gespeichert. 
-	Projekt Timer speichert den Namen des Projektes, seine id, seine Prio, die gemessenen Zeiten und sein Erstellungsdatum in "saveProject"
-	Projekt Note speichert seinen Text und seine Listen mit je Text und Status zu "saveProject" dazu
-	Commit History speichert seinen Namen (Commit Message aus dem Formular) Datum und Zeit seines Erstellens in "saveCommit"
-	Calendar Note speichert seinen Text und das Datum zudem die Notiz gehört in "saveCalendarNote"
-	Clipboard speichert seinen Namen und den Text welcher im Zwischenspeicher kopiert werden soll in "saveSnippet"
-	Collection List speichert seine Gruppen mit Namen, Id und Einträgen sowie deren Texte und Eigenschaften in "saveCollection" 
+	Genaure Beschreibungen folgen ...
 
-	---
-
-	PROJEKT TIMER
-	Das Tool soll helfen die Zeit für eine bestimmte Aufgabe/Projekt im Blick zu behalten. 
-	Dabei wird die gesamte Zeit festgehalten und eine session Zeit die sich zurück setzten lässt.
-	Mit [Add Project] lässt sich ein neuer Eintrag erstellen.
-	Mit [Go] wird der Timer gestartet und mit [Stop] angehalten. 
-	Der Session-Timer lässt sich mit [Reset] auf null zurück setzten.
-	[X] Löscht den Eintag aus der Liste, mit [Edit] kann Name und Id verändert werden
-	Mit [Prio] lässt sich eine Priorität vergeben, was die Positzion und Rahmenfarbe ändert.
-
-	PROJEKT NOTE
-
-	COMMIT MESSAGE
-
-	COMMIT HISTORY
-
-	CALENDAR NOTE
-
-	CLIPBOARD
-
-	COLLECTION LIST
 -->
 <html>
 	<head>
@@ -582,7 +555,7 @@
 			<button id="commitBtn" class="greenBtn" onclick="changeVisibility('commit')">Commit Message</button>
 			<button id="calendarBtn" class="greenBtn" onclick="changeVisibility('calendar')">Calendar Notes</button>
 			
-			<button id="noteBtn" class="greenBtn" onclick="changeVisibility('note')">Project Notes</button>
+			<button id="noteBtn" class="greenBtn" onclick="changeVisibility('note')">Memory Notes</button>
 			<button id="collectionBtn" class="greenBtn" onclick="changeVisibility('collection')">Collection List</button>
 			<button id="clipboardBtn" class="greenBtn" onclick="changeVisibility('clipboard')">Clipboard</button>
 
@@ -665,10 +638,10 @@
 		<div id="mainColumn2">
 			<div id="note" class="container"> <!-- COLLECTION HTML ---------------------------->
 				<div class="tooltip helpText">?
-					<span class="tooltiptext" id="noteToolTipp">Project Note</span>
+					<span class="tooltiptext" id="noteToolTipp">Memory Note</span>
 				</div>
 				
-				<h3>Project Note</h3>
+				<h3>Memory Note</h3>
 				<button id="addNote">Add Note</button>
 			</div>
 			<hr id="noteHr">
@@ -788,7 +761,7 @@
 				calendarToolTipp: "Tooltip Text für Calendar Notes",
 				clipboardToolTipp: "Tooltip Text für Clipboard",
 				collectionToolTipp: "Tooltip Text für Collection List",
-				noteToolTipp: "Tooltip Text für Project Note",
+				noteToolTipp: "Tooltip Text für Memory Note",
 				helpToolTipp: "<b>Vorwort</b><br><br>In dieser HTML-Seite werden verschiedene Tools angeboten, welche im Arbeitsalltag helfen möchten. Zudem ist das Erstellen des Codes für mich eine Übung gewesen. Der gesamte Code soll nur eine einzige Datei umfassen und muss daher eine hohe Qulität haben. Also eine gute Struktur, sprechende Namen, effizenter und lesbarer Code, hilfreiche Kommentare.<br><br><b>Anleitung</b><br><br>Tools können ein und ausgeblendet werden, mithilfe der oberen Buttons ..."
 			};
 

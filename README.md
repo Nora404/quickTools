@@ -9,7 +9,7 @@ Also eine gute Struktur, sprechende Namen, effizenter und lesbarer Code, hilfrei
 		
 #### TOOLS ÜBERSICHT:
 - **Projekt Timer**:	Zwei Stoppuhren, eine für die gesamte Zeit und eine die man zurück setzten kann
-- **Projekt Note**:		Notizen die mit einer Erinnerung verknüpft werden können 
+- **Memory Note**:		Notizen die mit einer Erinnerung verknüpft werden können 
 - **Commit Message**:	Formular zum Erstellen und Formatieren von Commits und Hilfe um die strengen Regeln einzuhalten
 - **Commit History**:	Eine Liste der letzten Commits, eine Erweiterung zu den Commit Messages. Füllt sich automatisch
 - **Calendar Note**:	Zeigt die aktuelle Arbeitswoche und ermöglicht zu jedem Tag eine kurze Notiz
@@ -29,7 +29,7 @@ Dieses Tool bietet für jeden Eintrag zwei Stoppuhren: Eine misst die gesamte Ze
   
 ---
 
-**Project Note**  
+**Memory Note**  
 Dieses Tool bietet die Möglichkeit Notizen (zum Beispiel zu einem Projekt) zu erstellen. Jede Notiz hat einen Titel und einen Text. Zudem kann eine Erinnerung gesetzt werden, die sobald sie abgelaufen ist, den Text des Titels rot einfärbt. Auch der Rand dieses Tools wird rot.
 - Mit [Add Note] wird eine neue Notiz erstellt, mit [Delete] neben dem Titel wird die Notiz gelöscht.
 - Mit einem Doppelklick auf den Titel oder den Text öffnet sich ein Eingabefeld, in dem der neue Text eingegeben werden kann. Mit der Enter-Taste wird der neue Inhalt gespeichert. Verliert das Eingabefeld den Fokus, ohne dass Enter gedrückt wurde, wird die Bearbeitung abgebrochen.
