@@ -31,6 +31,9 @@ Dieses Tool bietet für jeden Eintrag zwei Stoppuhren: Eine misst die gesamte Ze
 
 **Project Note**  
 Dieses Tool bietet die Möglichkeit Notizen (zum Beispiel zu einem Projekt) zu erstellen. Jede Notiz hat einen Titel und einen Text. Zudem kann eine Erinnerung gesetzt werden, die sobald sie abgelaufen ist, den Text des Titels rot einfärbt. Auch der Rand dieses Tools wird rot.
+- Mit [Add Note] wird eine neue Notiz erstellt, mit [Delete] neben dem Titel wird die Notiz gelöscht.
+- Mit einem Doppelklick auf den Titel oder den Text öffnet sich ein Eingabefeld, in dem der neue Text eingegeben werden kann. Mit der Enter-Taste wird der neue Inhalt gespeichert. Verliert das Eingabefeld den Fokus, ohne dass Enter gedrückt wurde, wird die Bearbeitung abgebrochen.
+- Mit einem Klick auf [Add Memo] kann eine Erinnerung gesetzt werden. Mit einem Klick auf [X] neben der Memo wird die Erinnerung gelöscht.
 
 ---
 
