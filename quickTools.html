@@ -899,6 +899,7 @@
 				addToggleEvent(newElement, currentValue, {...config, changeTo: currentTagName});
 
 				element.parentNode.replaceChild(newElement, element);
+
 				newElement.focus();
 			}
 
@@ -916,28 +917,40 @@
 			function addToggleEvent(element, value, config) {
 				const tag = element.tagName.toLowerCase();
 				
+				// Zustandsvariable, um zu überwachen, ob das Element im Bearbeitungsmodus ist
+				// Ansonsten hat Chrome Probleme mit dem blur-Event und der neue Wert wird nicht gespeichert
+				let isEditing = false;
+
 				if (tag === 'input' || tag === 'textarea') {
-					
 					element.addEventListener('keyup', function(event) {
 						if (event.key === "Enter") {
+							// Setzt isEditing auf false, da der Bearbeitungsmodus mit Enter beendet wird
+							isEditing = false;
 							toggleElement(config);
 							if (typeof config.callback === 'function' && element.value) {
 								config.callback(config.objId, config.changeAttr, element.value);
 							}
 						}
 					});
-					element.addEventListener('blur', () =>{
+					element.addEventListener('blur', () => {
+						if (isEditing) {
+							// Setzt isEditing auf false, da der Bearbeitungsmodus bei blur beendet wird
+							isEditing = false;
 							toggleElement(config);
 							if (typeof config.callback === 'function' && element.value) {
 								config.callback(config.objId, config.changeAttr, value);
 							}
+						}
 					});
 				} else {
 					element.addEventListener('dblclick', function() {
+						// Setzt isEditing auf true, da der Bearbeitungsmodus mit Doppelklick gestartet wird
+						isEditing = true;
 						toggleElement(config);
 					});
 				}
 			}
+
 		</script>
 
 		<script id="timerJS">
@@ -1252,11 +1265,18 @@
 			}
 
 			function editNote() {
-				console.log('editNote');
+				const config = {
+					objId: "noteArea",
+					elementId: "noteArea",
+					changeTo: "textarea",
+					changeAttr: "textContent",
+					inputType: "text",
+					callback: saveNote,
+				}
 			}
 
 			function saveNote() {
-
+				console.log('editNote');
 			}
 
 		</script>
