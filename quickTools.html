@@ -106,6 +106,7 @@
 			  color: var(--text-3);
 			  background-color: var(--ground);
 			  margin: 0;
+			  font-family: "Courier New", Courier, monospace;
 			}
 			
 			main {
@@ -131,9 +132,13 @@
 			}
 			
 			h3 {
+			  font-family: Arial, Helvetica, sans-serif;
+			  font-weight: 500;
+			  background-color: var(--glas);
 			  color: var(--text-2);
 			  font-size: 1.4em;
-			  margin: 15px 0 15px 0;
+			  margin: 0 0 25px 0;
+			  padding: 5px;
 			}
 
 			hr {
@@ -200,7 +205,7 @@
 
 			.container {
 				box-sizing: border-box;
-				padding: 10px;
+				padding: 20px;
 				border: 1px solid var(--background-2);
 				background-color: var(--background-1);
 			}
@@ -214,6 +219,7 @@
 			}
 		</style>  
 		<style id="tooltipsCSS"> 
+			/* Sichtbares Objekt */
 			.helpText {
 			  float: left;
 			  text-align: center;
@@ -223,8 +229,8 @@
 			  color: var(--text-3); 
 			  font-family: "Courier New", Courier, monospace;
 			  font-size: 1em;
-			  margin: 5px;
-			  margin-top: 17px;
+			  margin: 5px 10px 5px 5px;
+			  margin-top: 7px; /* Hiermit wird es zum Text daneben justiert */
 			  height: 18px;
 			  width: 18px;
 			}
@@ -270,8 +276,15 @@
 				height: 25px;
 			}
 			#timer li{
-				margin-bottom: 15px;
+				margin: 20px 0 20px 0;
+				font-family: Arial, Helvetica, sans-serif;
 			}
+
+			#timer span{
+				margin-top: 10px;
+				margin-bottom: 5px;
+			}
+
 			#projectList {
 				list-style-type: none;
 				padding: 0;
@@ -306,11 +319,11 @@
 			}
 			.timerRight{
 				display: inline;
-				width: 225px;
+				width: 265px;
 			}
 			.timerLeft{
 				display: inline;
-				width: calc(100% - 250px);
+				width: calc(100% - 280px);
 			}
 			.textTime{
 				display: inline-block;
@@ -321,6 +334,7 @@
 				height: 27px;
 				margin: 2px 4px 4px 5px;
 				font-size: 1.2em;
+				font-family: "Courier New", Courier, monospace;
 			}
 			.textName, .textNumber{
 				display: inline-block;
@@ -424,6 +438,7 @@
 				margin: 5px 0 5px 0;
 				padding: 5px;
 				resize: none;
+				font-family: Arial, Helvetica, sans-serif;
 			}
 			#deEnBtn {
 				float: right;
@@ -470,11 +485,12 @@
 				background-color: var(--background-2);
 			}
 			.noteArea {
+				font-family: Arial, Helvetica, sans-serif;
 				width: 100%;
 				max-width: 100%;
-				min-height: 100px;
+				min-height: 150px;
 				padding: 5px;
-				font-size: 1.1em;
+				font-size: 1em;
 				font-weight: 500;
 				text-align: left;
 			}
