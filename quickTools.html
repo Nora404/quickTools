@@ -66,6 +66,7 @@
 <html>
 	<head>
 		<title>quickTools</title>
+		<link rel="icon" type="image/x-icon" href="./quickToolsIcon.ico">
 		<style id="colors"> 
 			:root {
 			--ground: rgb(255, 255, 255);			/* Allgemeine Hintergundfarbe */
@@ -949,6 +950,9 @@
 				// Zustandsvariable, um zu überwachen, ob das Element im Bearbeitungsmodus ist
 				// Ansonsten hat Chrome Probleme mit dem blur-Event und der neue Wert wird nicht gespeichert
 				let isEditing = false;
+
+				// isEditing wird als Closure gespeichert, das heißt dass jeder EventListener auf isEditing zugreifen kann
+				// selbst dann wenn diese Funktion schon beendet ist
 
 				if (tag === 'input' || tag === 'textarea') {
 					element.addEventListener('keyup', function(event) {
