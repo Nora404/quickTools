@@ -39,7 +39,6 @@
 <html>
 	<head>
 		<title>quickTools</title>
-		<link rel="icon" type="image/x-icon" href="./quickToolsIcon.ico">
 		<style id="colors"> 
 			:root {
 			--ground: rgb(255, 255, 255);			/* Allgemeine Hintergundfarbe */
@@ -510,6 +509,7 @@
 				// Funktionen die beim Laden der Seite ausgeführt werden sollen
 				loadStore();
 				loadCss();
+				loadVisibility();
 				setCurrentWeekToInput();
 				updateTable();
 				setToolTipText();
@@ -539,12 +539,14 @@
 
 				if (!store || Object.keys(store).length === 0) {
 					store = {
-					timerBtn: true,
-					noteBtn: false,
-					commitBtn: true,
-					calendarBtn: true,
-					clipboardBtn: true,
-					collectionBtn: true,
+					visibility: {
+						timer: true,
+						commit: true,
+						calendar: true,
+						note: false,
+						clipboard: true,
+						collection: true
+					},
 					timerSort: "Date",
 					commitHistorySelect: 3,
 					cssMode: "default"
@@ -557,6 +559,14 @@
 				const cssMode = store.cssMode;
 				if(cssMode === "dark-mode"){
 					document.body.classList.toggle('dark-mode');
+				}
+			}
+
+			function loadVisibility(){
+				for (const tool in store.visibility) {
+					if (store.visibility[tool] === false) {
+						changeVisibility(tool);
+					}
 				}
 			}
 
@@ -698,11 +708,12 @@
 
 				if(element.classList.contains("hidden")) {
 					element.classList.remove("hidden");
-					elementBtn.classList.add("greenBtn");
 					elementBtn.classList.remove("redBtn");
+					elementBtn.classList.add("greenBtn");
 					if(elementHr){
 						elementHr.classList.remove("hidden");
 					}
+					store.visibility[container] = true;
 				} else {
 					element.classList.add("hidden");
 					elementBtn.classList.add("redBtn");
@@ -710,7 +721,9 @@
 					if(elementHr){
 						elementHr.classList.add("hidden");
 					}
+					store.visibility[container] = false;
 				}
+				localStorage.setItem("toolStore", JSON.stringify(store));
 				changeMainWidth();
 			}
 
