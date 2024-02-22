@@ -657,8 +657,8 @@
 				 <input type="week" id="weeklySelection" onchange="updateTable()">
 				 <button id="nextWeekBtn" onclick="changeWeek(+1)">Next</button>
 				 <table id="calendarTable">
-					<tr id="th"></tr>
-        			<tr id="tb"></tr>
+					<tr id="calendarTh"></tr>
+        			<tr id="calendarTb"></tr>
 				 </table>
 			</div> 
 		</div>	
@@ -1193,8 +1193,8 @@
 		</script> 
 
 		<script id="calendarJS">
-			const th = document.getElementById("th");
-			const tb = document.getElementById("tb");
+			const calendarTh = document.getElementById("calendarTh");
+			const calendarTb = document.getElementById("calendarTb");
 			const input = document.getElementById("weeklySelection");
 			const days = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
 
@@ -1222,17 +1222,20 @@
 			}
 
 			function fillTable(startDate) {
+				calendarTh.innerHTML = '';
+				calendarTb.innerHTML = '';
+
 				for (let i = 0; i < 5; i++) {
-					th.innerHTML += generateHeadline(i, startDate);           
-					tb.innerHTML += generateNoteArea(i);    
+					let date = new Date(startDate.getTime()); 
+					date.setDate(date.getDate() + i); 
+
+					calendarTh.innerHTML += generateHeadline(date);           
+					calendarTb.innerHTML += generateNoteArea(date);    
 				}
 			}
 
-			function generateHeadline(daysOffset = 0, startDate) {
-				let date = new Date(startDate.getTime()); // Eine Kopie von startDate
+			function generateHeadline(date) {
 				let thStart = "<th>";
-				date.setDate(date.getDate() + daysOffset); 
-
 				// Wenn das Datum heute ist, wird es mit einer anderen Farbe dargestellt
 				if(formatDate(date) === formatDate(new Date())){
 					thStart = "<th id='today'>";	
@@ -1256,8 +1259,8 @@
 				let newDate = input.valueAsDate || new Date(); 
 				newDate = getLastMonday(newDate);
 
-				th.innerHTML = "";
-				tb.innerHTML = "";
+				calendarTh.innerHTML = "";
+				calendarTb.innerHTML = "";
 
 				fillTable(newDate);
 			}
@@ -1286,9 +1289,10 @@
 			 * Diese tauscht das Textfeld mit dem <div> aus und speichert die Notiz in localStorage
 			 */
 
-			function generateNoteArea(index) {
+			function generateNoteArea(date) {
+				const dateId = formatDate(date).replace(/[\.\-\/]/g, "");
 				const noteAreaElement = 
-					`<div class="noteArea" id="note${index}" onclick="editNote()">`
+					`<div class="noteArea" id="${dateId}" onclick="editNote()">`
 				const noteAteaContent = getNote();
 
 				return `<td>${noteAreaElement}${noteAteaContent}</div></td>`;
