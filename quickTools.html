@@ -580,7 +580,6 @@
 			<button class="tooltip">Help
 				<span class="tooltiptext" id="helpToolTipp">Tooltip text</span>
 			</button>
-			<button id="logBtn" onclick="log()">Log F12</button>
 		</header>
 	
 	
@@ -686,15 +685,6 @@
 		</div>
 		</main> 
 
-		<script id="log">
-			function log(){
-				let toolStore = localStorage.getItem("toolStore");
-				let toolTimers = localStorage.getItem("toolTimers");
-
-				console.log('localStorage "toolStore": ',JSON.parse(toolStore));
-				console.log('localStorage "toolTimers": ',JSON.parse(toolTimers));
-			}
-		</script>
 <!--------------------------------------------------------------------------------------------------------------------------->
 
 <!--------------------------------------------------------------------------------------------------------------------------->
@@ -1040,6 +1030,7 @@
 
 			function resetTimer(projectId){
 				timerObjects[projectId].sessionTime = 0;
+				saveTimerObj(projectId, "sessionTime", 0);
 				renderTimerEntries();
 			}
 
