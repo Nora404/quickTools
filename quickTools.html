@@ -896,10 +896,10 @@
 				return [hrs, mins, secs];
 			}
 
-			function toggleElements(currentElement, newElement){
+			function toggleElements(currentElement, newElement, focusElement){
 				if(currentElement.parentNode) {
 					currentElement.parentNode.replaceChild(newElement, currentElement);
-					newElement.focus();
+					focusElement ? focusElement.focus() : newElement.focus();
 				}
 			}
 
@@ -1210,21 +1210,44 @@
 			}
 
 			function createCalendarDiv(date) {
-				const dateId = formatDate(date);
-				const editfield = createCalendarEditfield(dateId);
-				const div = document.createElement("div");
-					  div.className = "noteArea";
-					  div.id = dateId;
-					  div.textContent = getNote(dateId);
-					  div.addEventListener("dblclick", () => toggleElements(div, editfield));
 				const td = document.createElement("td");
+				const div = createCalendarNotefield(date)
 				td.appendChild(div);
 				return td;
 			}
 
-			function createCalendarEditfield(id){
+			function createCalendarNotefield(date){
+				const dateId = formatDate(date);
+				const editfield = createCalendarEditfield(date);
+				const div = document.createElement("div");
+					  div.className = "noteArea";
+					  div.id = dateId;
+					  div.textContent = getNote(dateId);
+					  div.addEventListener("dblclick", () => toggleElements(div, editfield[0], editfield[1]));
+				return div;
+			}
+
+			function createCalendarEditfield(date){
+				const dateId = formatDate(date);
+				const br = document.createElement("br");
+				const div = document.createElement("div");
+
 				const editfield = document.createElement("textarea");
-				return editfield;				
+					  editfield.value = getNote(dateId);
+					  editfield.id = dateId;
+				      editfield.addEventListener("blur", ()=>{
+						    const notefield = createCalendarNotefield(date);
+							toggleElements(div, notefield);
+					  });
+				
+				const saveBtn = document.createElement("button");
+				      saveBtn.textContent = "Save";
+
+				const cancelBtn = document.createElement("button");
+				      cancelBtn.textContent = "Cancel";
+
+				div.append(editfield, br, saveBtn, cancelBtn);
+				return [div, editfield];				
 			}
 
 			function getNote(id = 0) {
