@@ -895,93 +895,10 @@
 				return [hrs, mins, secs];
 			}
 
-			// Das elementId wird gegen changeTo ausgetauscht
-			// const config = {
-			// 		objId: key für den LocalStorage
-			// 		elementId: html-Element
-			// 		changeTo: neues html-Tag
-			// 		changeAttr: attr des geändert werden soll
-			// 		inputType: fals Input sein type
-			// 		callback: funktion zum speichern
-			// 	}
-			
-			/*  Funktionsweise von toggelElement:
-			 *  Eine Editfunktion muss die oben genannten Daten sammeln und damit toggleElement aufrufen
-			 *  Diese beginnt aus dem config-Daten die notwendigen Variabeln zu extrahieren
-			 *  Dazu gehört der Tag-Name, sein Inhalt und das neue HTML-Element
-			 *  Dem neuen Element wird gleiche id wie dem vorherigen Tag gegeben um es beim zurück
-			 *  tauschen wiederzufinden. Dafür braucht das Element noch den passenden EventListener
-			 *  Der ruft das toggelElement erneut auf, braucht daher die komplette neue config
-			 *  Das Event speichert auch den neuen Wert, sollte Enter gedrückt werden 
-			 *  Genaugenommen ruft es den Callback auf mit der objId, dessen geändertem Attribut und Wert
-			 */ 
-			function toggleElement(config) {
-				const element = document.getElementById(config.elementId);
-				if (!element) return;
-
-				const currentTagName = element.tagName.toLowerCase();
-				const isEditmode =  currentTagName === 'input' ||  currentTagName === 'textarea' ? true : false;
-				const currentValue = isEditmode ? element.value : element.textContent;
-				const newElement = createElementWithValue(config.changeTo, currentValue, config.inputType);
-
-				newElement.className = element.className;
-				newElement.id = config.elementId;
-
-				addToggleEvent(newElement, currentValue, {...config, changeTo: currentTagName});
-
-				element.parentNode.replaceChild(newElement, element);
-
-				newElement.focus();
-			}
-
-			function createElementWithValue(tag, value, inputType) {
-				const element = document.createElement(tag);
-				if (tag === 'input' || tag === 'textarea') {
-					element.value = value; 
-					element.setAttribute('type', inputType);
-				} else {
-					element.textContent = value; 
-				}
-				return element;
-			}
-
-			function addToggleEvent(element, value, config) {
-				const tag = element.tagName.toLowerCase();
-				
-				// Zustandsvariable, um zu überwachen, ob das Element im Bearbeitungsmodus ist
-				// Ansonsten hat Chrome Probleme mit dem blur-Event und der neue Wert wird nicht gespeichert
-				let isEditing = false;
-
-				// isEditing wird als Closure gespeichert, das heißt dass jeder EventListener auf isEditing zugreifen kann
-				// selbst dann wenn diese Funktion schon beendet ist
-
-				if (tag === 'input' || tag === 'textarea') {
-					element.addEventListener('keyup', function(event) {
-						if (event.key === "Enter") {
-							// Setzt isEditing auf false, da der Bearbeitungsmodus mit Enter beendet wird
-							isEditing = false;
-							toggleElement(config);
-							if (typeof config.callback === 'function' && element.value) {
-								config.callback(config.objId, config.changeAttr, element.value);
-							}
-						}
-					});
-					element.addEventListener('blur', () => {
-						if (isEditing) {
-							// Setzt isEditing auf false, da der Bearbeitungsmodus bei blur beendet wird
-							isEditing = false;
-							toggleElement(config);
-							if (typeof config.callback === 'function' && element.value) {
-								config.callback(config.objId, config.changeAttr, value);
-							}
-						}
-					});
-				} else {
-					element.addEventListener('dblclick', function() {
-						// Setzt isEditing auf true, da der Bearbeitungsmodus mit Doppelklick gestartet wird
-						isEditing = true;
-						toggleElement(config);
-					});
+			function toggleElements(currentElement, newElement){
+				if(currentElement.parentNode) {
+					currentElement.parentNode.replaceChild(newElement, currentElement);
+					newElement.focus();
 				}
 			}
 
@@ -1049,21 +966,6 @@
 				timerObjects[projectId].sessionTime = 0;
 				saveTimerObj(projectId, "sessionTime", 0);
 				renderTimerEntries();
-			}
-
-			function editProject(attr, objId){
-				const obj = timerObjects[objId];
-				const elementId = attr + objId;
-				const config = {
-					objId: objId,
-					elementId: elementId,
-					changeTo: "input",
-					changeAttr: attr,
-					inputType: "text",
-					callback: saveTimerObj,
-				}
-				
-				toggleElement(config);
 			}
 
 			function changePrio(projectId){
@@ -1161,9 +1063,10 @@
 				floatLeftDiv.appendChild(createButton('Delete', 'redBtn timerBtn', () => deleteProject(timerObj.id)));
 				floatLeftDiv.appendChild(document.createElement("br"));
 				
-				const textNameSpan = createSpan(timerObj.name, 'textName');
-					  textNameSpan.id = "name" + timerObj.id;
-					  textNameSpan.addEventListener("dblclick", () => editProject("name", timerObj.id));
+				const textNameSpan = createNameSpan(timerObj.name, timerObj.id);
+					//   textNameSpan.id = "name" + timerObj.id;
+					//   textNameSpan.setAttribute("data-change", "input");
+					//   textNameSpan.addEventListener("dblclick", () => editProject("name", timerObj.id));
     			floatLeftDiv.appendChild(textNameSpan);
 
 				// Rechte Seite mit Anzeige der Timer
@@ -1186,6 +1089,34 @@
 
 				li.appendChild(projectDiv);
     			return li;
+			}
+
+			function createNameSpan(text, id){
+				const input = createEditNameInput(text, id);
+				const span = document.createElement('span');
+				      span.className = "textName";
+					  span.id = "name" + id;
+					  span.textContent = text;
+					  span.addEventListener("dblclick", () => toggleElements(span, input));
+				return span;	  
+			}
+			function createEditNameInput(text, id){
+				const input = document.createElement("input");
+				      input.className = "textName";
+					  input.id = "name" + id;
+					  input.value = text;
+					  input.addEventListener("keyup", (e)=>{
+						if(e.key === "Enter"){
+							const span = createNameSpan(input.value, id);
+							saveTimerObj(id, "name", input.value);
+							toggleElements(input, span);
+						}
+					  });
+					  input.addEventListener("blur", ()=>{
+							const span = createNameSpan(text, id);
+							toggleElements(input, span);
+					  });
+				return input;	  
 			}
 		</script> 
 
@@ -1312,6 +1243,7 @@
 					inputType: "text",
 					callback: saveNote,
 				}
+				console.log("edit");
 			}
 
 			function saveNote() {
