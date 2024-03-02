@@ -341,6 +341,7 @@
 				display: inline-block;
 				margin: 5px 10px 5px 5px;
 				font-size: 1.2em;
+				max-width: 90%;
 			}
 			input.textName:focus, input.textNumber:focus{
 				outline: 0;
@@ -1064,9 +1065,6 @@
 				floatLeftDiv.appendChild(document.createElement("br"));
 				
 				const textNameSpan = createNameSpan(timerObj.name, timerObj.id);
-					//   textNameSpan.id = "name" + timerObj.id;
-					//   textNameSpan.setAttribute("data-change", "input");
-					//   textNameSpan.addEventListener("dblclick", () => editProject("name", timerObj.id));
     			floatLeftDiv.appendChild(textNameSpan);
 
 				// Rechte Seite mit Anzeige der Timer
@@ -1152,30 +1150,6 @@
 				document.getElementById("weeklySelection").value = weekValue;
 			}
 
-			function fillTable(startDate) {
-				calendarTh.innerHTML = '';
-				calendarTb.innerHTML = '';
-
-				for (let i = 0; i < 5; i++) {
-					let date = new Date(startDate.getTime()); 
-					date.setDate(date.getDate() + i); 
-
-					calendarTh.innerHTML += generateHeadline(date);           
-					calendarTb.innerHTML += generateNoteArea(date);    
-				}
-			}
-
-			function generateHeadline(date) {
-				let thStart = "<th>";
-				// Wenn das Datum heute ist, wird es mit einer anderen Farbe dargestellt
-				if(formatDate(date) === formatDate(new Date())){
-					thStart = "<th id='today'>";	
-				}
-				
-				const weekdayAndDate = `${days[date.getDay()]} (${formatDate(date)})`;
-				return `${thStart}${weekdayAndDate}</th>`;
-			}
-
 			function getLastMonday(date = new Date()) {
 				let resultDate = new Date(date); // Eine Kopie, um das Originaldatum nicht zu verändern
 				resultDate.setDate(resultDate.getDate() - (resultDate.getDay() || 7) + 1); // Korrektur für Sonntag
@@ -1186,6 +1160,8 @@
 				return date.toLocaleDateString("de-DE", { year: '2-digit', month: '2-digit', day: '2-digit' });
 			}
 
+			// Oberhalb sind die Hilfsfunktionen, Unterhalb wird das HTML generiert
+
 			function updateTable(){
 				let newDate = input.valueAsDate || new Date(); 
 				newDate = getLastMonday(newDate);
@@ -1194,6 +1170,19 @@
 				calendarTb.innerHTML = "";
 
 				fillTable(newDate);
+			}
+
+			function fillTable(startDate) {
+				calendarTh.innerHTML = '';
+				calendarTb.innerHTML = '';
+
+				for (let i = 0; i < 5; i++) {
+					let date = new Date(startDate.getTime()); 
+					date.setDate(date.getDate() + i); 
+
+					calendarTh.appendChild(createCalendarHeadline(date));           
+					calendarTb.appendChild(createCalendarDiv(date));    
+				}
 			}
 
 			// Da in Firefox das Inputfeld "week" nicht funktioniert, füge ich zwei Buttons hinzu
@@ -1209,41 +1198,38 @@
 				setCurrentWeekToInput(currentDate);
 				updateTable();
 			}
-		
-			/* In der zweiten Zeile der Tabelle können Notizen eingetragen werden
-			 * Die Zellen werden mit der Funktion generateNoteArea() erstellt
-			 * Mit der Funktion getNote() wird die Notiz aus localStorage geladen
-			 * Wird auf eine Zelle geklickt, wird die Funktion editNote() aufgerufen
-			 * Diese tauscht das <div> mit einem Textfeld aus, in dem die Notiz bearbeitet werden kann
-			 * Ein Button zum Speichern der Notiz wird hinzugefügt
-			 * Wird auf den Button geklickt, wird die Funktion saveNote() aufgerufen
-			 * Diese tauscht das Textfeld mit dem <div> aus und speichert die Notiz in localStorage
-			 */
 
-			function generateNoteArea(date) {
-				const dateId = formatDate(date).replace(/[\.\-\/]/g, "");
-				const noteAreaElement = 
-					`<div class="noteArea" id="${dateId}" onclick="editNote()">`
-				const noteAteaContent = getNote();
+			function createCalendarHeadline(date) {
+				const dateId = formatDate(date) + "headline";
+				const th = document.createElement("th");
+				      th.textContent = `${days[date.getDay()]} (${formatDate(date)})`;
+				if(formatDate(date) === formatDate(new Date())){
+					th.id = "today";	
+				}
+				return th;
+			}
 
-				return `<td>${noteAreaElement}${noteAteaContent}</div></td>`;
+			function createCalendarDiv(date) {
+				const dateId = formatDate(date);
+				const editfield = createCalendarEditfield(dateId);
+				const div = document.createElement("div");
+					  div.className = "noteArea";
+					  div.id = dateId;
+					  div.textContent = getNote(dateId);
+					  div.addEventListener("dblclick", () => toggleElements(div, editfield));
+				const td = document.createElement("td");
+				td.appendChild(div);
+				return td;
+			}
+
+			function createCalendarEditfield(id){
+				const editfield = document.createElement("textarea");
+				return editfield;				
 			}
 
 			function getNote(id = 0) {
 				const note = localStorage.getItem("noteArea" + id);
-				return note ? note : "Click to add note";
-			}
-
-			function editNote() {
-				const config = {
-					objId: "noteArea",
-					elementId: "noteArea",
-					changeTo: "textarea",
-					changeAttr: "textContent",
-					inputType: "text",
-					callback: saveNote,
-				}
-				console.log("edit");
+				return note ? note : "Doubleclick to add note";
 			}
 
 			function saveNote() {
