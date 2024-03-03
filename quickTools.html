@@ -465,6 +465,14 @@
 				font-family: "Courier New", Courier, monospace;
 			  	font-size: 1.1em;
 				font-weight: 500;
+				width: 20%;
+			}
+			.editfield {
+				outline: 0;
+				border: 2px solid var(--purple);
+				resize: vertical;
+				width: 90%;
+				min-height: 110px;
 			}
 			#weeklySelection {
 				box-sizing: border-box;
@@ -903,6 +911,10 @@
 				}
 			}
 
+			const adjustTextareaHeight = (textarea) => {
+					textarea.style.height = 'auto';
+					textarea.style.height = textarea.scrollHeight + 'px'; 
+			};
 		</script>
 
 		<script id="timerJS">
@@ -1122,6 +1134,15 @@
 		</script> 
 
 		<script id="calendarJS">
+			let calendarObjects = JSON.parse(localStorage.getItem("toolCalendar")) || {};
+
+			/** Da es in Vanilla keine Interfaces gibt, beschreibe ich hier das timerObjekt:
+			 *  {
+			 *    id: String           // Das Datum welches dem Text zugeordnet ist
+			 *    text: String         // der Text/Note welches dem Datum zugeordnet ist
+			 *  }
+			 */
+
 			const calendarTh = document.getElementById("calendarTh");
 			const calendarTb = document.getElementById("calendarTb");
 			const input = document.getElementById("weeklySelection");
@@ -1219,10 +1240,12 @@
 			function createCalendarNotefield(date){
 				const dateId = formatDate(date);
 				const editfield = createCalendarEditfield(date);
+				const formatedText = getNote(dateId).replace(/\n/g, '<br>');
 				const div = document.createElement("div");
 					  div.className = "noteArea";
 					  div.id = dateId;
-					  div.textContent = getNote(dateId);
+					  div.innerHTML = formatedText;
+					  // editfield ist ein Array, 0=Ganzes Objekt 1=Element das Focus haben soll
 					  div.addEventListener("dblclick", () => toggleElements(div, editfield[0], editfield[1]));
 				return div;
 			}
@@ -1235,28 +1258,42 @@
 				const editfield = document.createElement("textarea");
 					  editfield.value = getNote(dateId);
 					  editfield.id = dateId;
-				      editfield.addEventListener("blur", ()=>{
-						    const notefield = createCalendarNotefield(date);
-							toggleElements(div, notefield);
-					  });
+					  editfield.className = "editfield";
+
+				adjustTextareaHeight(editfield); 
+				editfield.addEventListener("input", () => adjustTextareaHeight(editfield));
+				editfield.addEventListener("focus", () => adjustTextareaHeight(editfield));
 				
 				const saveBtn = document.createElement("button");
 				      saveBtn.textContent = "Save";
+					  saveBtn.addEventListener("click", ()=>{
+							const text = editfield.value;
+							saveCalendarObj(text, dateId);
+							const notefield = createCalendarNotefield(date);
+							toggleElements(div, notefield);
+					  });
 
 				const cancelBtn = document.createElement("button");
 				      cancelBtn.textContent = "Cancel";
+					  cancelBtn.addEventListener("click", ()=>{
+						    const notefield = createCalendarNotefield(date);
+							toggleElements(div, notefield);
+					  });
 
 				div.append(editfield, br, saveBtn, cancelBtn);
+				// 0=Ganzes Objekt 1=Element das Focus haben soll
 				return [div, editfield];				
 			}
 
-			function getNote(id = 0) {
-				const note = localStorage.getItem("noteArea" + id);
-				return note ? note : "Doubleclick to add note";
+			function getNote(id) {
+				const note = calendarObjects[id];
+				return note ? note.text : "Doubleclick to add note";
 			}
 
-			function saveNote() {
-				console.log('editNote');
+			function saveCalendarObj(text, id) {
+				const obj = { id, text };
+				calendarObjects[id] = obj;
+				localStorage.setItem("toolCalendar", JSON.stringify(calendarObjects));
 			}
 
 		</script>
