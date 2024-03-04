@@ -56,10 +56,12 @@ Es werden die letzten 10 Commits gespeichert, mit ihren Namen, dem Datum und der
 ---
 
 **Calendar Note**  
-Mit diesem Tool lassen sich kurze Notizen zu jedem Tag erstellen. Der Kalender zeigt die aktuelle Arbeitswoche an, der aktuelle Tag wird farblich markiert. Es kann genutzt werden um die wichtigsten Aufgaben des Tages zu notieren.
+Mit diesem Tool lassen sich kurze Notizen zu jedem Tag erstellen. Der Kalender zeigt die aktuelle Arbeitswoche an, der aktuelle Tag wird farblich markiert. Es kann genutzt werden um die wichtigsten Gedanken des Tages zu notieren, um sich später besser an die vergangene Woche zu erinnern.
 - Mit [Last] und [Next] kann zwischen den Wochen gewechselt werden.
-- Der Button dazwischen zeigt die aktuelle Woche und das Jahr an.
-- Mit einem Doppelklick auf den Text unter dem Datum öffnet sich ein Eingabefeld, in dem die Notiz eingegeben werden kann. Mit der Enter-Taste wird die Notiz gespeichert. Verliert das Eingabefeld den Fokus, ohne dass Enter gedrückt wurde, wird die Bearbeitung abgebrochen. 
+- Der Button dazwischen zeigt die aktuelle Woche und das Jahr an. Mit einem Klick auf das Kalender-Icon öffnet sich ein Datepicker, mit dem das Datum direkt ausgewählt werden kann.
+- Mit einem Doppelklick auf den Text unter dem Datum öffnet sich ein Eingabefeld, in dem die Notiz eingegeben werden kann. Mit [Save] wird die Notiz gespeichert, mit [Cancel] wird der Vorgang abgebrochen.  
+
+Issues: In Firefox wird das Datum nicht korrekt angezeigt. Das liegt daran, dass Firefox das `type="date"` nicht unterstützt. 
 
 ---
 
