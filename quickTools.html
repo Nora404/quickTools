@@ -110,7 +110,6 @@
 			  font-family: "Courier New", Courier, monospace;
 
 			  background-color: var(--ground);
-			  /* opacity: 0.2; */
 			  background-image:  linear-gradient(var(--paper) 2px, transparent 2px), linear-gradient(90deg, var(--paper), transparent 2px), linear-gradient(var(--paper) 1px, transparent 1px), linear-gradient(90deg, var(--paper) 1px, var(--ground) 1px);
 			  background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
 			  background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
@@ -971,6 +970,7 @@
 				timerInterval = setInterval(()=>{
 					timerObjects[projectId].totalTime++;
 					timerObjects[projectId].sessionTime++;
+					localStorage.setItem("toolTimers", JSON.stringify(timerObjects));
 					renderTimerEntries();
 				}, 1000);
 
