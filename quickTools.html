@@ -1275,6 +1275,7 @@
 				
 				const saveBtn = document.createElement("button");
 				      saveBtn.textContent = "Save";
+					  saveBtn.className = "greenBtn";
 					  saveBtn.addEventListener("click", ()=>{
 							const text = editfield.value;
 							saveCalendarObj(text, dateId);
@@ -1284,6 +1285,7 @@
 
 				const cancelBtn = document.createElement("button");
 				      cancelBtn.textContent = "Cancel";
+					  cancelBtn.className = "redBtn";
 					  cancelBtn.addEventListener("click", ()=>{
 						    const notefield = createCalendarNotefield(date);
 							toggleElements(div, notefield);
