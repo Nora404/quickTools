@@ -42,6 +42,7 @@
 		<style id="colors"> 
 			:root {
 			--ground: rgb(255, 255, 255);			/* Allgemeine Hintergundfarbe */
+			--paper: rgb(233, 239, 247);			/* Papierlinien */
 			--input: rgb(241, 241, 241);			/* Hintergrund der Inputfelder */
 			--background-3: rgb(155, 169, 197);	/* Hintergundfarbe von Buttons */
 			--background-2: rgb(189, 201, 216);	/* Hintergundfarbe als Akzent */
@@ -71,7 +72,8 @@
 		</style>
 		<style id="darkMode"> 
 			.dark-mode {
-			--ground: rgb(19, 19, 19);				
+			--ground: rgb(19, 19, 19);	
+			--paper: rgb(36, 36, 36);				
 			--input: rgb(68, 68, 68);
 			--background-3: rgb(103, 112, 108);	
 			--background-2: rgb(38, 59, 65);		
@@ -104,13 +106,19 @@
 			  font-size: 1em;
 			  padding: 0;
 			  color: var(--text-3);
-			  background-color: var(--ground);
 			  margin: 0;
 			  font-family: "Courier New", Courier, monospace;
+
+			  background-color: var(--ground);
+			  /* opacity: 0.2; */
+			  background-image:  linear-gradient(var(--paper) 2px, transparent 2px), linear-gradient(90deg, var(--paper), transparent 2px), linear-gradient(var(--paper) 1px, transparent 1px), linear-gradient(90deg, var(--paper) 1px, var(--ground) 1px);
+			  background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
+			  background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
 			}
 			
 			main {
 			  box-sizing: border-box;
+			  background-color: var(--ground);
 			  margin: auto;
 			  display: flex;
 			  flex-wrap: nowrap;
