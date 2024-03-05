@@ -224,6 +224,9 @@
 				flex: 0 1 500px;
 				margin-left: 40px;
 			}
+			.grayText{
+				color: var(--gray-3);
+			}
 		</style>  
 		<style id="tooltipsCSS"> 
 			/* Sichtbares Objekt */
@@ -1298,7 +1301,8 @@
 
 			function getNote(id) {
 				const note = calendarObjects[id];
-				return note ? note.text : "Doubleclick to add note";
+				// Mit der Klasse im String ist unschön, das ließe sich sauberer lösen
+				return note ? note.text : "<span class='grayText'>Doubleclick to add note</span>";
 			}
 
 			function saveCalendarObj(text, id) {
