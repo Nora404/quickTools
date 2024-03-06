@@ -1144,6 +1144,7 @@
 
 		<script id="commitJS"> 
 		const commitTypElement = document.getElementById("commitType");
+		      commitTypElement.addEventListener("change", updateFormatedMessage);
 		const commitDomainElement = document.getElementById("commitDomain");
 		      commitDomainElement.addEventListener("input", updateFormatedMessage);
 		const commitMessageElement = document.getElementById("commitMessage");
@@ -1160,6 +1161,17 @@
 		
 		const historyList = document.getElementById("historyList");
 		const historyItemCount = document.getElementById("historyItemCount");
+
+		function fillCommitTypeSelect(){
+			const commitTypes = ["build", "ci", "docs", "feat", "fix", "perf", "refactor", "revert", "style", "test"];
+			commitTypes.forEach(type => {
+				const option = document.createElement("option");
+				option.value = type;
+				option.textContent = type;
+				commitTypElement.appendChild(option);
+			});
+		}
+		fillCommitTypeSelect();
 
 		function getText(){
 			const commitType = commitTypElement.value;
