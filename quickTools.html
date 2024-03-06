@@ -1143,6 +1143,52 @@
 		</script> 
 
 		<script id="commitJS"> 
+		const commitTypElement = document.getElementById("commitType");
+		const commitDomainElement = document.getElementById("commitDomain");
+		      commitDomainElement.addEventListener("input", updateFormatedMessage);
+		const commitMessageElement = document.getElementById("commitMessage");
+		      commitMessageElement.addEventListener("input", updateTextareaCounter);
+			  commitMessageElement.addEventListener("input", updateFormatedMessage);
+		const commitDescriptionElement = document.getElementById("commitDescription");
+		      commitDescriptionElement.addEventListener("input", updateFormatedMessage);
+		const commitFooterElement = document.getElementById("commitFooter");
+		      commitFooterElement.addEventListener("input", updateFormatedMessage);
+				
+		const copyBtn = document.getElementById("copyBtn");
+		const deEnBtn = document.getElementById("deEnBtn");
+		const readyBtn = document.getElementById("readyBtn");
+		
+		const historyList = document.getElementById("historyList");
+		const historyItemCount = document.getElementById("historyItemCount");
+
+		function getText(){
+			const commitType = commitTypElement.value;
+			const commitDomain = commitDomainElement.value;
+			const commitMessage = commitMessageElement.value;
+			const commitDescription = commitDescriptionElement.value;
+			const commitFooter = commitFooterElement.value;
+
+			const formatedMessage = `${commitType}(${commitDomain}): ${commitMessage}\n\n${commitDescription}\n\n${commitFooter}`;
+			return formatedMessage;
+		}
+
+		function updateFormatedMessage(){
+			const formatedCommitMessageElement = document.getElementById("formatedCommitMessage");
+			const formatedMessage = getText();
+			formatedCommitMessageElement.value = formatedMessage;
+		}
+
+		function updateTextareaCounter(){
+			const textCounterElement = document.getElementById("textCounter");
+			const textLength = commitMessageElement.value.length;
+			textCounterElement.value = 75 - textLength;
+		}
+
+		function copyToClipboard(){
+			const formatedMessage = getText();
+			navigator.clipboard.writeText(formatedMessage);
+		}
+
 		</script> 
 
 		<script id="calendarJS">
