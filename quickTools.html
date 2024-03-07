@@ -127,15 +127,20 @@
 			  padding: 10px 10px 10px 10px;
 			  outline: 3px solid var(--gray-2);
 			} header {
+			  box-sizing: border-box;
 			  margin: auto;
 			  margin-bottom: 20px;
 			  width: 100%;
 			  text-align: center;
 			  background-color: var(--background-1);
-			  padding: 5px;
+			  padding: 10px;
 			  border-bottom: 3px dotted var(--gray-2);
 			  outline: 3px solid var(--gray-2);
-			  z-index: 2;
+			}
+
+			*:focus {
+			  outline: 0;
+			  border: 2px solid var(--purple);
 			}
 			
 			h3 {
@@ -204,11 +209,6 @@
 			  background-color: var(--input);
 			  border: 2px solid var(--gray-3);
 			} 
-			input:focus,
-			textarea:focus,
-			select:focus{
-				border: 2px solid var(--purple);
-			}
 
 			.container {
 				box-sizing: border-box;
