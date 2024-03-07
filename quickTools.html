@@ -1314,7 +1314,7 @@
 
 		<script id="calendarJS">
 			let calendarObjects = JSON.parse(localStorage.getItem("toolCalendar")) || {};
-
+			const placeholder = "Doubleclick to add Note";
 			/** Da es in Vanilla keine Interfaces gibt, beschreibe ich hier das timerObjekt:
 			 *  {
 			 *    id: String           // Das Datum welches dem Text zugeordnet ist
@@ -1426,7 +1426,7 @@
 					  div.innerHTML = formatedText;
 					  // editfield ist ein Array, 0=Ganzes Objekt 1=Element das Focus haben soll
 					  div.addEventListener("dblclick", () => toggleElements(div, editfield[0], editfield[1]));
-				if(getNote(dateId) === "Doubleclick to add note"){
+				if(getNote(dateId) === placeholder){
 					div.classList = "grayText";
 				}
 				return div;
@@ -1472,7 +1472,7 @@
 			function getNote(id) {
 				const note = calendarObjects[id];
 				// Mit der Klasse im String ist unschön, das ließe sich sauberer lösen
-				return note ? note.text : "Doubleclick to add note";
+				return note ? note.text : placeholder;
 			}
 
 			function saveCalendarObj(text, id) {
