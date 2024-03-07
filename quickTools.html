@@ -457,6 +457,37 @@
 				float: right;
 				margin-right: 0 !important;
 			}
+			#commit ul{
+				list-style-type: none;
+				margin: 80px 0 0 0 !important;
+				padding: 0;
+			}
+			#commit ul div{
+				margin: 0 0 0 34px;
+				font-family: Arial, Helvetica, sans-serif;
+				padding-right: 5px;
+			}
+			#commit li{
+				margin: 20px 0 20px 0;
+				line-height: 1.5em;
+				background-color: var(--glas);
+				border: 1px dotted var(--gray-3);
+				padding: 3px 0 4px 0;
+			}
+			#historyItemCount{
+				box-sizing: border-box;
+				background-color: var(--background-3);
+			  	border: 1px solid var(--gray-3);
+				outline: 0;
+			 	color: var(--ground);
+				margin: 0 0 15px 0;
+				padding: 0 5px 0 5px;
+				font-size: 1em;
+				height: 25px;
+				width: 60px;
+			} #historyItemCount:hover {
+				filter: brightness(1.15);
+			}
 		</style>  
 		<style id="calendarCSS"> 
 			#calendarTable {
@@ -659,8 +690,8 @@
 
 					<h3>Commit History</h3>
 					<select id="historyItemCount">
-						<option value="3">3</option>
-						<option value="5" selected>5</option>
+						<option value="3" selected>3</option>
+						<option value="5" >5</option>
 						<option value="10">10</option>
 					  </select>
 					  <ul id="historyList"></ul>
@@ -1216,6 +1247,7 @@
 		 */ 
 		const historyList = document.getElementById("historyList");
 		const historyItemCount = document.getElementById("historyItemCount");
+		      historyItemCount.addEventListener("change", saveHistorySelect);
 			  copyBtn.addEventListener("click", createHistoryObject);
 
 		// Wenn der copyBtn geklick wird, nimmt sich die Funktion den Text aus
@@ -1227,7 +1259,7 @@
 				id: generateId(),
 				name: escapeHtml(commitMessage),
 				createdAtDay: date.getDate().toString().padStart(2, "0") + "." + (date.getMonth() + 1).toString().padStart(2, "0"),
-				createdAtTime: date.getHours().toString().padStart(2, "0") + ":" + date.getMinutes().toString().padStart(2, "0") + "Uhr",
+				createdAtTime: date.getHours().toString().padStart(2, "0") + ":" + date.getMinutes().toString().padStart(2, "0") + " Uhr",
 			};
 			saveHistoryObj(historyObj);
 			renderHistoryList();
@@ -1239,9 +1271,17 @@
 			localStorage.setItem("toolHistory", JSON.stringify(historyArray));
 		}
 
-		function renderHistoryList(){
-			const historyArray = JSON.parse(localStorage.getItem("toolHistory")) || [];
+		function saveHistorySelect(){
 			const itemCount = historyItemCount.value;
+			store.commitHistorySelect = itemCount;
+			localStorage.setItem("toolStore", JSON.stringify(store));
+			renderHistoryList();
+		}
+
+		function renderHistoryList(){
+			historyItemCount.value = store.commitHistorySelect;
+			const historyArray = JSON.parse(localStorage.getItem("toolHistory")) || [];
+			const itemCount = store.commitHistorySelect;
 			const historyItems = historyArray.slice(0, itemCount);
 			historyList.innerHTML = "";
 			historyItems.forEach(historyObj => {
@@ -1249,11 +1289,17 @@
 			});
 		}
 
-		// TODO - Hier fehlt noch einiges
 		function createHistoryListElement(historyObj){
 			const li = document.createElement("li");
-			      li.textContent = historyObj.name;
-				  console.log(historyObj);
+			const span1 = document.createElement("span");
+				  span1.textContent = `${historyObj.createdAtDay} ${historyObj.createdAtTime}`;
+			const span2 = document.createElement("div");
+				  span2.textContent = historyObj.name;	  
+			const deleteBtn = createButton("X", "redBtn", () => deleteHistoryObject(historyObj.id));
+				  
+			li.insertBefore(deleteBtn, li.firstChild);
+			li.appendChild(span1);	
+			li.appendChild(span2); 	  
 			return li;
 		}
 
