@@ -1226,7 +1226,7 @@
 			const historyObj = {
 				id: generateId(),
 				name: escapeHtml(commitMessage),
-				createdAtDay: date.getDate() + "." + (date.getMonth() + 1),
+				createdAtDay: date.getDate().toString().padStart(2, "0") + "." + (date.getMonth() + 1).toString().padStart(2, "0"),
 				createdAtTime: date.getHours().toString().padStart(2, "0") + ":" + date.getMinutes().toString().padStart(2, "0") + "Uhr",
 			};
 			saveHistoryObj(historyObj);
@@ -1253,6 +1253,7 @@
 		function createHistoryListElement(historyObj){
 			const li = document.createElement("li");
 			      li.textContent = historyObj.name;
+				  console.log(historyObj);
 			return li;
 		}
 
