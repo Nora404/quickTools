@@ -1426,6 +1426,9 @@
 					  div.innerHTML = formatedText;
 					  // editfield ist ein Array, 0=Ganzes Objekt 1=Element das Focus haben soll
 					  div.addEventListener("dblclick", () => toggleElements(div, editfield[0], editfield[1]));
+				if(getNote(dateId) === "Doubleclick to add note"){
+					div.classList = "grayText";
+				}
 				return div;
 			}
 
@@ -1469,7 +1472,7 @@
 			function getNote(id) {
 				const note = calendarObjects[id];
 				// Mit der Klasse im String ist unschön, das ließe sich sauberer lösen
-				return note ? note.text : "<span class='grayText'>Doubleclick to add note</span>";
+				return note ? note.text : "Doubleclick to add note";
 			}
 
 			function saveCalendarObj(text, id) {
