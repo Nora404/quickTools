@@ -535,6 +535,7 @@
 				setToolTipText();
 				renderTimerEntries();
 				renderSortTimerBtn();
+				renderHistoryList();
 			});
 
 		// Die Seite merkt sich verschiedene Einstellungen zu den Tools
@@ -1143,6 +1144,13 @@
 		</script> 
 
 		<script id="commitJS"> 
+		// Die Werte aus dem Formular werden gesammelt, formatiert und in ein
+		// Textfeld geschrieben. Dieser Text kann dann kopiert werden.
+		// Beim Klick auf den Button "DE -> EN" wird der Text übersetzt
+		// Allerdings nur wenn eine Internetverbindung besteht
+		// Gleichzeitig wird der Commit mit seiner Beschreibung und dem Datum
+		// in der History gespeichert
+
 		const commitTypElement = document.getElementById("commitType");
 		      commitTypElement.addEventListener("change", updateFormatedMessage);
 		const commitDomainElement = document.getElementById("commitDomain");
@@ -1159,9 +1167,6 @@
 		const deEnBtn = document.getElementById("deEnBtn");
 		const readyBtn = document.getElementById("readyBtn");
 		
-		const historyList = document.getElementById("historyList");
-		const historyItemCount = document.getElementById("historyItemCount");
-
 		function fillCommitTypeSelect(){
 			const commitTypes = ["build", "ci", "docs", "feat", "fix", "perf", "refactor", "revert", "style", "test"];
 			commitTypes.forEach(type => {
@@ -1199,6 +1204,63 @@
 		function copyToClipboard(){
 			const formatedMessage = getText();
 			navigator.clipboard.writeText(formatedMessage);
+		}
+
+		/** Da es in Vanilla keine Interfaces gibt, beschreibe ich hier das historyObjekt:
+		 *  {
+		 *    id: String               // generiert von generateID() in globalsJS
+		 *    name: String             // wird mit escapeHtml formatiert
+		 * 	  createdAtDay: String	   // Tag der Erstellung
+		 *    createdAtTime: String	   // Uhrzeit der Erstellung
+		 *  }
+		 */ 
+		const historyList = document.getElementById("historyList");
+		const historyItemCount = document.getElementById("historyItemCount");
+			  copyBtn.addEventListener("click", createHistoryObject);
+
+		// Wenn der copyBtn geklick wird, nimmt sich die Funktion den Text aus
+		// commitMessage und erstellt ein neues historyObjekt	
+		function createHistoryObject(){
+			const commitMessage = commitMessageElement.value;
+			const date = new Date();
+			const historyObj = {
+				id: generateId(),
+				name: escapeHtml(commitMessage),
+				createdAtDay: date.getDate() + "." + (date.getMonth() + 1),
+				createdAtTime: date.getHours().toString().padStart(2, "0") + ":" + date.getMinutes().toString().padStart(2, "0") + "Uhr",
+			};
+			saveHistoryObj(historyObj);
+			renderHistoryList();
+		}
+
+		function saveHistoryObj(historyObj){
+			const historyArray = JSON.parse(localStorage.getItem("toolHistory")) || [];
+			historyArray.unshift(historyObj);
+			localStorage.setItem("toolHistory", JSON.stringify(historyArray));
+		}
+
+		function renderHistoryList(){
+			const historyArray = JSON.parse(localStorage.getItem("toolHistory")) || [];
+			const itemCount = historyItemCount.value;
+			const historyItems = historyArray.slice(0, itemCount);
+			historyList.innerHTML = "";
+			historyItems.forEach(historyObj => {
+				historyList.appendChild(createHistoryListElement(historyObj));
+			});
+		}
+
+		function createHistoryListElement(historyObj){
+			const li = document.createElement("li");
+			      li.textContent = historyObj.name;
+			console.log(historyObj);
+			return li;
+		}
+
+		function deleteHistoryObject(historyId){
+			const historyArray = JSON.parse(localStorage.getItem("toolHistory")) || [];
+			const newHistoryArray = historyArray.filter(historyObj => historyObj.id !== historyId);
+			localStorage.setItem("toolHistory", JSON.stringify(newHistoryArray));
+			renderHistoryList();
 		}
 
 		</script> 
