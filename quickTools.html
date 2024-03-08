@@ -638,6 +638,7 @@
 			<button id="noteBtn" class="greenBtn" onclick="changeVisibility('note')">Memory Notes</button>
 			<button id="collectionBtn" class="greenBtn" onclick="changeVisibility('collection')">Collection List</button>
 			<button id="clipboardBtn" class="greenBtn" onclick="changeVisibility('clipboard')">Clipboard</button>
+			<button id="saveManagerBtn" class="greenBtn" onclick="changeVisibility('saveManager')">Save Manager</button>
 
 			<button id="toggelCssBtn" onclick="toggleDarkMode()">Toggel CSS</button>
 			<button class="tooltip">Help
@@ -745,6 +746,27 @@
 				 <button id="addSnippet">Add Snippet</button>
 				 <ul id="snippetList"></ul>
 			</div>
+			<hr id="clipboardHr">
+
+			<div id="saveManager" class="container">
+				<div class="tooltip helpText">?
+					<span class="tooltiptext" id="saveManagerToolTipp"></span>
+				</div>
+
+				 <h3>Save Manager</h3>
+				 <details>
+					<summary>Project Timer: toolTimers</summary>
+					<p>Save Manager</p>
+				 </details>
+				 <details>
+					<summary>Commit History: toolHistory</summary>
+					<p>Save Manager</p>
+				 </details>
+				 <details>
+					<summary>Calendar Notes: toolCalendar</summary>
+					<p>Save Manager</p>
+				 </details>
+			</div>
 		</div>
 		</main> 
 
@@ -845,7 +867,8 @@
 				clipboardToolTipp: "Tooltip Text für Clipboard",
 				collectionToolTipp: "Tooltip Text für Collection List",
 				noteToolTipp: "Tooltip Text für Memory Note",
-				helpToolTipp: "<b>Vorwort</b><br><br>In dieser HTML-Seite werden verschiedene Tools angeboten, welche im Arbeitsalltag helfen möchten. Zudem ist das Erstellen des Codes für mich eine Übung gewesen. Der gesamte Code soll nur eine einzige Datei umfassen und muss daher eine hohe Qulität haben. Also eine gute Struktur, sprechende Namen, effizenter und lesbarer Code, hilfreiche Kommentare.<br><br><b>Anleitung</b><br><br>Tools können ein und ausgeblendet werden, mithilfe der oberen Buttons ..."
+				helpToolTipp: "<b>Vorwort</b><br><br>In dieser HTML-Seite werden verschiedene Tools angeboten, welche im Arbeitsalltag helfen möchten. Zudem ist das Erstellen des Codes für mich eine Übung gewesen. Der gesamte Code soll nur eine einzige Datei umfassen und muss daher eine hohe Qulität haben. Also eine gute Struktur, sprechende Namen, effizenter und lesbarer Code, hilfreiche Kommentare.<br><br><b>Anleitung</b><br><br>Tools können ein und ausgeblendet werden, mithilfe der oberen Buttons ...",
+				saveManagerToolTipp: "Tooltip Text für Save Manager"
 			};
 
 			function setToolTipText() {
