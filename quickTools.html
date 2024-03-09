@@ -640,12 +640,23 @@
 				width: 100%; 
 			}
 		</style>
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+<!--------------------------------------------------------------------------------------------------------------------------->
 		
+		<style id="saveManagerCSS">
+		</style>
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+<!--------------------------------------------------------------------------------------------------------------------------->		
 		<script id="loadJS">  
 			 window.addEventListener("load", () => {
 				// Funktionen die beim Laden der Seite ausgeführt werden sollen
 				loadStore();
 				loadCss();
+				createHeaderBtn();
 				loadVisibility();
 				setCurrentWeekToInput();
 				updateTable();
@@ -658,8 +669,8 @@
 		const allTools = {
 			timer: "Project Timer",
 			commit: "Commit Message",
-			calendar: "Calendar Note",
-			note: "Memory Note",
+			calendar: "Calendar Notes",
+			note: "Memory Notes",
 			collection: "Collection List",
 			clipboard: "Clipboard",
 			saveManager: "Save Manager",
@@ -719,15 +730,7 @@
 
 	<body>
 		<header> <!-- Sichtbarkeit der Tools ------------------------------>
-			<button id="timerBtn" class="greenBtn" onclick="changeVisibility('timer')">Project Timer</button>
-			<button id="commitBtn" class="greenBtn" onclick="changeVisibility('commit')">Commit Message</button>
-			<button id="calendarBtn" class="greenBtn" onclick="changeVisibility('calendar')">Calendar Notes</button>
-			
-			<button id="noteBtn" class="greenBtn" onclick="changeVisibility('note')">Memory Notes</button>
-			<button id="collectionBtn" class="greenBtn" onclick="changeVisibility('collection')">Collection List</button>
-			<button id="clipboardBtn" class="greenBtn" onclick="changeVisibility('clipboard')">Clipboard</button>
-			<button id="saveManagerBtn" class="greenBtn" onclick="changeVisibility('saveManager')">Save Manager</button>
-
+			<span id="headerBtns"></span>
 			<button id="toggelCssBtn" onclick="toggleDarkMode()">Toggel CSS</button>
 			<button class="tooltip">Help
 				<span class="tooltiptext" id="helpToolTipp">Tooltip text</span>
@@ -737,7 +740,7 @@
 	
 		<main>
 		<div id="mainColumn1">	
-			<div id="timer" class="container"> <!-- TIMER HTML ------------------------------>
+			<div id="timer" class="container"> <!-- TIMER HTML ------------------------------------->
 				<div class="tooltip helpText">?
 					<span class="tooltiptext" id="timerToolTipp">Tooltip text</span>
 				</div>
@@ -750,7 +753,7 @@
 			</div> 
 			<hr id="timerHr">
 
-			<div id="commit"> <!-- COMMIT HTML ---------------------------->
+			<div id="commit"> <!-- COMMIT HTML ----------------------------------------------------->
 				<div id="commitEditor" class="container">
 					<div class="tooltip helpText">?
 						<span class="tooltiptext" id="messageToolTipp">Tooltip text</span>
@@ -788,7 +791,7 @@
 			</div> 
 			<hr id="commitHr">
 
-			<div id="calendar" class="container"> <!-- CALENDAR HTML ------------------------>
+			<div id="calendar" class="container"> <!-- CALENDAR HTML ------------------------------->
 				<div class="tooltip helpText">?
 					<span class="tooltiptext" id="calendarToolTipp">Tooltip text</span>
 				</div>
@@ -805,7 +808,7 @@
 		</div>	
 
 		<div id="mainColumn2">
-			<div id="note" class="container"> <!-- COLLECTION HTML ---------------------------->
+			<div id="note" class="container"> <!-- COLLECTION HTML --------------------------------->
 				<div class="tooltip helpText">?
 					<span class="tooltiptext" id="noteToolTipp">Memory Note</span>
 				</div>
@@ -825,7 +828,7 @@
 			</div>
 			<hr id="collectionHr">
 
-			<div id="clipboard" class="container"> <!-- CLIPBOARD HTML ------------------------>
+			<div id="clipboard" class="container"> <!-- CLIPBOARD HTML ------------------------------>
 				<div class="tooltip helpText">?
 					<span class="tooltiptext" id="clipboardToolTipp"></span>
 				</div>
@@ -836,7 +839,7 @@
 			</div>
 			<hr id="clipboardHr">
 
-			<div id="saveManager" class="container">
+			<div id="saveManager" class="container"> <!-- SAVEMANAGER HTML -------------------------->
 				<div class="tooltip helpText">?
 					<span class="tooltiptext" id="saveManagerToolTipp"></span>
 				</div>
@@ -865,6 +868,19 @@
 
 
 		<script id="globalJS"> 
+			function createHeaderBtn(){
+				const toolNameArray = Object.keys(allTools);
+				const header = document.getElementById("headerBtns");
+
+				toolNameArray.forEach((key)=>{
+					const btnText = allTools[key];
+					const btnFn = ()=> changeVisibility(key);
+					const btn = createButton(btnText, "greenBtn", btnFn);
+						  btn.id = key + "Btn"
+					header.appendChild(btn);
+				});
+			}
+
 			function changeVisibility(container){
 				const element = document.getElementById(container);
 				const elementBtn = document.getElementById(container + "Btn");
