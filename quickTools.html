@@ -71,13 +71,14 @@
 	TOOL EINBINDEN
 	Das Einbinden eines neuen Tools soll möglichst schnell, einfach und automatisch erfolgen. 
 	Der Name des Tools wird als Key verwendet, als Id für seinen Container, abgewandelt als Button oder Speicher.
-	Schritt 1 muss manuell erfolgen, Schritt 4/5 brauchen expliziete Angaben.
+	Schritt 2 erfolgt automatisch
 	- Schritt 1: Den Namen als Key und die Überschrift als Value im Objekt "allTools" eintragen 
 	- Schritt 2: Der Button hat die Id "<tool>Btn" wobei <tool> der Name des Tools ist
 				 Die Beschriftung des Buttons hat den Wert von allTools[<tool>]
 	             Der Button hat ein Klick-Event welches "changeVisibility('<tool>'')" aufruft.
-	- Schritt 3: Der Div-Kontainer hat die Id <tool> der Span-Container die Id "<tool>ToolTipp"
-				 Die Überschrift <h3> hat den Wert von allTools[<tool>]
+	- Schritt 3: Der Div-Kontainer hat die Id <tool> 
+				 Der Span-Container <tool>Header umfasst die Tooltips und die Überschrift
+				 Die Funktion "createToolHeader" erwartet <tool> und den Text der Überschrift
 	- Schritt 4: Das Objekt "tooltips" bekommt eine neue Eigenschaft mit dem Key "<tool>ToolTipp"
 				 Der Wert von "<tool>ToolTipp" ist ein String mit der Beschreibung des Tools
 	- Schritt 5: Die Daten des Tools werden unter "tool<Tool>" im Objekt "quickToolsSaves" gespeichert
@@ -648,15 +649,18 @@
 		<style id="saveManagerCSS">
 		</style>
 
-<!--------------------------------------------------------------------------------------------------------------------------->
 
-<!--------------------------------------------------------------------------------------------------------------------------->		
+<!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+<!--------------------------------------------------------------------------------------------------------------------------->
+<!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+
+
 		<script id="loadJS">  
 			 window.addEventListener("load", () => {
 				// Funktionen die beim Laden der Seite ausgeführt werden sollen
 				loadStore();
 				loadCss();
-				createHeaderBtn();
+				createBtnHeader();
 				loadVisibility();
 				setCurrentWeekToInput();
 				updateTable();
@@ -720,155 +724,13 @@
 				}
 			}
 		</script> 
-	</head>
 
-
-<!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
 <!--------------------------------------------------------------------------------------------------------------------------->
-<!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
 
-
-	<body>
-		<header> <!-- Sichtbarkeit der Tools ------------------------------>
-			<span id="headerBtns"></span>
-			<button id="toggelCssBtn" onclick="toggleDarkMode()">Toggel CSS</button>
-			<button class="tooltip">Help
-				<span class="tooltiptext" id="helpToolTipp">Tooltip text</span>
-			</button>
-		</header>
-	
-	
-		<main>
-		<div id="mainColumn1">	
-			<div id="timer" class="container"> <!-- TIMER HTML ------------------------------------->
-				<div class="tooltip helpText">?
-					<span class="tooltiptext" id="timerToolTipp">Tooltip text</span>
-				</div>
-				
-				<h3>Project Timer</h3>
-				<button id="addProjectBtn">Add Timer</button>
-				<span id="sortTimer">Sort by</span><br>
-				
-				<ul id="projectList"></ul>
-			</div> 
-			<hr id="timerHr">
-
-			<div id="commit"> <!-- COMMIT HTML ----------------------------------------------------->
-				<div id="commitEditor" class="container">
-					<div class="tooltip helpText">?
-						<span class="tooltiptext" id="messageToolTipp">Tooltip text</span>
-					</div>
-
-					<h3>Commit Message</h3>
-					<form id="commitForm">
-						<select id="commitType"><option>Typ</option></select>
-						<input id="commitDomain" type="text" placeholder="Domain"><br>
-						<input id="commitMessage" type="text" maxlength="75" placeholder="Commit Message">
-						<input id="textCounter" value="75" disabled><br>
-						<textarea id="commitDescription" placeholder="Description"></textarea><br>
-						<input id="commitFooter" type="text" placeholder="Footer">
-						<button id="readyBtn">ready</button><br>
-					</form>
-
-						<textarea id="formatedCommitMessage" placeholder="Formated Message" disabled></textarea><br>
-						<button id="copyBtn" onclick="copyToClipboard()">Copy to Clipboard</button>
-						<button id="deEnBtn" onclick="translateDeEn()">DE -> EN</button>
-				</div>
-
-				<div id="commitHistory" class="container">
-					<div class="tooltip helpText">?
-						<span class="tooltiptext" id="historyToolTipp">Tooltip text</span>
-					</div>
-
-					<h3>Commit History</h3>
-					<select id="historyItemCount">
-						<option value="3" selected>3</option>
-						<option value="5" >5</option>
-						<option value="10">10</option>
-					  </select>
-					  <ul id="historyList"></ul>
-				</div>
-			</div> 
-			<hr id="commitHr">
-
-			<div id="calendar" class="container"> <!-- CALENDAR HTML ------------------------------->
-				<div class="tooltip helpText">?
-					<span class="tooltiptext" id="calendarToolTipp">Tooltip text</span>
-				</div>
-
-				 <h3>Calendar Notes</h3>
-				 <button id="lastWeekBtn" onclick="changeWeek(-1)">Last</button>
-				 <input type="week" id="weeklySelection" onchange="updateTable()">
-				 <button id="nextWeekBtn" onclick="changeWeek(+1)">Next</button>
-				 <table id="calendarTable">
-					<tr id="calendarTh"></tr>
-        			<tr id="calendarTb"></tr>
-				 </table>
-			</div> 
-		</div>	
-
-		<div id="mainColumn2">
-			<div id="note" class="container"> <!-- COLLECTION HTML --------------------------------->
-				<div class="tooltip helpText">?
-					<span class="tooltiptext" id="noteToolTipp">Memory Note</span>
-				</div>
-				
-				<h3>Memory Note</h3>
-				<button id="addNote">Add Note</button>
-			</div>
-			<hr id="noteHr">
-
-			<div id="collection" class="container"> <!-- COLLECTION HTML ---------------------------->
-				<div class="tooltip helpText">?
-					<span class="tooltiptext" id="collectionToolTipp">Tooltip text</span>
-				</div>
-				
-				<h3>Collection List</h3>
-				<button id="addList">Add List</button>
-			</div>
-			<hr id="collectionHr">
-
-			<div id="clipboard" class="container"> <!-- CLIPBOARD HTML ------------------------------>
-				<div class="tooltip helpText">?
-					<span class="tooltiptext" id="clipboardToolTipp"></span>
-				</div>
-
-				 <h3>Clipboard</h3>
-				 <button id="addSnippet">Add Snippet</button>
-				 <ul id="snippetList"></ul>
-			</div>
-			<hr id="clipboardHr">
-
-			<div id="saveManager" class="container"> <!-- SAVEMANAGER HTML -------------------------->
-				<div class="tooltip helpText">?
-					<span class="tooltiptext" id="saveManagerToolTipp"></span>
-				</div>
-
-				 <h3>Save Manager</h3>
-				 <details>
-					<summary>Project Timer: toolTimers</summary>
-					<p>Save Manager</p>
-				 </details>
-				 <details>
-					<summary>Commit History: toolHistory</summary>
-					<p>Save Manager</p>
-				 </details>
-				 <details>
-					<summary>Calendar Notes: toolCalendar</summary>
-					<p>Save Manager</p>
-				 </details>
-			</div>
-		</div>
-		</main> 
-
-
-<!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
-<!--------------------------------------------------------------------------------------------------------------------------->
-<!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
-
+<!--------------------------------------------------------------------------------------------------------------------------->	
 
 		<script id="globalJS"> 
-			function createHeaderBtn(){
+			function createBtnHeader(){
 				const toolNameArray = Object.keys(allTools);
 				const header = document.getElementById("headerBtns");
 
@@ -876,9 +738,30 @@
 					const btnText = allTools[key];
 					const btnFn = ()=> changeVisibility(key);
 					const btn = createButton(btnText, "greenBtn", btnFn);
-						  btn.id = key + "Btn"
+						btn.id = key + "Btn"
 					header.appendChild(btn);
 				});
+			}
+
+			function createToolHeader(id, name = ""){
+				const container = document.getElementById(id + "Header");
+				const h3 = document.createElement("h3");
+
+				if(name){
+					h3.textContent = name;
+				} else {
+					h3.textContent = id.charAt(0).toUpperCase() + id.slice(1);
+				}
+
+				const divTooltip = document.createElement("div");
+					  divTooltip.classList = "tooltip helpText";
+					  divTooltip.textContent = "?";
+				const textTooltip = document.createElement("span");
+					  textTooltip.classList = "tooltiptext";
+					  textTooltip.id = id + "ToolTipp";
+
+				divTooltip.appendChild(textTooltip);
+				container.append(divTooltip, h3);
 			}
 
 			function changeVisibility(container){
@@ -910,7 +793,7 @@
 			function changeMainWidth(){
 				const main = document.querySelector('main');
 				const mainColumn1 = document.getElementById('mainColumn1');
-  				const mainColumn2 = document.getElementById('mainColumn2');
+				const mainColumn2 = document.getElementById('mainColumn2');
 
 				// Konvertiere die children-HTMLCollection in ein Array und filtere es
 				// Überprüfe, dass das Element nicht <hr> ist und nicht die Klasse 'hidden' hat
@@ -963,16 +846,16 @@
 				localStorage.setItem("toolStore", JSON.stringify(store));
 			};
 		</script> 
-
+	
 <!--------------------------------------------------------------------------------------------------------------------------->
 
-<!--------------------------------------------------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------------------------------------------->	
 
 		<script id="tooltipsJS">
 			const tooltips = {
 				timerToolTipp: "<b>Project Timer</b><br><br>Dieses Tool bietet für jeden Eintrag zwei Stoppuhren: Eine misst die gesamte Zeit, während die andere sich zurücksetzen lässt. Jeder Timer kann mit einem Namen versehen werden – sei es ein beliebiger Text, eine Ticketnummer oder eine spezifische Aufgabe.<ul><li>Mit [Go] starten beide Timer gleichzeitig, mit [Stop] werden beide angehalten.</li><li>Über das Dropdown-Menü lässt sich eine Priorität für jeden Eintrag festlegen, wobei 1 die niedrigste und 4 die höchste Priorität bedeutet.</li><li>Die Einträge können nach Erstellungsdatum oder Priorität sortiert werden.</li><li>Um den Text eines Eintrags zu ändern, genügt ein Doppelklick darauf. Es erscheint ein Eingabefeld, in dem der neue Text eingegeben werden kann. Mit der Enter-Taste wird der neue Inhalt gespeichert. Verliert das Eingabefeld den Fokus, ohne dass Enter gedrückt wurde, wird die Bearbeitung abgebrochen.</li><li>Mit [Delete] wird der Eintrag gelöscht.</li></ul>",
-				messageToolTipp: "<b>Commit Message</b><br><br>Dieses Tool hilft bei der Erstellung von Commits, indem es die Einhaltung von Regeln unterstützt und die Message korrekt formatiert. Mit einem Klick kann die Message in die Zwischenablage kopiert werden. Zudem gibt es eine Hilfe, bei der Übersetzung vom Deutschen ins Englische (nur mit Internetverbindung).<ul><li><i>Typ</i>: Wähle aus, ob es sich um ein Feature, ein Fix, eine Dokumentation oder eine andere Änderung handelt.</li><li><i>Domain</i>: Der Gültigkeitsbereich, zum Beispiel der Name der bearbeiteten Komponente, ist optional.</li><li><i>Short Description</i>: Eine kurze Beschreibung der Änderung, die in der Commit-Liste angezeigt wird. Sie darf maximal 72 Zeichen lang sein und muss mit einem Kleinbuchstaben beginnen. Zudem sollte sie im Präsens verfasst sein.</li><li><i>Description</i>: Eine ausführliche Beschreibung der Änderung, welche die Motivation für die Veränderung und die Auswirkungen beschreibt.</li><li><i>Footer</i>: Hier können zusätzliche Informationen wie Referenzen oder Schließungen von Tickets eingetragen werden. Mit /ready wird das Ticket als bereit zur Überprüfung markiert.</li></ul>",
-				historyToolTipp: "<b>Commit History</b><br><br>Sobald ein Commit in die Zwischenablage kopiert wird, wird er der History hinzugefügt. Es werden die letzten 10 Commits gespeichert, mit ihren Namen, dem Datum und der Zeit.<br><br>Mit [X] wird der Eintrag gelöscht. Es können die letzten 3, 5 oder 10 Commits angezeigt werden.<br>",
+				commitEditorToolTipp: "<b>Commit Message</b><br><br>Dieses Tool hilft bei der Erstellung von Commits, indem es die Einhaltung von Regeln unterstützt und die Message korrekt formatiert. Mit einem Klick kann die Message in die Zwischenablage kopiert werden. Zudem gibt es eine Hilfe, bei der Übersetzung vom Deutschen ins Englische (nur mit Internetverbindung).<ul><li><i>Typ</i>: Wähle aus, ob es sich um ein Feature, ein Fix, eine Dokumentation oder eine andere Änderung handelt.</li><li><i>Domain</i>: Der Gültigkeitsbereich, zum Beispiel der Name der bearbeiteten Komponente, ist optional.</li><li><i>Short Description</i>: Eine kurze Beschreibung der Änderung, die in der Commit-Liste angezeigt wird. Sie darf maximal 72 Zeichen lang sein und muss mit einem Kleinbuchstaben beginnen. Zudem sollte sie im Präsens verfasst sein.</li><li><i>Description</i>: Eine ausführliche Beschreibung der Änderung, welche die Motivation für die Veränderung und die Auswirkungen beschreibt.</li><li><i>Footer</i>: Hier können zusätzliche Informationen wie Referenzen oder Schließungen von Tickets eingetragen werden. Mit /ready wird das Ticket als bereit zur Überprüfung markiert.</li></ul>",
+				commitHistoryToolTipp: "<b>Commit History</b><br><br>Sobald ein Commit in die Zwischenablage kopiert wird, wird er der History hinzugefügt. Es werden die letzten 10 Commits gespeichert, mit ihren Namen, dem Datum und der Zeit.<br><br>Mit [X] wird der Eintrag gelöscht. Es können die letzten 3, 5 oder 10 Commits angezeigt werden.<br>",
 				calendarToolTipp: "<b>Calendar Note</b><br><br>Mit diesem Tool lassen sich kurze Notizen zu jedem Tag erstellen. Der Kalender zeigt die aktuelle Arbeitswoche an, der aktuelle Tag wird farblich markiert. Es kann genutzt werden um die wichtigsten Gedanken des Tages zu notieren, um sich später besser an die vergangene Woche zu erinnern.<ul><li>Mit [Last] und [Next] kann zwischen den Wochen gewechselt werden.</li><li>Der Button dazwischen zeigt die aktuelle Woche und das Jahr an. Mit einem Klick auf das Kalender-Icon öffnet sich ein Datepicker, mit dem das Datum direkt ausgewählt werden kann.</li><li>Mit einem Doppelklick auf den Text unter dem Datum öffnet sich ein Eingabefeld, in dem die Notiz eingegeben werden kann. Mit [Save] wird die Notiz gespeichert, mit [Cancel] wird der Vorgang abgebrochen.</li></ul><br><br><b>Issues:</b> In Firefox wird das Datum nicht korrekt angezeigt. Das liegt daran, dass Firefox das <code>type='date'</code> nicht unterstützt.",
 				clipboardToolTipp: "Tooltip Text für Clipboard",
 				collectionToolTipp: "Tooltip Text für Collection List",
@@ -1096,6 +979,148 @@
 					textarea.style.height = textarea.scrollHeight + 'px'; 
 			};
 		</script>
+
+	</head>
+
+
+<!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+<!--------------------------------------------------------------------------------------------------------------------------->
+<!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+
+
+	<body>
+		<header> 
+			<span id="headerBtns"></span>
+			<button id="toggelCssBtn" onclick="toggleDarkMode()">Toggel CSS</button>
+			<button class="tooltip">Help
+				<span class="tooltiptext" id="helpToolTipp">Tooltip text</span>
+			</button>
+		</header>
+	
+	
+		<main>
+		<div id="mainColumn1">	
+<!-- TIMER HTML --------------------------------------------------------------------------------------->			
+			<div id="timer" class="container"> 
+				<span id="timerHeader"></span>
+			    <script>createToolHeader("timer", "Project Timer")</script>
+
+				<button id="addProjectBtn">Add Timer</button>
+				<span id="sortTimer">Sort by</span><br>
+				
+				<ul id="projectList"></ul>
+			</div> 
+			<hr id="timerHr">
+
+<!-- COMMIT HTML -------------------------------------------------------------------------------------->			
+			<div id="commit"> 
+				<div id="commitEditor" class="container">
+					<span id="commitEditorHeader"></span>
+				    <script>createToolHeader("commitEditor", "Commit Message")</script>
+
+					<form id="commitForm">
+						<select id="commitType"><option>Typ</option></select>
+						<input id="commitDomain" type="text" placeholder="Domain"><br>
+						<input id="commitMessage" type="text" maxlength="75" placeholder="Commit Message">
+						<input id="textCounter" value="75" disabled><br>
+						<textarea id="commitDescription" placeholder="Description"></textarea><br>
+						<input id="commitFooter" type="text" placeholder="Footer">
+						<button id="readyBtn">ready</button><br>
+					</form>
+
+						<textarea id="formatedCommitMessage" placeholder="Formated Message" disabled></textarea><br>
+						<button id="copyBtn" onclick="copyToClipboard()">Copy to Clipboard</button>
+						<button id="deEnBtn" onclick="translateDeEn()">DE -> EN</button>
+				</div>
+
+				<div id="commitHistory" class="container">
+					<span id="commitHistoryHeader"></span>
+				    <script>createToolHeader("commitHistory", "Commit History")</script>
+
+					<select id="historyItemCount">
+						<option value="3" selected>3</option>
+						<option value="5" >5</option>
+						<option value="10">10</option>
+					  </select>
+					  <ul id="historyList"></ul>
+				</div>
+			</div> 
+			<hr id="commitHr">
+
+<!-- CALENDAR HTML ------------------------------------------------------------------------------------>			
+			<div id="calendar" class="container"> 
+				<span id="calendarHeader"></span>
+				<script>createToolHeader("calendar", "Calendar Notes")</script>
+
+				 <button id="lastWeekBtn" onclick="changeWeek(-1)">Last</button>
+				 <input type="week" id="weeklySelection" onchange="updateTable()">
+				 <button id="nextWeekBtn" onclick="changeWeek(+1)">Next</button>
+				 <table id="calendarTable">
+					<tr id="calendarTh"></tr>
+        			<tr id="calendarTb"></tr>
+				 </table>
+			</div> 
+		</div>	
+
+
+		<div id="mainColumn2">
+<!-- COLLECTION HTML ---------------------------------------------------------------------------------->			
+			<div id="note" class="container"> 
+				<span id="noteHeader"></span>
+				<script>createToolHeader("note", "Memory Note")</script>
+
+				<button id="addNote">Add Note</button>
+			</div>
+			<hr id="noteHr">
+
+<!-- COLLECTION HTML ---------------------------------------------------------------------------------->			
+			<div id="collection" class="container"> 
+				<span id="collectionHeader"></span>
+				<script>createToolHeader("collection", "Collection List")</script>
+
+				<button id="addList">Add List</button>
+			</div>
+			<hr id="collectionHr">
+
+<!-- CLIPBOARD HTML ----------------------------------------------------------------------------------->			
+			<div id="clipboard" class="container"> 
+				<span id="clipboardHeader"></span>
+				<script>createToolHeader("clipboard", "Clipboard")</script>
+
+				<button id="addSnippet">Add Snippet</button>
+				<ul id="snippetList"></ul>
+			</div>
+			<hr id="clipboardHr">
+
+<!-- SAVEMANAGER HTML --------------------------------------------------------------------------------->			
+			<div id="saveManager" class="container"> 
+				<span id="saveManagerHeader"></span>
+				<script>createToolHeader("saveManager", "Save Manager")</script>
+
+				 <details>
+					<summary>Project Timer: toolTimers</summary>
+					<p>Save Manager</p>
+				 </details>
+				 <details>
+					<summary>Commit History: toolHistory</summary>
+					<p>Save Manager</p>
+				 </details>
+				 <details>
+					<summary>Calendar Notes: toolCalendar</summary>
+					<p>Save Manager</p>
+				 </details>
+			</div>
+		</div>
+		</main> 
+
+
+<!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+<!--------------------------------------------------------------------------------------------------------------------------->
+<!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+
+
+
+
 
 <!--------------------------------------------------------------------------------------------------------------------------->
 
