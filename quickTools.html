@@ -18,7 +18,7 @@
 	TOOLTIPS:
 	Obwohl das UI der Seite englisch sein sollte, sind die Tooltipps auf deutsch. Ich mag verständliche Anleitungen.
 	Jede Überschrift eines Tools hat einen (?) Button, der beim Hovern eine Anleitung zum Tool zeigt.
-	Dieser div-Kontainer einhält ein span-Element welcher die gleiche id haben muss wie die Variable inder sein Text gespeichert ist.
+	Dieser div-Kontainer enthält ein span-Element welcher die gleiche id haben muss wie die Variable inder sein Text gespeichert ist.
 	Durch verschiedene CSS Klassen und einer Funktion die beim Start ausgeführt wird, werden die Tooltipps erstellt.
 	Im Gegensatz zum HTML-Attribut <titel> erscheint der Text sofort und ist optisch anpassbar.
 		
@@ -30,11 +30,57 @@
 	- Calenadar Note:	Zeigt die aktuelle Arbeitswoche und ermöglicht zu jedem Tag eine kurze Notiz
 	- Clipboard:		Speichert kleine Texte und kopiert diese per Klick in die Zwischenablage
 	- Collection List:	Anlegen von Gruppen mit je mehreren kurzen Einträgen die verschiedene Eigenschaften haben können  
-	
-	SPEICHERORT:
-	Die Werte der Tools werden im LocalStorage des Browsers gespeichert. 
-	Genaure Beschreibungen folgen ...
+	- Save Manager:		Möglichkeit die Daten der Seite zu importieren, exportieren oder zu löschen
 
+	SPEICHERORT:
+	Die Werte der Tools werden im LocalStorage des Browsers unter "quickToolsSaves" gespeichert.
+	Jede Eigenschaft des Objektes beeinhaltet die gespeicherten Daten eines Tools 
+	- toolStore
+		 *	<tool>Btn: boolean				// <tool> steht für die Namen der Tools
+		 *	timerSort: string				// Einträge nach Date oder Prio sortiert
+		 *	commitHistorySelect: number		// Anzahl der gezeigten Einträge
+		 *	cssMode: string					// Dark-Mode oder Light-Mode
+	- toolTimers (umbenennen in toolTimer)
+		 *  id: String           			// generiert von generateID() in globalsJS
+		 *  name: String         			// Kurze Beschreibung des Timers
+		 * 	createdAt: Date	   				// Erstellungsdatum, wird zum sortieren genutzt
+		 *  totalTime: Number    			// Sekunden
+		 *  sessionTime: Number  			// Sekunden
+		 *  prio: Number         			// [1-4] Zum sortieren und Farbdarstellung
+	- toolHistory (umbenennen in toolCommit)
+		 *  id: String             		    // generiert von generateID() in globalsJS
+		 *  name: String             		// Ist die Kurzbeschreibung des Commits
+		 * 	createdAtDay: String	   		// Tag der Erstellung
+		 *  createdAtTime: String	   		// Uhrzeit der Erstellung
+	- toolCalendar
+		 *  id: String         				// Das Datum welches dem Text zugeordnet ist
+		 *  text: String         			// der Text/Note welches dem Datum zugeordnet ist
+	- toolNote
+		 *  id: Date         				// Die genaue Uhrzeit und Datum
+		 *  name: String					// Überschrift zum Note (Default: "Note von <Date>")
+		 *  text: String         			// der Text/Note welches dem Note zugeordnet ist
+		 *  memory: boolean					// Ja/Nein ob zur Note eine Erinnerung gehört
+	- toolCollection
+		 *  id: String         				// generiert von generateID() in globalsJS
+		 *  name: String         			// Überschrift der Collection (Default: "Collection <Number>")	
+		 *  list: Array[Object]				// {name: String, status: boolean} 	
+	- toolClipboard
+		 *  id: String         				// generiert von generateID() in globalsJS
+		 *  text: String         			// der Text welche gespeichert wurde
+
+	TOOL EINBINDEN
+	Das Einbinden eines neuen Tools soll möglichst schnell, einfach und automatisch erfolgen. 
+	Der Name des Tools wird als Key verwendet, als Id für seinen Container, abgewandelt als Button oder Speicher.
+	Schritt 1 muss manuell erfolgen, Schritt 4/5 brauchen expliziete Angaben.
+	- Schritt 1: Den Namen als Key und die Überschrift als Value im Objekt "allTools" eintragen 
+	- Schritt 2: Der Button hat die Id "<tool>Btn" wobei <tool> der Name des Tools ist
+				 Die Beschriftung des Buttons hat den Wert von allTools[<tool>]
+	             Der Button hat ein Klick-Event welches "changeVisibility('<tool>'')" aufruft.
+	- Schritt 3: Der Div-Kontainer hat die Id <tool> der Span-Container die Id "<tool>ToolTipp"
+				 Die Überschrift <h3> hat den Wert von allTools[<tool>]
+	- Schritt 4: Das Objekt "tooltips" bekommt eine neue Eigenschaft mit dem Key "<tool>ToolTipp"
+				 Der Wert von "<tool>ToolTipp" ist ein String mit der Beschreibung des Tools
+	- Schritt 5: Die Daten des Tools werden unter "tool<Tool>" im Objekt "quickToolsSaves" gespeichert
 -->
 <html>
 	<head>
@@ -70,6 +116,11 @@
 			--prio4: rgba(221, 151, 151, 0.15);	/* Hintergrund der höchsten Prio */
 			}
 		</style>
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
 		<style id="darkMode"> 
 			.dark-mode {
 			--ground: rgb(19, 19, 19);	
@@ -101,6 +152,11 @@
 			--prio4: rgb(46, 37, 37);
 			}
 		</style>
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
 		<style id="globalCSS"> 
 			body {
 			  font-size: 1em;
@@ -228,6 +284,11 @@
 				color: var(--gray-3);
 			}
 		</style>  
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
 		<style id="tooltipsCSS"> 
 			/* Sichtbares Objekt */
 			.helpText {
@@ -272,6 +333,11 @@
 			  visibility: visible;
 			}
 		</style>
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
 		<style id="timerCSS">  
 			.timerBtn{
 				box-sizing: border-box;
@@ -389,7 +455,12 @@
 				background-color: var(--ground);
 			}
 
-		</style>  
+		</style> 
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
 		<style id="commitCSS"> 
 			#commit {
 				display: flex;
@@ -489,6 +560,11 @@
 				filter: brightness(1.15);
 			}
 		</style>  
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
 		<style id="calendarCSS"> 
 			#calendarTable {
 				width: 100%;
@@ -547,8 +623,18 @@
 				text-align: left;
 			}
 		</style>  
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
 		<style id="clipboardCSS"> 
 		</style>
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+		
 		<style id="collectionCSS">
 			#collection{
 				width: 100%; 
@@ -569,36 +655,37 @@
 				renderHistoryList();
 			});
 
-		// Die Seite merkt sich verschiedene Einstellungen zu den Tools
-		// Diese werden im LocalStorage gespeichert.
+		const allTools = {
+			timer: "Project Timer",
+			commit: "Commit Message",
+			calendar: "Calendar Note",
+			note: "Memory Note",
+			collection: "Collection List",
+			clipboard: "Clipboard",
+			saveManager: "Save Manager",
+		}
 
 		/* toolStore = {
-		 *		timerBtn = boolean
-		 *		noteBtn = boolean
-		 *		commitBtn = boolean
-		 *		calendarBtn = boolean
-		 *		clipboardBtn = boolean
-		 *		collectionBtn = boolean
-		 *		timerSort = string
-		 *		commitHistorySelect = number
-		 *		cssMode = string
+		 *		<tool>Btn = boolean				// <tool> steht für den Toolname aus allTools
+		 *		timerSort = string				// Einträge nach Date oder Prio sortiert
+		 *		commitHistorySelect = number	// Anzahl der gezeigten Einträge
+		 *		cssMode = string				// Dark-Mode oder Light-Mode
 		 *	}
 		 */
 			let store = {};
 			function loadStore() {
 				const storedData = localStorage.getItem("toolStore");
-				store = storedData ? JSON.parse(storedData) : {};
+				const toolNameArray = Object.keys(allTools);
+				let initVisibility = {}; 
+				
+				toolNameArray.forEach((key)=>{
+					initVisibility[key] = true;
+				});
 
+				store = storedData ? JSON.parse(storedData) : {};
 				if (!store || Object.keys(store).length === 0) {
 					store = {
-					visibility: {
-						timer: true,
-						commit: true,
-						calendar: true,
-						note: false,
-						clipboard: true,
-						collection: true
-					},
+					visibility: initVisibility,
 					timerSort: "Date",
 					commitHistorySelect: 3,
 					cssMode: "default"
@@ -621,24 +708,14 @@
 					}
 				}
 			}
-
-			const allTools = {
-				timer: "Project Timer",
-				commitMsg: "Commit Message",
-				commitHis: "Commit History",
-				calendat: "Calendar Note",
-				memoNote: "Memory Note",
-				collection: "Collection List",
-				clipboard: "Clipboard",
-				saveManager: "Save Manager",
-			}
-
 		</script> 
 	</head>
 
-<!--------------------------------------------------------------------------------------------------------------------------->
 
+<!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
 <!--------------------------------------------------------------------------------------------------------------------------->
+<!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+
 
 	<body>
 		<header> <!-- Sichtbarkeit der Tools ------------------------------>
@@ -781,9 +858,11 @@
 		</div>
 		</main> 
 
-<!--------------------------------------------------------------------------------------------------------------------------->
 
+<!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
 <!--------------------------------------------------------------------------------------------------------------------------->
+<!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+
 
 		<script id="globalJS"> 
 			function changeVisibility(container){
@@ -869,6 +948,10 @@
 			};
 		</script> 
 
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
 		<script id="tooltipsJS">
 			const tooltips = {
 				timerToolTipp: "<b>Project Timer</b><br><br>Dieses Tool bietet für jeden Eintrag zwei Stoppuhren: Eine misst die gesamte Zeit, während die andere sich zurücksetzen lässt. Jeder Timer kann mit einem Namen versehen werden – sei es ein beliebiger Text, eine Ticketnummer oder eine spezifische Aufgabe.<ul><li>Mit [Go] starten beide Timer gleichzeitig, mit [Stop] werden beide angehalten.</li><li>Über das Dropdown-Menü lässt sich eine Priorität für jeden Eintrag festlegen, wobei 1 die niedrigste und 4 die höchste Priorität bedeutet.</li><li>Die Einträge können nach Erstellungsdatum oder Priorität sortiert werden.</li><li>Um den Text eines Eintrags zu ändern, genügt ein Doppelklick darauf. Es erscheint ein Eingabefeld, in dem der neue Text eingegeben werden kann. Mit der Enter-Taste wird der neue Inhalt gespeichert. Verliert das Eingabefeld den Fokus, ohne dass Enter gedrückt wurde, wird die Bearbeitung abgebrochen.</li><li>Mit [Delete] wird der Eintrag gelöscht.</li></ul>",
@@ -891,6 +974,10 @@
 				}
 			}
 		</script>
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+<!--------------------------------------------------------------------------------------------------------------------------->
 
 		<script id="utilityJS">
 			// Gibt eine zufällige Folge von Zeichen zurück
@@ -993,6 +1080,10 @@
 					textarea.style.height = textarea.scrollHeight + 'px'; 
 			};
 		</script>
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+<!--------------------------------------------------------------------------------------------------------------------------->
 
 		<script id="timerJS">
 			let timerObjects = JSON.parse(localStorage.getItem("toolTimers")) || {};
@@ -1208,6 +1299,10 @@
 			}
 		</script> 
 
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
 		<script id="commitJS"> 
 		// Die Werte aus dem Formular werden gesammelt, formatiert und in ein
 		// Textfeld geschrieben. Dieser Text kann dann kopiert werden.
@@ -1345,6 +1440,10 @@
 		}
 
 		</script> 
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+<!--------------------------------------------------------------------------------------------------------------------------->
 
 		<script id="calendarJS">
 			let calendarObjects = JSON.parse(localStorage.getItem("toolCalendar")) || {};
@@ -1516,6 +1615,10 @@
 			}
 
 		</script>
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+<!--------------------------------------------------------------------------------------------------------------------------->
 		
 		<script id="clipboardJS"> 
 		</script>
