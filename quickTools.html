@@ -85,255 +85,256 @@
 -->
 <html>
 	<head>
-		<title>quickTools</title>
-		<style id="colors"> 
-			:root {
-			--ground: rgb(255, 255, 255);			/* Allgemeine Hintergundfarbe */
-			--paper: rgb(233, 239, 247);			/* Papierlinien */
-			--input: rgb(241, 241, 241);			/* Hintergrund der Inputfelder */
-			--background-3: rgb(155, 169, 197);	/* Hintergundfarbe von Buttons */
-			--background-2: rgb(189, 201, 216);	/* Hintergundfarbe als Akzent */
-			--background-1: rgb(243, 248, 252);	/* Hintergrundfarbe von Modulen */
+	<title>quickTools</title>
 
-			--text-3: rgb(43, 53, 66);				/* Normale Textfarbe */
-			--text-2: rgb(92, 94, 110);			/* Textfarbe von Überschriften */
-			--text-1: rgb(244, 244, 245);			/* Textfarbe von Tooltipps */
+	<style id="colors"> 
+		:root {
+		--ground: rgb(255, 255, 255);			/* Allgemeine Hintergundfarbe */
+		--paper: rgb(233, 239, 247);			/* Papierlinien */
+		--input: rgb(241, 241, 241);			/* Hintergrund der Inputfelder */
+		--background-3: rgb(155, 169, 197);	/* Hintergundfarbe von Buttons */
+		--background-2: rgb(189, 201, 216);	/* Hintergundfarbe als Akzent */
+		--background-1: rgb(243, 248, 252);	/* Hintergrundfarbe von Modulen */
 
-			--gray-3: rgb(172, 172, 172);			/* Ränder von Formularen */
-			--gray-2: rgb(215, 216, 216);			/* Inaktiv oder nicht Interaktiv */
-			--gray-1: rgb(215, 216, 216);			/* Noch kein Einsatz */
+		--text-3: rgb(43, 53, 66);				/* Normale Textfarbe */
+		--text-2: rgb(92, 94, 110);			/* Textfarbe von Überschriften */
+		--text-1: rgb(244, 244, 245);			/* Textfarbe von Tooltipps */
 
-			--green: rgb(175, 196, 145);			/* Bestätigen oder Starten */
-			--red: rgb(221, 151, 151);				/* Warnung, Löschen oder Abbrechen */
-			--purple: rgb(187, 155, 197);			/* Sonderfarbe z.B bei der Prioanzeige */
+		--gray-3: rgb(172, 172, 172);			/* Ränder von Formularen */
+		--gray-2: rgb(215, 216, 216);			/* Inaktiv oder nicht Interaktiv */
+		--gray-1: rgb(215, 216, 216);			/* Noch kein Einsatz */
 
-			--shadow: rgba(0, 0, 0, 0);			/* Schatten z.B bei der Animation */
-			--shadow-glas: rgba(0, 0, 0, 0.2);		/* Durchsichtiger Schatten */
-			--glas: rgba(255, 255, 255, 0.75);		/* Durchsichtiger Hintergund wie Glas */
+		--green: rgb(175, 196, 145);			/* Bestätigen oder Starten */
+		--red: rgb(221, 151, 151);				/* Warnung, Löschen oder Abbrechen */
+		--purple: rgb(187, 155, 197);			/* Sonderfarbe z.B bei der Prioanzeige */
 
-			--prio1: rgba(215, 216, 216, 0.15);	/* Hintergrund der geringsten Prio */
-			--prio2: rgba(155, 169, 197, 0.15);	/* Hintergrund der standard Prio */
-			--prio3: rgba(187, 155, 197, 0.15);	/* Hintergrund der höheren Prio */
-			--prio4: rgba(221, 151, 151, 0.15);	/* Hintergrund der höchsten Prio */
-			}
-		</style>
+		--shadow: rgba(0, 0, 0, 0);			/* Schatten z.B bei der Animation */
+		--shadow-glas: rgba(0, 0, 0, 0.2);		/* Durchsichtiger Schatten */
+		--glas: rgba(255, 255, 255, 0.75);		/* Durchsichtiger Hintergund wie Glas */
 
-<!--------------------------------------------------------------------------------------------------------------------------->
-
-<!--------------------------------------------------------------------------------------------------------------------------->
-
-		<style id="darkMode"> 
-			.dark-mode {
-			--ground: rgb(19, 19, 19);	
-			--paper: rgb(36, 36, 36);				
-			--input: rgb(68, 68, 68);
-			--background-3: rgb(103, 112, 108);	
-			--background-2: rgb(38, 59, 65);		
-			--background-1: rgb(30, 33, 34);			
-
-			--text-3: rgb(167, 177, 165);		
-			--text-2: rgb(117, 133, 113);				
-			--text-1: rgb(33, 44, 30);					
-
-			--gray-3: rgb(110, 110, 110);	
-			--gray-2: rgb(46, 46, 46);			
-			--gray-1: rgb(15, 15, 15);
-
-			--green: rgb(54, 73, 28);					
-			--red: rgb(88, 43, 43);						
-			--purple: rgb(72, 51, 78);			
-
-			--shadow: rgba(255, 255, 255, 0);
-			--shadow-glas: rgba(255, 255, 255, 0.3);
-			--glas: rgba(0, 0, 0, 0.25);
-
-			--prio1: rgb(44, 44, 44);
-			--prio2: rgb(31, 43, 43);	
-			--prio3: rgb(38, 32, 39);		
-			--prio4: rgb(46, 37, 37);
-			}
-		</style>
+		--prio1: rgba(215, 216, 216, 0.15);	/* Hintergrund der geringsten Prio */
+		--prio2: rgba(155, 169, 197, 0.15);	/* Hintergrund der standard Prio */
+		--prio3: rgba(187, 155, 197, 0.15);	/* Hintergrund der höheren Prio */
+		--prio4: rgba(221, 151, 151, 0.15);	/* Hintergrund der höchsten Prio */
+		}
+	</style>
 
 <!--------------------------------------------------------------------------------------------------------------------------->
 
 <!--------------------------------------------------------------------------------------------------------------------------->
 
-		<style id="globalCSS"> 
-			body {
-			  font-size: 1em;
-			  padding: 0;
-			  color: var(--text-3);
-			  margin: 0;
-			  font-family: "Courier New", Courier, monospace;
+	<style id="darkMode"> 
+		.dark-mode {
+		--ground: rgb(19, 19, 19);	
+		--paper: rgb(36, 36, 36);				
+		--input: rgb(68, 68, 68);
+		--background-3: rgb(103, 112, 108);	
+		--background-2: rgb(38, 59, 65);		
+		--background-1: rgb(30, 33, 34);			
 
-			  background-color: var(--ground);
-			  background-image:  linear-gradient(var(--paper) 2px, transparent 2px), linear-gradient(90deg, var(--paper), transparent 2px), linear-gradient(var(--paper) 1px, transparent 1px), linear-gradient(90deg, var(--paper) 1px, var(--ground) 1px);
-			  background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
-			  background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
-			}
-			
-			main {
-			  box-sizing: border-box;
-			  background-color: var(--ground);
-			  margin: auto;
-			  display: flex;
-			  flex-wrap: nowrap;
-			  max-width: 1500px;
-			  width: auto;
-			  border: 3px dotted var(--gray-2);
-			  padding: 10px 10px 10px 10px;
-			  outline: 3px solid var(--gray-2);
-			} header {
-			  box-sizing: border-box;
-			  margin: auto;
-			  margin-bottom: 20px;
-			  width: 100%;
-			  text-align: center;
-			  background-color: var(--background-1);
-			  padding: 10px;
-			  border-bottom: 3px dotted var(--gray-2);
-			  outline: 3px solid var(--gray-2);
-			}
+		--text-3: rgb(167, 177, 165);		
+		--text-2: rgb(117, 133, 113);				
+		--text-1: rgb(33, 44, 30);					
 
-			*:focus {
-			  outline: 0;
-			  border: 2px solid var(--purple);
-			}
-			
-			h3 {
-			  font-family: Arial, Helvetica, sans-serif;
-			  font-weight: 500;
-			  background-color: var(--glas);
-			  color: var(--text-2);
-			  font-size: 1.4em;
-			  margin: 0 0 25px 0;
-			  padding: 5px;
-			}
+		--gray-3: rgb(110, 110, 110);	
+		--gray-2: rgb(46, 46, 46);			
+		--gray-1: rgb(15, 15, 15);
 
-			hr {
-			  height: 0;
-			  border: none;
-			  margin: 20px 0 20px 0;
-			}
-			
-			button {
-			  background-color: var(--background-3);
-			  border: 1px solid var(--gray-3);
-			  color: var(--text-1);
-			  font-family: "Courier New", Courier, monospace;
-			  font-size: 1em;
-			  margin: 5px 5px 5px 5px;
-			  height: 25px;
-			} button:hover {
-				filter: brightness(1.25);
-			} button:active {
-				background-color: var(--green);
-				border: 1px solid var(--gray-1);
-				color: var(--text-2);
-			}
-			
-			.greenBtn {
-			  background-color: var(--green);
-			  color: var(--text-3); 
-			}
-			
-			.redBtn {
-			  background-color: var(--red);
-			  color: var(--text-3); 
-			}
+		--green: rgb(54, 73, 28);					
+		--red: rgb(88, 43, 43);						
+		--purple: rgb(72, 51, 78);			
 
-			.hidden {
-			  display: none !important;
-			}
+		--shadow: rgba(255, 255, 255, 0);
+		--shadow-glas: rgba(255, 255, 255, 0.3);
+		--glas: rgba(0, 0, 0, 0.25);
 
-			.floatLeft {
-			  float: left;
-			}
-			.floatRight {
-			  float: right;
-			  margin-right: 10px;
-			  text-align: right;
-			}
-
-			input,
-			option,
-			select,
-			textarea {
-			  font-family: "Courier New", Courier, monospace;
-			  font-weight: 500;
-			  font-size: small;
-			  color: var(--text-3);
-			  background-color: var(--input);
-			  border: 2px solid var(--gray-3);
-			} 
-
-			.container {
-				box-sizing: border-box;
-				padding: 20px;
-				border: 1px solid var(--background-2);
-				background-color: var(--background-1);
-			}
-
-			#mainColumn1 {
-				flex: 0 1 1000px;
-			}
-			#mainColumn2 {
-				flex: 0 1 500px;
-				margin-left: 40px;
-			}
-			.grayText{
-				color: var(--gray-3);
-			}
-		</style>  
+		--prio1: rgb(44, 44, 44);
+		--prio2: rgb(31, 43, 43);	
+		--prio3: rgb(38, 32, 39);		
+		--prio4: rgb(46, 37, 37);
+		}
+	</style>
 
 <!--------------------------------------------------------------------------------------------------------------------------->
 
 <!--------------------------------------------------------------------------------------------------------------------------->
 
-		<style id="tooltipsCSS"> 
-			/* Sichtbares Objekt */
-			.helpText {
-			  float: left;
-			  text-align: center;
-			  border-radius: 50%;
-			  background-color: var(--text-1);
-			  border: 1px solid var(--gray-3);
-			  color: var(--text-3); 
-			  font-family: "Courier New", Courier, monospace;
-			  font-size: 1em;
-			  margin: 5px 10px 5px 5px;
-			  margin-top: 7px; /* Hiermit wird es zum Text daneben justiert */
-			  height: 18px;
-			  width: 18px;
-			}
+	<style id="globalCSS"> 
+		body {
+			font-size: 1em;
+			padding: 0;
+			color: var(--text-3);
+			margin: 0;
+			font-family: "Courier New", Courier, monospace;
 
-			.tooltip {
-			  position: relative;
-			  display: inline-block; 
-			}
-			
-			/* Tooltip text */
-			.tooltip .tooltiptext {
-			  font-family: Arial, Helvetica, sans-serif;
-			  line-height: 130%;
-			  visibility: hidden;
-			  min-width: 400px;
-			  background-color: var(--text-2);
-			  border: 1px solid var(--text-3);
-			  outline: 3px solid var(--ground);
-			  color: var(--text-1);
-			  text-align: left;
-			  padding: 8px;
-			  border-radius: 6px;
-			  font-size: 0.9em;
-			  position: absolute;
-			  z-index: 1;
-			}
-			
-			.tooltip:hover .tooltiptext {
-			  visibility: visible;
-			}
-		</style>
+			background-color: var(--ground);
+			background-image:  linear-gradient(var(--paper) 2px, transparent 2px), linear-gradient(90deg, var(--paper), transparent 2px), linear-gradient(var(--paper) 1px, transparent 1px), linear-gradient(90deg, var(--paper) 1px, var(--ground) 1px);
+			background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
+			background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+		}
+		
+		main {
+			box-sizing: border-box;
+			background-color: var(--ground);
+			margin: auto;
+			display: flex;
+			flex-wrap: nowrap;
+			max-width: 1500px;
+			width: auto;
+			border: 3px dotted var(--gray-2);
+			padding: 10px 10px 10px 10px;
+			outline: 3px solid var(--gray-2);
+		} header {
+			box-sizing: border-box;
+			margin: auto;
+			margin-bottom: 20px;
+			width: 100%;
+			text-align: center;
+			background-color: var(--background-1);
+			padding: 10px;
+			border-bottom: 3px dotted var(--gray-2);
+			outline: 3px solid var(--gray-2);
+		}
+
+		*:focus {
+			outline: 0;
+			border: 2px solid var(--purple);
+		}
+		
+		h3 {
+			font-family: Arial, Helvetica, sans-serif;
+			font-weight: 500;
+			background-color: var(--glas);
+			color: var(--text-2);
+			font-size: 1.4em;
+			margin: 0 0 25px 0;
+			padding: 5px;
+		}
+
+		hr {
+			height: 0;
+			border: none;
+			margin: 20px 0 20px 0;
+		}
+		
+		button {
+			background-color: var(--background-3);
+			border: 1px solid var(--gray-3);
+			color: var(--text-1);
+			font-family: "Courier New", Courier, monospace;
+			font-size: 1em;
+			margin: 5px 5px 5px 5px;
+			height: 25px;
+		} button:hover {
+			filter: brightness(1.25);
+		} button:active {
+			background-color: var(--green);
+			border: 1px solid var(--gray-1);
+			color: var(--text-2);
+		}
+		
+		.greenBtn {
+			background-color: var(--green);
+			color: var(--text-3); 
+		}
+		
+		.redBtn {
+			background-color: var(--red);
+			color: var(--text-3); 
+		}
+
+		.hidden {
+			display: none !important;
+		}
+
+		.floatLeft {
+			float: left;
+		}
+		.floatRight {
+			float: right;
+			margin-right: 10px;
+			text-align: right;
+		}
+
+		input,
+		option,
+		select,
+		textarea {
+			font-family: "Courier New", Courier, monospace;
+			font-weight: 500;
+			font-size: small;
+			color: var(--text-3);
+			background-color: var(--input);
+			border: 2px solid var(--gray-3);
+		} 
+
+		.container {
+			box-sizing: border-box;
+			padding: 20px;
+			border: 1px solid var(--background-2);
+			background-color: var(--background-1);
+		}
+
+		#mainColumn1 {
+			flex: 0 1 1000px;
+		}
+		#mainColumn2 {
+			flex: 0 1 500px;
+			margin-left: 40px;
+		}
+		.grayText{
+			color: var(--gray-3);
+		}
+	</style>  
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+	<style id="tooltipsCSS"> 
+		/* Sichtbares Objekt */
+		.helpText {
+			float: left;
+			text-align: center;
+			border-radius: 50%;
+			background-color: var(--text-1);
+			border: 1px solid var(--gray-3);
+			color: var(--text-3); 
+			font-family: "Courier New", Courier, monospace;
+			font-size: 1em;
+			margin: 5px 10px 5px 5px;
+			margin-top: 7px; /* Hiermit wird es zum Text daneben justiert */
+			height: 18px;
+			width: 18px;
+		}
+
+		.tooltip {
+			position: relative;
+			display: inline-block; 
+		}
+		
+		/* Tooltip text */
+		.tooltip .tooltiptext {
+			font-family: Arial, Helvetica, sans-serif;
+			line-height: 130%;
+			visibility: hidden;
+			min-width: 400px;
+			background-color: var(--text-2);
+			border: 1px solid var(--text-3);
+			outline: 3px solid var(--ground);
+			color: var(--text-1);
+			text-align: left;
+			padding: 8px;
+			border-radius: 6px;
+			font-size: 0.9em;
+			position: absolute;
+			z-index: 1;
+		}
+		
+		.tooltip:hover .tooltiptext {
+			visibility: visible;
+		}
+	</style>
 
 
 <!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
@@ -341,344 +342,332 @@
 <!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
 
 
-		<style id="timerCSS">  
-			.timerBtn{
-				box-sizing: border-box;
-				border: 1px solid var(--gray-3);
-				margin: 3px 1px 3px 1px;
-				height: 25px;	
-			}
-			#timer select{
-				box-sizing: border-box;
-				background-color: var(--background-3);
-			  	border: 1px solid var(--gray-3);
-				color: var(--ground);
-				margin: 5px 1px 5px 1px;
-				height: 25px;
-			}
-			#timer li{
-				margin: 20px 0 20px 0;
-				font-family: Arial, Helvetica, sans-serif;
-			}
+	<style id="timerCSS">  
+		.timerBtn{
+			box-sizing: border-box;
+			border: 1px solid var(--gray-3);
+			margin: 3px 1px 3px 1px;
+			height: 25px;	
+		}
+		#timer select{
+			box-sizing: border-box;
+			background-color: var(--background-3);
+			border: 1px solid var(--gray-3);
+			color: var(--ground);
+			margin: 5px 1px 5px 1px;
+			height: 25px;
+		}
+		#timer li{
+			margin: 20px 0 20px 0;
+			font-family: Arial, Helvetica, sans-serif;
+		}
 
-			#timer span{
-				margin-top: 10px;
-				margin-bottom: 5px;
-			}
+		#timer span{
+			margin-top: 10px;
+			margin-bottom: 5px;
+		}
 
-			#projectList {
-				list-style-type: none;
-				padding: 0;
-			}
-			.prio4{
-				border: 2px solid var(--red);
-				background-color: var(--prio4);
-				padding: 5px;
-				overflow: auto;
-			}
-			.prio3{
-				border: 2px solid var(--purple);
-				background-color: var(--prio3);
-				padding: 5px;
-				overflow: auto;
-			}
-			.prio2{
-				border: 2px solid var(--background-2);
-				background-color: var(--prio2);
-				padding: 5px;
-				overflow: auto;
-			}
-			.prio1{
-				border: 2px solid var(--gray-2);
-				background-color: var(--prio1);
-				padding: 5px;
-				overflow: auto;
-			}
-			.timerEntry{
-				display: flex;
-				flex-direction: row;
-			}
-			.timerRight{
-				display: inline;
-				width: 265px;
-			}
-			.timerLeft{
-				display: inline;
-				width: calc(100% - 280px);
-			}
-			.textTime{
-				display: inline-block;
-				box-sizing: border-box;
-				border: 1px dotted var(--gray-3);
-				background-color: var(--glas);
-				padding: 1px 6px 0 6px;
-				height: 27px;
-				margin: 2px 4px 4px 5px;
-				font-size: 1.2em;
-				font-family: "Courier New", Courier, monospace;
-			}
-			.textName, .textNumber{
-				display: inline-block;
-				margin: 5px 10px 5px 5px;
-				font-size: 1.2em;
-				max-width: 90%;
-			}
-			input.textName:focus, input.textNumber:focus{
-				outline: 0;
-				height: 27px;
-				width: 100%;
-				padding: 2px 5px 2px 8px;
-				height: 20px;
-				margin: 4px 0 0 2px;
-				font-size: 1em;
-			}
+		#projectList {
+			list-style-type: none;
+			padding: 0;
+		}
+		.prio4{
+			border: 2px solid var(--red);
+			background-color: var(--prio4);
+			padding: 5px;
+			overflow: auto;
+		}
+		.prio3{
+			border: 2px solid var(--purple);
+			background-color: var(--prio3);
+			padding: 5px;
+			overflow: auto;
+		}
+		.prio2{
+			border: 2px solid var(--background-2);
+			background-color: var(--prio2);
+			padding: 5px;
+			overflow: auto;
+		}
+		.prio1{
+			border: 2px solid var(--gray-2);
+			background-color: var(--prio1);
+			padding: 5px;
+			overflow: auto;
+		}
+		.timerEntry{
+			display: flex;
+			flex-direction: row;
+		}
+		.timerRight{
+			display: inline;
+			width: 265px;
+		}
+		.timerLeft{
+			display: inline;
+			width: calc(100% - 280px);
+		}
+		.textTime{
+			display: inline-block;
+			box-sizing: border-box;
+			border: 1px dotted var(--gray-3);
+			background-color: var(--glas);
+			padding: 1px 6px 0 6px;
+			height: 27px;
+			margin: 2px 4px 4px 5px;
+			font-size: 1.2em;
+			font-family: "Courier New", Courier, monospace;
+		}
+		.textName, .textNumber{
+			display: inline-block;
+			margin: 5px 10px 5px 5px;
+			font-size: 1.2em;
+			max-width: 90%;
+		}
+		input.textName:focus, input.textNumber:focus{
+			outline: 0;
+			height: 27px;
+			width: 100%;
+			padding: 2px 5px 2px 8px;
+			height: 20px;
+			margin: 4px 0 0 2px;
+			font-size: 1em;
+		}
 
-			/* Hier kommt eine Animation um den aktiven Eintrag hervor zu heben */
+		/* Hier kommt eine Animation um den aktiven Eintrag hervor zu heben */
 
-			@keyframes pulse {
-				0% {
-					box-shadow: 0 0 0 0 var(--shadow-glas);
-				}
-				50% {
-					box-shadow: 0 0 0 10px var(--shadow);
-				}
-				100% {
-					box-shadow: 0 0 0 0 var(--shadow-glas);
-				}
+		@keyframes pulse {
+			0% {
+				box-shadow: 0 0 0 0 var(--shadow-glas);
 			}
+			50% {
+				box-shadow: 0 0 0 10px var(--shadow);
+			}
+			100% {
+				box-shadow: 0 0 0 0 var(--shadow-glas);
+			}
+		}
 
-			.pulsing-border {
-				outline: 2px solid var(--gray-2);
-				animation: pulse 2s infinite; /* Animation anwenden */
-			} 
-			.pulsing-border .prio1,
-			.pulsing-border .prio2,
-			.pulsing-border .prio3,
-			.pulsing-border .prio4{
-				background-color: var(--ground);
-			}
+		.pulsing-border {
+			outline: 2px solid var(--gray-2);
+			animation: pulse 2s infinite; /* Animation anwenden */
+		} 
+		.pulsing-border .prio1,
+		.pulsing-border .prio2,
+		.pulsing-border .prio3,
+		.pulsing-border .prio4{
+			background-color: var(--ground);
+		}
 
-		</style> 
-
-<!--------------------------------------------------------------------------------------------------------------------------->
-
-<!--------------------------------------------------------------------------------------------------------------------------->
-
-		<style id="commitCSS"> 
-			#commit {
-				display: flex;
-      			justify-content: space-between;
-			}
-
-			#commitEditor, #commitHistory {
-				width: 48%;
-			}
-
-			#historyItemCount{
-				float: right;
-			}
-			#commit input,
-			#commit select,
-			#commit option,
-			#commitDescription {
-				box-sizing: border-box;
-				outline: 0;
-				margin: 5px 0 5px 0;
-				padding: 5px;
-				resize: none;
-				height: 30px;
-			}
-			#commitType {
-				width: calc(25% - 8px); 
-			}
-			#commitDomain {
-				width: 75%;
-				float: right;
-			}
-			#commitMessage {
-				width: 90%;
-			}
-			#textCounter {
-				text-align: center;
-				background-color: var(--gray-2) !important;
-				width: calc(10% - 8px);
-				float: right;
-			}
-			#commit textarea {
-				height: 100px;
-				width: 100%;
-			}
-			#commitFooter {
-				width: 80%;
-			}
-			#readyBtn {
-				box-sizing: border-box;
-				float: right;
-				width: calc(20% - 8px);
-				margin: 5px 0 5px 0;
-				height: 30px;
-			}
-			#formatedCommitMessage {
-				box-sizing: border-box;
-				border: none;
-				background-color: var(--gray-2);
-				margin: 5px 0 5px 0;
-				padding: 5px;
-				resize: none;
-				font-family: Arial, Helvetica, sans-serif;
-			}
-			#deEnBtn {
-				float: right;
-				margin-right: 0 !important;
-			}
-			#commitHistory ul{
-				list-style-type: none;
-				margin: 80px 0 0 0 !important;
-				padding: 0;
-			}
-			#commitHistory ul div{
-				margin: 0 0 0 34px;
-				font-family: Arial, Helvetica, sans-serif;
-				padding-right: 5px;
-			}
-			#commitHistory li{
-				margin: 20px 0 20px 0;
-				line-height: 1.5em;
-				background-color: var(--glas);
-				border: 1px dotted var(--gray-3);
-				padding: 3px 0 4px 0;
-			}
-			#historyItemCount{
-				box-sizing: border-box;
-				background-color: var(--background-3);
-			  	border: 1px solid var(--gray-3);
-				outline: 0;
-			 	color: var(--ground);
-				margin: 0 0 15px 0;
-				padding: 0 5px 0 5px;
-				font-size: 1em;
-				height: 25px;
-				width: 60px;
-			} #historyItemCount:hover {
-				filter: brightness(1.15);
-			}
-		</style>  
+	</style> 
 
 <!--------------------------------------------------------------------------------------------------------------------------->
 
 <!--------------------------------------------------------------------------------------------------------------------------->
 
-		<style id="calendarCSS"> 
-			#calendarTable {
-				width: 100%;
-				margin: 0 0 15px 0;
-				background-color: var(--glas);
-			}
-			#calendar th, td {
-				border: 2px solid var(--gray-2);
-				padding: 10px;
-				vertical-align: top;
-				padding: 5px;
-				box-sizing: border-box;
-				text-align: center;
-			}
-			#calendar th {
-				font-family: "Courier New", Courier, monospace;
-			  	font-size: 1.1em;
-				font-weight: 500;
-				width: 20%;
-			}
-			.editfield {
-				outline: 0;
-				border: 2px solid var(--purple);
-				resize: vertical;
-				width: 90%;
-				min-height: 110px;
-			}
-			#weeklySelection {
-				box-sizing: border-box;
-				background-color: var(--background-3);
-			  	border: 1px solid var(--gray-3);
-				outline: 0;
-			 	color: var(--ground);
-				margin: 0 0 15px 0;
-				padding: 0 5px 0 5px;
-				font-size: 1em;
-				height: 25px;
-				width: 19.9%;
-			} #weeklySelection:hover {
-				filter: brightness(1.15);
-			}
+	<style id="commitCSS"> 
+		#commit {
+			display: flex;
+			justify-content: space-between;
+		}
 
-			#today {
-				box-sizing: border-box;
-				border: 2px solid var(--background-3) !important;
-				background-color: var(--background-2);
-			}
-			.noteArea {
-				font-family: Arial, Helvetica, sans-serif;
-				width: 100%;
-				max-width: 100%;
-				min-height: 150px;
-				padding: 5px;
-				font-size: 1em;
-				font-weight: 500;
-				text-align: left;
-			}
-		</style>  
+		#commitEditor, #commitHistory {
+			width: 48%;
+		}
+
+		#historyItemCount{
+			float: right;
+		}
+		#commit input,
+		#commit select,
+		#commit option,
+		#commitDescription {
+			box-sizing: border-box;
+			outline: 0;
+			margin: 5px 0 5px 0;
+			padding: 5px;
+			resize: none;
+			height: 30px;
+		}
+		#commitType {
+			width: calc(25% - 8px); 
+		}
+		#commitDomain {
+			width: 75%;
+			float: right;
+		}
+		#commitMessage {
+			width: 90%;
+		}
+		#textCounter {
+			text-align: center;
+			background-color: var(--gray-2) !important;
+			width: calc(10% - 8px);
+			float: right;
+		}
+		#commit textarea {
+			height: 100px;
+			width: 100%;
+		}
+		#commitFooter {
+			width: 80%;
+		}
+		#readyBtn {
+			box-sizing: border-box;
+			float: right;
+			width: calc(20% - 8px);
+			margin: 5px 0 5px 0;
+			height: 30px;
+		}
+		#formatedCommitMessage {
+			box-sizing: border-box;
+			border: none;
+			background-color: var(--gray-2);
+			margin: 5px 0 5px 0;
+			padding: 5px;
+			resize: none;
+			font-family: Arial, Helvetica, sans-serif;
+		}
+		#deEnBtn {
+			float: right;
+			margin-right: 0 !important;
+		}
+		#commitHistory ul{
+			list-style-type: none;
+			margin: 80px 0 0 0 !important;
+			padding: 0;
+		}
+		#commitHistory ul div{
+			margin: 0 0 0 34px;
+			font-family: Arial, Helvetica, sans-serif;
+			padding-right: 5px;
+		}
+		#commitHistory li{
+			margin: 20px 0 20px 0;
+			line-height: 1.5em;
+			background-color: var(--glas);
+			border: 1px dotted var(--gray-3);
+			padding: 3px 0 4px 0;
+		}
+		#historyItemCount{
+			box-sizing: border-box;
+			background-color: var(--background-3);
+			border: 1px solid var(--gray-3);
+			outline: 0;
+			color: var(--ground);
+			margin: 0 0 15px 0;
+			padding: 0 5px 0 5px;
+			font-size: 1em;
+			height: 25px;
+			width: 60px;
+		} #historyItemCount:hover {
+			filter: brightness(1.15);
+		}
+	</style>  
 
 <!--------------------------------------------------------------------------------------------------------------------------->
 
 <!--------------------------------------------------------------------------------------------------------------------------->
 
-		<style id="noteCSS"> 
-		</style>
+	<style id="calendarCSS"> 
+		#calendarTable {
+			width: 100%;
+			margin: 0 0 15px 0;
+			background-color: var(--glas);
+		}
+		#calendar th, td {
+			border: 2px solid var(--gray-2);
+			padding: 10px;
+			vertical-align: top;
+			padding: 5px;
+			box-sizing: border-box;
+			text-align: center;
+		}
+		#calendar th {
+			font-family: "Courier New", Courier, monospace;
+			font-size: 1.1em;
+			font-weight: 500;
+			width: 20%;
+		}
+		.editfield {
+			outline: 0;
+			border: 2px solid var(--purple);
+			resize: vertical;
+			width: 90%;
+			min-height: 110px;
+		}
+		#weeklySelection {
+			box-sizing: border-box;
+			background-color: var(--background-3);
+			border: 1px solid var(--gray-3);
+			outline: 0;
+			color: var(--ground);
+			margin: 0 0 15px 0;
+			padding: 0 5px 0 5px;
+			font-size: 1em;
+			height: 25px;
+			width: 19.9%;
+		} #weeklySelection:hover {
+			filter: brightness(1.15);
+		}
+
+		#today {
+			box-sizing: border-box;
+			border: 2px solid var(--background-3) !important;
+			background-color: var(--background-2);
+		}
+		.noteArea {
+			font-family: Arial, Helvetica, sans-serif;
+			width: 100%;
+			max-width: 100%;
+			min-height: 150px;
+			padding: 5px;
+			font-size: 1em;
+			font-weight: 500;
+			text-align: left;
+		}
+	</style>  
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+	<style id="noteCSS"> 
+	</style>
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+	
+	<style id="collectionCSS">
+		#collection{
+			width: 100%; 
+		}
+	</style>
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+	<style id="clipboardCSS"> 
+	</style>
 
 <!--------------------------------------------------------------------------------------------------------------------------->
 
 <!--------------------------------------------------------------------------------------------------------------------------->
 		
-		<style id="collectionCSS">
-			#collection{
-				width: 100%; 
-			}
-		</style>
+	<style id="saveManagerCSS">
+	</style>
 
+
+<!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
 <!--------------------------------------------------------------------------------------------------------------------------->
+<!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
 
-<!--------------------------------------------------------------------------------------------------------------------------->
 
-		<style id="clipboardCSS"> 
-		</style>
-
-<!--------------------------------------------------------------------------------------------------------------------------->
-
-<!--------------------------------------------------------------------------------------------------------------------------->
+	<script id="loadJS">  
+		let store = {};
 		
-		<style id="saveManagerCSS">
-		</style>
-
-
-<!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
-<!--------------------------------------------------------------------------------------------------------------------------->
-<!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
-
-
-		<script id="loadJS">  
-			 window.addEventListener("load", () => {
-				// Funktionen die beim Laden der Seite ausgeführt werden sollen
-				loadStore();
-				loadCss();
-				createBtnHeader();
-				loadVisibility();
-				setCurrentWeekToInput();
-				updateTable();
-				setToolTipText();
-				renderTimerEntries();
-				renderSortTimerBtn();
-				renderHistoryList();
-			});
-
 		const allTools = {
 			timer: "Project Timer",
 			commit: "Commit Message",
@@ -689,307 +678,312 @@
 			saveManager: "Save Manager",
 		}
 
-		/* toolStore = {
-		 *		<tool>Btn = boolean				// <tool> steht für den Toolname aus allTools
-		 *		timerSort = string				// Einträge nach Date oder Prio sortiert
-		 *		commitHistorySelect = number	// Anzahl der gezeigten Einträge
-		 *		cssMode = string				// Dark-Mode oder Light-Mode
-		 *	}
-		 */
-			let store = {};
-			function loadStore() {
-				const storedData = localStorage.getItem("toolStore");
-				const toolNameArray = Object.keys(allTools);
-				let initVisibility = {}; 
-				
-				toolNameArray.forEach((key)=>{
-					initVisibility[key] = true;
-				});
+		window.addEventListener("load", () => {
+			loadStore();
+			loadCss();
+			createBtnHeader();
+			loadVisibility();
+			setCurrentWeekToInput();
+			updateTable();
+			setToolTipText();
+			renderTimerEntries();
+			renderSortTimerBtn();
+			renderHistoryList();
+		});
 
-				store = storedData ? JSON.parse(storedData) : {};
-				if (!store || Object.keys(store).length === 0) {
-					store = {
-					visibility: initVisibility,
-					timerSort: "Date",
-					commitHistorySelect: 3,
-					cssMode: "default"
-					};
-					localStorage.setItem("toolStore", JSON.stringify(store));
-				}
-			}
+		function loadStore() {
+			const storedData = localStorage.getItem("toolStore");
+			const toolNameArray = Object.keys(allTools);
+			let initVisibility = {}; 
+			
+			toolNameArray.forEach((key)=>{
+				initVisibility[key] = true;
+			});
 
-			function loadCss(){
-				const cssMode = store.cssMode;
-				if(cssMode === "dark-mode"){
-					document.body.classList.toggle('dark-mode');
-				}
-			}
-
-			function loadVisibility(){
-				for (const tool in store.visibility) {
-					if (store.visibility[tool] === false) {
-						changeVisibility(tool);
-					}
-				}
-			}
-		</script> 
-
-<!--------------------------------------------------------------------------------------------------------------------------->
-
-<!--------------------------------------------------------------------------------------------------------------------------->	
-
-		<script id="globalJS"> 
-			function createBtnHeader(){
-				const toolNameArray = Object.keys(allTools);
-				const header = document.getElementById("headerBtns");
-
-				toolNameArray.forEach((key)=>{
-					const btnText = allTools[key];
-					const btnFn = ()=> changeVisibility(key);
-					const btn = createButton(btnText, "greenBtn", btnFn);
-						btn.id = key + "Btn"
-					header.appendChild(btn);
-				});
-			}
-
-			function createToolHeader(id, name = ""){
-				const container = document.getElementById(id + "Header");
-				const h3 = document.createElement("h3");
-
-				if(name){
-					h3.textContent = name;
-				} else {
-					h3.textContent = id.charAt(0).toUpperCase() + id.slice(1);
-				}
-
-				const divTooltip = document.createElement("div");
-					  divTooltip.classList = "tooltip helpText";
-					  divTooltip.textContent = "?";
-				const textTooltip = document.createElement("span");
-					  textTooltip.classList = "tooltiptext";
-					  textTooltip.id = id + "ToolTipp";
-
-				divTooltip.appendChild(textTooltip);
-				container.append(divTooltip, h3);
-			}
-
-			function changeVisibility(container){
-				const element = document.getElementById(container);
-				const elementBtn = document.getElementById(container + "Btn");
-				const elementHr = document.getElementById(container + "Hr");
-
-				if(element.classList.contains("hidden")) {
-					element.classList.remove("hidden");
-					elementBtn.classList.remove("redBtn");
-					elementBtn.classList.add("greenBtn");
-					if(elementHr){
-						elementHr.classList.remove("hidden");
-					}
-					store.visibility[container] = true;
-				} else {
-					element.classList.add("hidden");
-					elementBtn.classList.add("redBtn");
-					elementBtn.classList.remove("greenBtn");
-					if(elementHr){
-						elementHr.classList.add("hidden");
-					}
-					store.visibility[container] = false;
-				}
+			store = storedData ? JSON.parse(storedData) : {};
+			if (!store || Object.keys(store).length === 0) {
+				store = {
+				visibility: initVisibility,
+				timerSort: "Date",
+				commitHistorySelect: 3,
+				cssMode: "default"
+				};
 				localStorage.setItem("toolStore", JSON.stringify(store));
-				changeMainWidth();
 			}
+		}
 
-			function changeMainWidth(){
-				const main = document.querySelector('main');
-				const mainColumn1 = document.getElementById('mainColumn1');
-				const mainColumn2 = document.getElementById('mainColumn2');
-
-				// Konvertiere die children-HTMLCollection in ein Array und filtere es
-				// Überprüfe, dass das Element nicht <hr> ist und nicht die Klasse 'hidden' hat
-				const haveTools1 = Array.from(mainColumn1.children).filter(function(el) {
-				return el.tagName !== 'HR' && !el.classList.contains('hidden');
-				});
-
-				const haveTools2 = Array.from(mainColumn2.children).filter(function(el) {
-				return el.tagName !== 'HR' && !el.classList.contains('hidden');
-				});
-
-
-				if(haveTools1.length >= 1 && haveTools2.length >= 1){  // links ja / rechts ja
-					mainColumn1.classList.remove("hidden")
-					mainColumn2.classList.remove("hidden")
-					main.style.maxWidth = '1500px';
-					mainColumn2.style.flex = "0 1 500px";
-					mainColumn2.style.marginLeft = "40px";
-				} 
-				
-				if(haveTools1.length >= 1 && haveTools2.length < 1){  // links ja / rechts nein
-					mainColumn2.classList.add("hidden");
-					mainColumn1.classList.remove("hidden")
-					main.style.maxWidth = '1000px';
-				}
-
-				if(haveTools1.length < 1 && haveTools2.length >= 1){  // links nein / rechts ja
-					mainColumn1.classList.add("hidden");
-					mainColumn2.classList.remove("hidden")
-					main.style.maxWidth = '700px';
-					mainColumn2.style.flex = "1 0 auto";
-					mainColumn2.style.marginLeft = "0";
-				} 
-				
-				if(haveTools1.length < 1 && haveTools2.length < 1){  // links nein / rechts nein
-					mainColumn1.classList.add("hidden");
-					mainColumn2.classList.add("hidden");
-					main.style.maxWidth = '500px';
-				}
-			}
-
-			const toggleDarkMode = () => {
+		function loadCss(){
+			const cssMode = store.cssMode;
+			if(cssMode === "dark-mode"){
 				document.body.classList.toggle('dark-mode');
-				const currentCssMode = store.cssMode;
-				if(currentCssMode === "default"){
-					store.cssMode = "dark-mode";
-				} else {
-					store.cssMode = "default";
+			}
+		}
+
+		function loadVisibility(){
+			for (const tool in store.visibility) {
+				if (store.visibility[tool] === false) {
+					changeVisibility(tool);
 				}
-				localStorage.setItem("toolStore", JSON.stringify(store));
-			};
-		</script> 
-	
+			}
+		}
+	</script> 
+
 <!--------------------------------------------------------------------------------------------------------------------------->
 
 <!--------------------------------------------------------------------------------------------------------------------------->	
 
-		<script id="tooltipsJS">
-			const tooltips = {
-				timerToolTipp: "<b>Project Timer</b><br><br>Dieses Tool bietet für jeden Eintrag zwei Stoppuhren: Eine misst die gesamte Zeit, während die andere sich zurücksetzen lässt. Jeder Timer kann mit einem Namen versehen werden – sei es ein beliebiger Text, eine Ticketnummer oder eine spezifische Aufgabe.<ul><li>Mit [Go] starten beide Timer gleichzeitig, mit [Stop] werden beide angehalten.</li><li>Über das Dropdown-Menü lässt sich eine Priorität für jeden Eintrag festlegen, wobei 1 die niedrigste und 4 die höchste Priorität bedeutet.</li><li>Die Einträge können nach Erstellungsdatum oder Priorität sortiert werden.</li><li>Um den Text eines Eintrags zu ändern, genügt ein Doppelklick darauf. Es erscheint ein Eingabefeld, in dem der neue Text eingegeben werden kann. Mit der Enter-Taste wird der neue Inhalt gespeichert. Verliert das Eingabefeld den Fokus, ohne dass Enter gedrückt wurde, wird die Bearbeitung abgebrochen.</li><li>Mit [Delete] wird der Eintrag gelöscht.</li></ul>",
-				commitEditorToolTipp: "<b>Commit Message</b><br><br>Dieses Tool hilft bei der Erstellung von Commits, indem es die Einhaltung von Regeln unterstützt und die Message korrekt formatiert. Mit einem Klick kann die Message in die Zwischenablage kopiert werden. Zudem gibt es eine Hilfe, bei der Übersetzung vom Deutschen ins Englische (nur mit Internetverbindung).<ul><li><i>Typ</i>: Wähle aus, ob es sich um ein Feature, ein Fix, eine Dokumentation oder eine andere Änderung handelt.</li><li><i>Domain</i>: Der Gültigkeitsbereich, zum Beispiel der Name der bearbeiteten Komponente, ist optional.</li><li><i>Short Description</i>: Eine kurze Beschreibung der Änderung, die in der Commit-Liste angezeigt wird. Sie darf maximal 72 Zeichen lang sein und muss mit einem Kleinbuchstaben beginnen. Zudem sollte sie im Präsens verfasst sein.</li><li><i>Description</i>: Eine ausführliche Beschreibung der Änderung, welche die Motivation für die Veränderung und die Auswirkungen beschreibt.</li><li><i>Footer</i>: Hier können zusätzliche Informationen wie Referenzen oder Schließungen von Tickets eingetragen werden. Mit /ready wird das Ticket als bereit zur Überprüfung markiert.</li></ul>",
-				commitHistoryToolTipp: "<b>Commit History</b><br><br>Sobald ein Commit in die Zwischenablage kopiert wird, wird er der History hinzugefügt. Es werden die letzten 10 Commits gespeichert, mit ihren Namen, dem Datum und der Zeit.<br><br>Mit [X] wird der Eintrag gelöscht. Es können die letzten 3, 5 oder 10 Commits angezeigt werden.<br>",
-				calendarToolTipp: "<b>Calendar Note</b><br><br>Mit diesem Tool lassen sich kurze Notizen zu jedem Tag erstellen. Der Kalender zeigt die aktuelle Arbeitswoche an, der aktuelle Tag wird farblich markiert. Es kann genutzt werden um die wichtigsten Gedanken des Tages zu notieren, um sich später besser an die vergangene Woche zu erinnern.<ul><li>Mit [Last] und [Next] kann zwischen den Wochen gewechselt werden.</li><li>Der Button dazwischen zeigt die aktuelle Woche und das Jahr an. Mit einem Klick auf das Kalender-Icon öffnet sich ein Datepicker, mit dem das Datum direkt ausgewählt werden kann.</li><li>Mit einem Doppelklick auf den Text unter dem Datum öffnet sich ein Eingabefeld, in dem die Notiz eingegeben werden kann. Mit [Save] wird die Notiz gespeichert, mit [Cancel] wird der Vorgang abgebrochen.</li></ul><br><br><b>Issues:</b> In Firefox wird das Datum nicht korrekt angezeigt. Das liegt daran, dass Firefox das <code>type='date'</code> nicht unterstützt.",
-				clipboardToolTipp: "Tooltip Text für Clipboard",
-				collectionToolTipp: "Tooltip Text für Collection List",
-				noteToolTipp: "Tooltip Text für Memory Note",
-				helpToolTipp: "<b>Vorwort</b><br><br>In dieser HTML-Seite werden verschiedene Tools angeboten, welche im Arbeitsalltag helfen möchten. Zudem ist das Erstellen des Codes für mich eine Übung gewesen. Der gesamte Code soll nur eine einzige Datei umfassen und muss daher eine hohe Qulität haben. Also eine gute Struktur, sprechende Namen, effizenter und lesbarer Code, hilfreiche Kommentare.<br><br><b>Anleitung</b><br><br>Tools können ein und ausgeblendet werden, mithilfe der oberen Buttons ...",
-				saveManagerToolTipp: "Tooltip Text für Save Manager"
-			};
+	<script id="globalJS"> 
+		function createBtnHeader(){
+			const toolNameArray = Object.keys(allTools);
+			const header = document.getElementById("headerBtns");
 
-			function setToolTipText() {
-				for (const id in tooltips) {
-					const element = document.getElementById(id);
-					if (element) { 
-						element.innerHTML = tooltips[id]; 
-					}
+			toolNameArray.forEach((key)=>{
+				const btnText = allTools[key];
+				const btnFn = ()=> changeVisibility(key);
+				const btn = createButton(btnText, "greenBtn", btnFn);
+					btn.id = key + "Btn"
+				header.appendChild(btn);
+			});
+		}
+
+		function createToolHeader(id, name = ""){
+			const container = document.getElementById(id + "Header");
+			const h3 = document.createElement("h3");
+
+			if(name){
+				h3.textContent = name;
+			} else {
+				h3.textContent = id.charAt(0).toUpperCase() + id.slice(1);
+			}
+
+			const divTooltip = document.createElement("div");
+					divTooltip.classList = "tooltip helpText";
+					divTooltip.textContent = "?";
+			const textTooltip = document.createElement("span");
+					textTooltip.classList = "tooltiptext";
+					textTooltip.id = id + "ToolTipp";
+
+			divTooltip.appendChild(textTooltip);
+			container.append(divTooltip, h3);
+		}
+
+		function changeVisibility(container){
+			const element = document.getElementById(container);
+			const elementBtn = document.getElementById(container + "Btn");
+			const elementHr = document.getElementById(container + "Hr");
+
+			if(element.classList.contains("hidden")) {
+				element.classList.remove("hidden");
+				elementBtn.classList.remove("redBtn");
+				elementBtn.classList.add("greenBtn");
+				if(elementHr){
+					elementHr.classList.remove("hidden");
+				}
+				store.visibility[container] = true;
+			} else {
+				element.classList.add("hidden");
+				elementBtn.classList.add("redBtn");
+				elementBtn.classList.remove("greenBtn");
+				if(elementHr){
+					elementHr.classList.add("hidden");
+				}
+				store.visibility[container] = false;
+			}
+			localStorage.setItem("toolStore", JSON.stringify(store));
+			changeMainWidth();
+		}
+
+		function changeMainWidth(){
+			const main = document.querySelector('main');
+			const mainColumn1 = document.getElementById('mainColumn1');
+			const mainColumn2 = document.getElementById('mainColumn2');
+
+			// Konvertiere die children-HTMLCollection in ein Array und filtere es
+			// Überprüfe, dass das Element nicht <hr> ist und nicht die Klasse 'hidden' hat
+			const haveTools1 = Array.from(mainColumn1.children).filter(function(el) {
+			return el.tagName !== 'HR' && !el.classList.contains('hidden');
+			});
+
+			const haveTools2 = Array.from(mainColumn2.children).filter(function(el) {
+			return el.tagName !== 'HR' && !el.classList.contains('hidden');
+			});
+
+
+			if(haveTools1.length >= 1 && haveTools2.length >= 1){  // links ja / rechts ja
+				mainColumn1.classList.remove("hidden")
+				mainColumn2.classList.remove("hidden")
+				main.style.maxWidth = '1500px';
+				mainColumn2.style.flex = "0 1 500px";
+				mainColumn2.style.marginLeft = "40px";
+			} 
+			
+			if(haveTools1.length >= 1 && haveTools2.length < 1){  // links ja / rechts nein
+				mainColumn2.classList.add("hidden");
+				mainColumn1.classList.remove("hidden")
+				main.style.maxWidth = '1000px';
+			}
+
+			if(haveTools1.length < 1 && haveTools2.length >= 1){  // links nein / rechts ja
+				mainColumn1.classList.add("hidden");
+				mainColumn2.classList.remove("hidden")
+				main.style.maxWidth = '700px';
+				mainColumn2.style.flex = "1 0 auto";
+				mainColumn2.style.marginLeft = "0";
+			} 
+			
+			if(haveTools1.length < 1 && haveTools2.length < 1){  // links nein / rechts nein
+				mainColumn1.classList.add("hidden");
+				mainColumn2.classList.add("hidden");
+				main.style.maxWidth = '500px';
+			}
+		}
+
+		const toggleDarkMode = () => {
+			document.body.classList.toggle('dark-mode');
+			const currentCssMode = store.cssMode;
+			if(currentCssMode === "default"){
+				store.cssMode = "dark-mode";
+			} else {
+				store.cssMode = "default";
+			}
+			localStorage.setItem("toolStore", JSON.stringify(store));
+		};
+	</script> 
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+<!--------------------------------------------------------------------------------------------------------------------------->	
+
+	<script id="tooltipsJS">
+		const tooltips = {
+			timerToolTipp: "<b>Project Timer</b><br><br>Dieses Tool bietet für jeden Eintrag zwei Stoppuhren: Eine misst die gesamte Zeit, während die andere sich zurücksetzen lässt. Jeder Timer kann mit einem Namen versehen werden – sei es ein beliebiger Text, eine Ticketnummer oder eine spezifische Aufgabe.<ul><li>Mit [Go] starten beide Timer gleichzeitig, mit [Stop] werden beide angehalten.</li><li>Über das Dropdown-Menü lässt sich eine Priorität für jeden Eintrag festlegen, wobei 1 die niedrigste und 4 die höchste Priorität bedeutet.</li><li>Die Einträge können nach Erstellungsdatum oder Priorität sortiert werden.</li><li>Um den Text eines Eintrags zu ändern, genügt ein Doppelklick darauf. Es erscheint ein Eingabefeld, in dem der neue Text eingegeben werden kann. Mit der Enter-Taste wird der neue Inhalt gespeichert. Verliert das Eingabefeld den Fokus, ohne dass Enter gedrückt wurde, wird die Bearbeitung abgebrochen.</li><li>Mit [Delete] wird der Eintrag gelöscht.</li></ul>",
+			commitEditorToolTipp: "<b>Commit Message</b><br><br>Dieses Tool hilft bei der Erstellung von Commits, indem es die Einhaltung von Regeln unterstützt und die Message korrekt formatiert. Mit einem Klick kann die Message in die Zwischenablage kopiert werden. Zudem gibt es eine Hilfe, bei der Übersetzung vom Deutschen ins Englische (nur mit Internetverbindung).<ul><li><i>Typ</i>: Wähle aus, ob es sich um ein Feature, ein Fix, eine Dokumentation oder eine andere Änderung handelt.</li><li><i>Domain</i>: Der Gültigkeitsbereich, zum Beispiel der Name der bearbeiteten Komponente, ist optional.</li><li><i>Short Description</i>: Eine kurze Beschreibung der Änderung, die in der Commit-Liste angezeigt wird. Sie darf maximal 72 Zeichen lang sein und muss mit einem Kleinbuchstaben beginnen. Zudem sollte sie im Präsens verfasst sein.</li><li><i>Description</i>: Eine ausführliche Beschreibung der Änderung, welche die Motivation für die Veränderung und die Auswirkungen beschreibt.</li><li><i>Footer</i>: Hier können zusätzliche Informationen wie Referenzen oder Schließungen von Tickets eingetragen werden. Mit /ready wird das Ticket als bereit zur Überprüfung markiert.</li></ul>",
+			commitHistoryToolTipp: "<b>Commit History</b><br><br>Sobald ein Commit in die Zwischenablage kopiert wird, wird er der History hinzugefügt. Es werden die letzten 10 Commits gespeichert, mit ihren Namen, dem Datum und der Zeit.<br><br>Mit [X] wird der Eintrag gelöscht. Es können die letzten 3, 5 oder 10 Commits angezeigt werden.<br>",
+			calendarToolTipp: "<b>Calendar Note</b><br><br>Mit diesem Tool lassen sich kurze Notizen zu jedem Tag erstellen. Der Kalender zeigt die aktuelle Arbeitswoche an, der aktuelle Tag wird farblich markiert. Es kann genutzt werden um die wichtigsten Gedanken des Tages zu notieren, um sich später besser an die vergangene Woche zu erinnern.<ul><li>Mit [Last] und [Next] kann zwischen den Wochen gewechselt werden.</li><li>Der Button dazwischen zeigt die aktuelle Woche und das Jahr an. Mit einem Klick auf das Kalender-Icon öffnet sich ein Datepicker, mit dem das Datum direkt ausgewählt werden kann.</li><li>Mit einem Doppelklick auf den Text unter dem Datum öffnet sich ein Eingabefeld, in dem die Notiz eingegeben werden kann. Mit [Save] wird die Notiz gespeichert, mit [Cancel] wird der Vorgang abgebrochen.</li></ul><br><br><b>Issues:</b> In Firefox wird das Datum nicht korrekt angezeigt. Das liegt daran, dass Firefox das <code>type='date'</code> nicht unterstützt.",
+			clipboardToolTipp: "Tooltip Text für Clipboard",
+			collectionToolTipp: "Tooltip Text für Collection List",
+			noteToolTipp: "Tooltip Text für Memory Note",
+			helpToolTipp: "<b>Vorwort</b><br><br>In dieser HTML-Seite werden verschiedene Tools angeboten, welche im Arbeitsalltag helfen möchten. Zudem ist das Erstellen des Codes für mich eine Übung gewesen. Der gesamte Code soll nur eine einzige Datei umfassen und muss daher eine hohe Qulität haben. Also eine gute Struktur, sprechende Namen, effizenter und lesbarer Code, hilfreiche Kommentare.<br><br><b>Anleitung</b><br><br>Tools können ein und ausgeblendet werden, mithilfe der oberen Buttons ...",
+			saveManagerToolTipp: "Tooltip Text für Save Manager"
+		};
+
+		function setToolTipText() {
+			for (const id in tooltips) {
+				const element = document.getElementById(id);
+				if (element) { 
+					element.innerHTML = tooltips[id]; 
 				}
 			}
-		</script>
+		}
+	</script>
 
 <!--------------------------------------------------------------------------------------------------------------------------->
 
 <!--------------------------------------------------------------------------------------------------------------------------->
 
-		<script id="utilityJS">
-			// Gibt eine zufällige Folge von Zeichen zurück
-			function generateId(){
-				let id = "";
-				const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-				for (let i = 0; i < 16; i++) {
-					id += chars.charAt(Math.floor(Math.random() * chars.length));
+	<script id="utilityJS">
+		// Gibt eine zufällige Folge von Zeichen zurück
+		function generateId(){
+			let id = "";
+			const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+			for (let i = 0; i < 16; i++) {
+				id += chars.charAt(Math.floor(Math.random() * chars.length));
+			}
+			return id;
+		}
+
+		// Erstellt Buttons mit einem EventListener, eingebaut werden sie so:
+		// element.appendChild(createButton('btn name', 'css namen', () => fn(z.B. eine id)));
+		function createButton(text, className, onClick) {
+			const button = document.createElement('button');
+			button.className = className;
+			button.textContent = text;
+			button.addEventListener('click', onClick);
+			return button;
+		}
+
+		// Erstellt ein Select Element mit Opions die als Array mitgegeben werden 
+		function createSelect(options, selectedValue, onChange) {
+			const select = document.createElement('select');
+			
+			options.forEach((optionValue) => {
+				const option = document.createElement('option');
+				option.textContent = optionValue;
+				option.value = optionValue;
+				if (String(optionValue) === String(selectedValue)) {
+					option.selected = true;
 				}
-				return id;
+				select.appendChild(option);
+			});
+
+			select.addEventListener('change', onChange);
+
+			return select;
+		}
+
+		// Alle Eingaben des Users müssen hier durch
+		function escapeHtml(text) {
+			return text
+				.replace(/&/g, "&amp;")
+				.replace(/</g, "&lt;")
+				.replace(/>/g, "&gt;")
+				.replace(/"/g, "&quot;")
+				.replace(/'/g, "&#039;");
+		}
+
+		// Erstellt ein <span> Tag mit einer css Klasse und einem Text-Inhalt
+		function createSpan(text, className) {
+			const span = document.createElement('span');
+			span.className = className;
+			span.textContent = text;
+			return span;
+		}
+
+		// Die Sekunden werden in "00:00:00" (hh:mm:ss) zurück gegeben
+		function formartTime(seconds){
+			if (isNaN(seconds)) return "00:00:00";
+
+			const timeParts = splitSecondsIntoHMS(seconds);
+			const result = `
+				${timeParts[0].toString().padStart(2, "0")}:${timeParts[1].toString().padStart(2, "0")}:${timeParts[2].toString().padStart(2, "0")}`;
+
+			return result;
+		}
+
+		// Sekunden werden in 00.0h zurück gegeben
+		// Es ist ein Bruch, 90min wären 01.5h 
+		function secondsToHoursDecimal(seconds){
+			if (isNaN(seconds)) return "00.0";
+
+			const timeParts = splitSecondsIntoHMS(seconds);
+			const result = (timeParts[0] + timeParts[1] / 60 + timeParts[2] / 3600).toFixed(1);
+			return result.padStart(4, '0') + "h";
+		}
+
+		// Zerlegt Sekunden in ein Array mit drei Werten
+		// [0] sind Stunden [1] sind Minuten [2] sind Sekunden
+		function splitSecondsIntoHMS(seconds){
+			const hrs = Math.floor(seconds / 3600);
+			const mins = Math.floor((seconds % 3600) / 60);
+			const secs = seconds % 60;
+
+			return [hrs, mins, secs];
+		}
+
+		function toggleElements(currentElement, newElement, focusElement){
+			if(currentElement.parentNode) {
+				currentElement.parentNode.replaceChild(newElement, currentElement);
+				focusElement ? focusElement.focus() : newElement.focus();
 			}
+		}
 
-			// Erstellt Buttons mit einem EventListener, eingebaut werden sie so:
-			// element.appendChild(createButton('btn name', 'css namen', () => fn(z.B. eine id)));
-			function createButton(text, className, onClick) {
-				const button = document.createElement('button');
-				button.className = className;
-				button.textContent = text;
-				button.addEventListener('click', onClick);
-				return button;
-			}
+		const adjustTextareaHeight = (textarea) => {
+				textarea.style.height = 'auto';
+				textarea.style.height = textarea.scrollHeight + 'px'; 
+		};
+	</script>
 
-			// Erstellt ein Select Element mit Opions die als Array mitgegeben werden 
-			function createSelect(options, selectedValue, onChange) {
-				const select = document.createElement('select');
-				
-				options.forEach((optionValue) => {
-					const option = document.createElement('option');
-					option.textContent = optionValue;
-					option.value = optionValue;
-					if (String(optionValue) === String(selectedValue)) {
-						option.selected = true;
-					}
-					select.appendChild(option);
-				});
-
-				select.addEventListener('change', onChange);
-
-				return select;
-			}
-
-			// Alle Eingaben des Users müssen hier durch
-			function escapeHtml(text) {
-				return text
-					.replace(/&/g, "&amp;")
-					.replace(/</g, "&lt;")
-					.replace(/>/g, "&gt;")
-					.replace(/"/g, "&quot;")
-					.replace(/'/g, "&#039;");
-			}
-
-			// Erstellt ein <span> Tag mit einer css Klasse und einem Text-Inhalt
-			function createSpan(text, className) {
-				const span = document.createElement('span');
-				span.className = className;
-				span.textContent = text;
-				return span;
-			}
-
-			// Die Sekunden werden in "00:00:00" (hh:mm:ss) zurück gegeben
-			function formartTime(seconds){
-				if (isNaN(seconds)) return "00:00:00";
-
-				const timeParts = splitSecondsIntoHMS(seconds);
-				const result = `
-					${timeParts[0].toString().padStart(2, "0")}:${timeParts[1].toString().padStart(2, "0")}:${timeParts[2].toString().padStart(2, "0")}`;
-
-				return result;
-			}
-
-			// Sekunden werden in 00.0h zurück gegeben
-			// Es ist ein Bruch, 90min wären 01.5h 
-			function secondsToHoursDecimal(seconds){
-				if (isNaN(seconds)) return "00.0";
-
-				const timeParts = splitSecondsIntoHMS(seconds);
-				const result = (timeParts[0] + timeParts[1] / 60 + timeParts[2] / 3600).toFixed(1);
-				return result.padStart(4, '0') + "h";
-			}
-
-			// Zerlegt Sekunden in ein Array mit drei Werten
-			// [0] sind Stunden [1] sind Minuten [2] sind Sekunden
-			function splitSecondsIntoHMS(seconds){
-				const hrs = Math.floor(seconds / 3600);
-				const mins = Math.floor((seconds % 3600) / 60);
-				const secs = seconds % 60;
-
-				return [hrs, mins, secs];
-			}
-
-			function toggleElements(currentElement, newElement, focusElement){
-				if(currentElement.parentNode) {
-					currentElement.parentNode.replaceChild(newElement, currentElement);
-					focusElement ? focusElement.focus() : newElement.focus();
-				}
-			}
-
-			const adjustTextareaHeight = (textarea) => {
-					textarea.style.height = 'auto';
-					textarea.style.height = textarea.scrollHeight + 'px'; 
-			};
-		</script>
-
-	</head>
+</head>
 
 
 <!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
@@ -997,130 +991,130 @@
 <!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
 
 
-	<body>
-		<header> 
-			<span id="headerBtns"></span>
-			<button id="toggelCssBtn" onclick="toggleDarkMode()">Toggel CSS</button>
-			<button class="tooltip">Help
-				<span class="tooltiptext" id="helpToolTipp">Tooltip text</span>
-			</button>
-		</header>
-	
-	
-		<main>
-		<div id="mainColumn1">	
+<body>
+	<header> 
+		<span id="headerBtns"></span>
+		<button id="toggelCssBtn" onclick="toggleDarkMode()">Toggel CSS</button>
+		<button class="tooltip">Help
+			<span class="tooltiptext" id="helpToolTipp">Tooltip text</span>
+		</button>
+	</header>
+
+
+	<main>
+	<div id="mainColumn1">	
 <!-- TIMER HTML --------------------------------------------------------------------------------------->			
-			<div id="timer" class="container"> 
-				<span id="timerHeader"></span>
-			    <script>createToolHeader("timer", "Project Timer")</script>
+		<div id="timer" class="container"> 
+			<span id="timerHeader"></span>
+			<script>createToolHeader("timer", "Project Timer")</script>
 
-				<button id="addProjectBtn">Add Timer</button>
-				<span id="sortTimer">Sort by</span><br>
-				
-				<ul id="projectList"></ul>
-			</div> 
-			<hr id="timerHr">
+			<button id="addProjectBtn">Add Timer</button>
+			<span id="sortTimer">Sort by</span><br>
+			
+			<ul id="projectList"></ul>
+		</div> 
+		<hr id="timerHr">
 
 <!-- COMMIT HTML -------------------------------------------------------------------------------------->			
-			<div id="commit"> 
-				<div id="commitEditor" class="container">
-					<span id="commitEditorHeader"></span>
-				    <script>createToolHeader("commitEditor", "Commit Message")</script>
+		<div id="commit"> 
+			<div id="commitEditor" class="container">
+				<span id="commitEditorHeader"></span>
+				<script>createToolHeader("commitEditor", "Commit Message")</script>
 
-					<form id="commitForm">
-						<select id="commitType"><option>Typ</option></select>
-						<input id="commitDomain" type="text" placeholder="Domain"><br>
-						<input id="commitMessage" type="text" maxlength="75" placeholder="Commit Message">
-						<input id="textCounter" value="75" disabled><br>
-						<textarea id="commitDescription" placeholder="Description"></textarea><br>
-						<input id="commitFooter" type="text" placeholder="Footer">
-						<button id="readyBtn">ready</button><br>
-					</form>
+				<form id="commitForm">
+					<select id="commitType"><option>Typ</option></select>
+					<input id="commitDomain" type="text" placeholder="Domain"><br>
+					<input id="commitMessage" type="text" maxlength="75" placeholder="Commit Message">
+					<input id="textCounter" value="75" disabled><br>
+					<textarea id="commitDescription" placeholder="Description"></textarea><br>
+					<input id="commitFooter" type="text" placeholder="Footer">
+					<button id="readyBtn">ready</button><br>
+				</form>
 
-						<textarea id="formatedCommitMessage" placeholder="Formated Message" disabled></textarea><br>
-						<button id="copyBtn" onclick="copyToClipboard()">Copy to Clipboard</button>
-						<button id="deEnBtn" onclick="translateDeEn()">DE -> EN</button>
-				</div>
+					<textarea id="formatedCommitMessage" placeholder="Formated Message" disabled></textarea><br>
+					<button id="copyBtn" onclick="copyToClipboard()">Copy to Clipboard</button>
+					<button id="deEnBtn" onclick="translateDeEn()">DE -> EN</button>
+			</div>
 
-				<div id="commitHistory" class="container">
-					<span id="commitHistoryHeader"></span>
-				    <script>createToolHeader("commitHistory", "Commit History")</script>
+			<div id="commitHistory" class="container">
+				<span id="commitHistoryHeader"></span>
+				<script>createToolHeader("commitHistory", "Commit History")</script>
 
-					<select id="historyItemCount">
-						<option value="3" selected>3</option>
-						<option value="5" >5</option>
-						<option value="10">10</option>
-					  </select>
-					  <ul id="historyList"></ul>
-				</div>
-			</div> 
-			<hr id="commitHr">
+				<select id="historyItemCount">
+					<option value="3" selected>3</option>
+					<option value="5" >5</option>
+					<option value="10">10</option>
+					</select>
+					<ul id="historyList"></ul>
+			</div>
+		</div> 
+		<hr id="commitHr">
 
 <!-- CALENDAR HTML ------------------------------------------------------------------------------------>			
-			<div id="calendar" class="container"> 
-				<span id="calendarHeader"></span>
-				<script>createToolHeader("calendar", "Calendar Notes")</script>
+		<div id="calendar" class="container"> 
+			<span id="calendarHeader"></span>
+			<script>createToolHeader("calendar", "Calendar Notes")</script>
 
-				 <button id="lastWeekBtn" onclick="changeWeek(-1)">Last</button>
-				 <input type="week" id="weeklySelection" onchange="updateTable()">
-				 <button id="nextWeekBtn" onclick="changeWeek(+1)">Next</button>
-				 <table id="calendarTable">
-					<tr id="calendarTh"></tr>
-        			<tr id="calendarTb"></tr>
-				 </table>
-			</div> 
-		</div>	
+				<button id="lastWeekBtn" onclick="changeWeek(-1)">Last</button>
+				<input type="week" id="weeklySelection" onchange="updateTable()">
+				<button id="nextWeekBtn" onclick="changeWeek(+1)">Next</button>
+				<table id="calendarTable">
+				<tr id="calendarTh"></tr>
+				<tr id="calendarTb"></tr>
+				</table>
+		</div> 
+	</div>	
 
 
-		<div id="mainColumn2">
+	<div id="mainColumn2">
 <!-- COLLECTION HTML ---------------------------------------------------------------------------------->			
-			<div id="note" class="container"> 
-				<span id="noteHeader"></span>
-				<script>createToolHeader("note", "Memory Note")</script>
+		<div id="note" class="container"> 
+			<span id="noteHeader"></span>
+			<script>createToolHeader("note", "Memory Note")</script>
 
-				<button id="addNote">Add Note</button>
-			</div>
-			<hr id="noteHr">
+			<button id="addNote">Add Note</button>
+		</div>
+		<hr id="noteHr">
 
 <!-- COLLECTION HTML ---------------------------------------------------------------------------------->			
-			<div id="collection" class="container"> 
-				<span id="collectionHeader"></span>
-				<script>createToolHeader("collection", "Collection List")</script>
+		<div id="collection" class="container"> 
+			<span id="collectionHeader"></span>
+			<script>createToolHeader("collection", "Collection List")</script>
 
-				<button id="addList">Add List</button>
-			</div>
-			<hr id="collectionHr">
+			<button id="addList">Add List</button>
+		</div>
+		<hr id="collectionHr">
 
 <!-- CLIPBOARD HTML ----------------------------------------------------------------------------------->			
-			<div id="clipboard" class="container"> 
-				<span id="clipboardHeader"></span>
-				<script>createToolHeader("clipboard", "Clipboard")</script>
+		<div id="clipboard" class="container"> 
+			<span id="clipboardHeader"></span>
+			<script>createToolHeader("clipboard", "Clipboard")</script>
 
-				<button id="addSnippet">Add Snippet</button>
-				<ul id="snippetList"></ul>
-			</div>
-			<hr id="clipboardHr">
+			<button id="addSnippet">Add Snippet</button>
+			<ul id="snippetList"></ul>
+		</div>
+		<hr id="clipboardHr">
 
 <!-- SAVEMANAGER HTML --------------------------------------------------------------------------------->			
-			<div id="saveManager" class="container"> 
-				<span id="saveManagerHeader"></span>
-				<script>createToolHeader("saveManager", "Save Manager")</script>
+		<div id="saveManager" class="container"> 
+			<span id="saveManagerHeader"></span>
+			<script>createToolHeader("saveManager", "Save Manager")</script>
 
-				 <details>
-					<summary>Project Timer: toolTimers</summary>
-					<p>Save Manager</p>
-				 </details>
-				 <details>
-					<summary>Commit History: toolHistory</summary>
-					<p>Save Manager</p>
-				 </details>
-				 <details>
-					<summary>Calendar Notes: toolCalendar</summary>
-					<p>Save Manager</p>
-				 </details>
-			</div>
+				<details>
+				<summary>Project Timer: toolTimers</summary>
+				<p>Save Manager</p>
+				</details>
+				<details>
+				<summary>Commit History: toolHistory</summary>
+				<p>Save Manager</p>
+				</details>
+				<details>
+				<summary>Calendar Notes: toolCalendar</summary>
+				<p>Save Manager</p>
+				</details>
 		</div>
-		</main> 
+	</div>
+	</main> 
 
 
 <!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
@@ -1128,544 +1122,544 @@
 <!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
 
 
-		<script id="timerJS">
-			let timerObjects = JSON.parse(localStorage.getItem("toolTimers")) || {};
-			let timerInterval = null;
-			let timerActiv = null;
+	<script id="timerJS">
+		let timerObjects = JSON.parse(localStorage.getItem("toolTimers")) || {};
+		let timerInterval = null;
+		let timerActiv = null;
 
-			function addProject(){
-				const id = generateId();
-				const newTimerObj = {
-					id: id,
-					name: "ProjectName (Doubleclick to edit Text)",
-					createdAt: Date.now(),
-					totalTime: 0,
-					sessionTime: 0,
-					prio: 2,
-				};
-				timerObjects[id] = newTimerObj;
-				localStorage.setItem("toolTimers", JSON.stringify(timerObjects));
-				renderTimerEntries();
-			}
-			const addProjectBtn = document.getElementById("addProjectBtn");
-				  addProjectBtn.addEventListener("click", ()=>{
-					addProject();
-				  })
-
-			function startTimer(projectId){
-				if(timerInterval) clearInterval(timerInterval);
-				
-				timerActiv = projectId;
-				timerInterval = setInterval(()=>{
-					timerObjects[projectId].totalTime++;
-					timerObjects[projectId].sessionTime++;
-					localStorage.setItem("toolTimers", JSON.stringify(timerObjects));
-					renderTimerEntries();
-				}, 1000);
-
-				renderTimerEntries();
-			}
-
-			function stopTimer(projectId){
-				clearInterval(timerInterval);
-				timerInterval = null;
-				timerActiv = null;
-				renderTimerEntries();
-			}
-
-			function resetTimer(projectId){
-				timerObjects[projectId].sessionTime = 0;
-				saveTimerObj(projectId, "sessionTime", 0);
-				renderTimerEntries();
-			}
-
-			function changePrio(projectId){
-				const obj = timerObjects[projectId];
-				const entry = document.getElementById(obj.id);
-				const prio = entry.querySelector('select');
-
-				saveTimerObj(projectId, "prio", prio.value);
-			}
-
-			function deleteProject(projectId){
-				delete timerObjects[projectId];
-				localStorage.setItem("toolTimers", JSON.stringify(timerObjects));
-				renderTimerEntries();
-			}
-
-			function saveTimerObj(timerId, attr, value){
-				const obj = timerObjects[timerId];
-				obj[attr] = value;
-				timerObjects[timerId] = obj;
-				localStorage.setItem("toolTimers", JSON.stringify(timerObjects));
-				renderTimerEntries();
-			}
-
-			/* Das Timerlayout muss für jedes Element generiert werden
-			*  Unter <script id="utility"> gibt es dafür ein paar Hilfsfunktionen
-			*  Nach dem Vorbild des Builder Pattern wird das Layout über mehrere fn aufgebaut
-			*  Die Datei aus dem LocalStorage wird in ein Array verwandelt und sortiert
-			*  nach Priorität (absteigend) und Erstellungsdatum (aufsteigend)
-			*/
-			function renderSortTimerBtn(){
-				const currentSortby = store.timerSort == "Date" ? "Date" : "Prio";
-				const newSortby = store.timerSort == "Date" ? "Prio" : "Date";
-
-				const span = document.getElementById("sortTimer");		
-				span.innerHTML = "Sort by";	
-				const sortBtn = createButton(currentSortby, "", ()=> setTimerSort(newSortby))
-
-				span.appendChild(sortBtn);
-			}
-
-			function renderTimerEntries(){
-				const list = document.getElementById("projectList");
-				      list.innerHTML = "";
-						
-				let sortObjects = store.timerSort == "Date" ? sortByDate() : sortByPrio();	  
-
-				sortObjects.forEach(timerObj => {
-					list.appendChild(createTimerEntry(timerObj));
-				});
-			}
-
-			function setTimerSort(value){
-				store.timerSort = value;
-				localStorage.setItem("toolStore", JSON.stringify(store));
-				renderTimerEntries();
-				renderSortTimerBtn();
-			}
-
-			function sortByPrio() {
-				const timersArray = Object.values(timerObjects);
-				return timersArray.sort((a, b) => b.prio - a.prio);
-			}
-
-			function sortByDate() {
-				const timersArray = Object.values(timerObjects);
-				return timersArray.sort((a, b) => a.createdAt - b.createdAt);
-			}
-
-			/* Das Layout liegt in einem Listenelement und besteht aus einem Kontainer
-			 * Indem links und recht nebeneinander ein weitere Kontainer liegt
-			 * Im rechten Kontainer sind die beiden Stoppuhren
- 			 */
-			function createTimerEntry(timerObj){
-				const li = document.createElement("li");
-				li.id = timerObj.id;
-				
-				const projectDiv = document.createElement('div');
-				projectDiv.className = `prio${timerObj.prio}`; 
-				if(timerObj.id == timerActiv) {
-					li.classList = 'pulsing-border';
-				}
-
-				const floatLeftDiv = document.createElement('div');
-				floatLeftDiv.classList = 'floatLeft timerLeft';
-				
-				const floatRightDiv = document.createElement('div');
-    			floatRightDiv.classList = 'floatRight timerRight';
-
-				// Linke Seite mit Buttons und Textfeld
-				floatLeftDiv.appendChild(createButton('Go', 'greenBtn timerBtn', ()=> startTimer(timerObj.id)));
-				floatLeftDiv.appendChild(createButton('Stop', 'timerBtn', () => stopTimer(timerObj.id)));
-				floatLeftDiv.appendChild(createButton('Reset', 'timerBtn', () => resetTimer(timerObj.id)));
-				floatLeftDiv.appendChild(createSelect([1,2,3,4],timerObj.prio, () => changePrio(timerObj.id)));
-				floatLeftDiv.appendChild(createButton('Delete', 'redBtn timerBtn', () => deleteProject(timerObj.id)));
-				floatLeftDiv.appendChild(document.createElement("br"));
-				
-				const textNameSpan = createNameSpan(timerObj.name, timerObj.id);
-    			floatLeftDiv.appendChild(textNameSpan);
-
-				// Rechte Seite mit Anzeige der Timer
-				const totalTime = formartTime(timerObj.totalTime);
-				const totalDec = secondsToHoursDecimal(timerObj.totalTime);
-				const sessionTime = formartTime(timerObj.sessionTime);
-				const sessionDec = secondsToHoursDecimal(timerObj.sessionTime);
-
-    			floatRightDiv.appendChild(createSpan(`Total:`, ''));
-				floatRightDiv.appendChild(createSpan(totalTime, 'textTime'));
-				floatRightDiv.appendChild(createSpan(totalDec, 'textTime'));
-				floatRightDiv.appendChild(document.createElement("br"));
-    			floatRightDiv.appendChild(createSpan(`Session:`, ''));	
-				floatRightDiv.appendChild(createSpan(sessionTime, 'textTime'));
-				floatRightDiv.appendChild(createSpan(sessionDec, 'textTime'));			
-				
-				// Fügt beide Divs zum Haupt-Div hinzu
-				projectDiv.appendChild(floatLeftDiv);
-    			projectDiv.appendChild(floatRightDiv);
-
-				li.appendChild(projectDiv);
-    			return li;
-			}
-
-			function createNameSpan(text, id){
-				const input = createEditNameInput(text, id);
-				const span = document.createElement('span');
-				      span.className = "textName";
-					  span.id = "name" + id;
-					  span.textContent = text;
-					  span.addEventListener("dblclick", () => toggleElements(span, input));
-				return span;	  
-			}
-			function createEditNameInput(text, id){
-				const input = document.createElement("input");
-				      input.className = "textName";
-					  input.id = "name" + id;
-					  input.value = text;
-					  input.addEventListener("keyup", (e)=>{
-						if(e.key === "Enter"){
-							const span = createNameSpan(input.value, id);
-							saveTimerObj(id, "name", input.value);
-							toggleElements(input, span);
-						}
-					  });
-					  input.addEventListener("blur", ()=>{
-							const span = createNameSpan(text, id);
-							toggleElements(input, span);
-					  });
-				return input;	  
-			}
-		</script> 
-
-<!--------------------------------------------------------------------------------------------------------------------------->
-
-<!--------------------------------------------------------------------------------------------------------------------------->
-
-		<script id="commitJS"> 
-		// Die Werte aus dem Formular werden gesammelt, formatiert und in ein
-		// Textfeld geschrieben. Dieser Text kann dann kopiert werden.
-		// Beim Klick auf den Button "DE -> EN" wird der Text übersetzt
-		// Allerdings nur wenn eine Internetverbindung besteht
-		// Gleichzeitig wird der Commit mit seiner Beschreibung und dem Datum
-		// in der History gespeichert
-
-		const commitTypElement = document.getElementById("commitType");
-		      commitTypElement.addEventListener("change", updateFormatedMessage);
-		const commitDomainElement = document.getElementById("commitDomain");
-		      commitDomainElement.addEventListener("input", updateFormatedMessage);
-		const commitMessageElement = document.getElementById("commitMessage");
-		      commitMessageElement.addEventListener("input", updateTextareaCounter);
-			  commitMessageElement.addEventListener("input", updateFormatedMessage);
-		const commitDescriptionElement = document.getElementById("commitDescription");
-		      commitDescriptionElement.addEventListener("input", updateFormatedMessage);
-		const commitFooterElement = document.getElementById("commitFooter");
-		      commitFooterElement.addEventListener("input", updateFormatedMessage);
-				
-		const copyBtn = document.getElementById("copyBtn");
-		const deEnBtn = document.getElementById("deEnBtn");
-		const readyBtn = document.getElementById("readyBtn");
-		
-		function fillCommitTypeSelect(){
-			const commitTypes = ["build", "ci", "docs", "feat", "fix", "perf", "refactor", "revert", "style", "test"];
-			commitTypes.forEach(type => {
-				const option = document.createElement("option");
-				option.value = type;
-				option.textContent = type;
-				commitTypElement.appendChild(option);
-			});
-		}
-		fillCommitTypeSelect();
-
-		function getText(){
-			const commitType = commitTypElement.value;
-			const commitDomain = commitDomainElement.value;
-			const commitMessage = commitMessageElement.value;
-			const commitDescription = commitDescriptionElement.value;
-			const commitFooter = commitFooterElement.value;
-
-			const formatedMessage = `${commitType}(${commitDomain}): ${commitMessage}\n\n${commitDescription}\n\n${commitFooter}`;
-			return formatedMessage;
-		}
-
-		function updateFormatedMessage(){
-			const formatedCommitMessageElement = document.getElementById("formatedCommitMessage");
-			const formatedMessage = getText();
-			formatedCommitMessageElement.value = formatedMessage;
-		}
-
-		function updateTextareaCounter(){
-			const textCounterElement = document.getElementById("textCounter");
-			const textLength = commitMessageElement.value.length;
-			textCounterElement.value = 75 - textLength;
-		}
-
-		function copyToClipboard(){
-			const formatedMessage = getText();
-			navigator.clipboard.writeText(formatedMessage);
-		}
-
-		/** Da es in Vanilla keine Interfaces gibt, beschreibe ich hier das historyObjekt:
-		 *  {
-		 *    id: String               // generiert von generateID() in globalsJS
-		 *    name: String             // wird mit escapeHtml formatiert
-		 * 	  createdAtDay: String	   // Tag der Erstellung
-		 *    createdAtTime: String	   // Uhrzeit der Erstellung
-		 *  }
-		 */ 
-		const historyList = document.getElementById("historyList");
-		const historyItemCount = document.getElementById("historyItemCount");
-		      historyItemCount.addEventListener("change", saveHistorySelect);
-			  copyBtn.addEventListener("click", createHistoryObject);
-
-		// Wenn der copyBtn geklick wird, nimmt sich die Funktion den Text aus
-		// commitMessage und erstellt ein neues historyObjekt	
-		function createHistoryObject(){
-			const commitMessage = commitMessageElement.value;
-			const date = new Date();
-			const historyObj = {
-				id: generateId(),
-				name: escapeHtml(commitMessage),
-				createdAtDay: date.getDate().toString().padStart(2, "0") + "." + (date.getMonth() + 1).toString().padStart(2, "0"),
-				createdAtTime: date.getHours().toString().padStart(2, "0") + ":" + date.getMinutes().toString().padStart(2, "0") + " Uhr",
+		function addProject(){
+			const id = generateId();
+			const newTimerObj = {
+				id: id,
+				name: "ProjectName (Doubleclick to edit Text)",
+				createdAt: Date.now(),
+				totalTime: 0,
+				sessionTime: 0,
+				prio: 2,
 			};
-			saveHistoryObj(historyObj);
-			renderHistoryList();
+			timerObjects[id] = newTimerObj;
+			localStorage.setItem("toolTimers", JSON.stringify(timerObjects));
+			renderTimerEntries();
+		}
+		const addProjectBtn = document.getElementById("addProjectBtn");
+				addProjectBtn.addEventListener("click", ()=>{
+				addProject();
+				})
+
+		function startTimer(projectId){
+			if(timerInterval) clearInterval(timerInterval);
+			
+			timerActiv = projectId;
+			timerInterval = setInterval(()=>{
+				timerObjects[projectId].totalTime++;
+				timerObjects[projectId].sessionTime++;
+				localStorage.setItem("toolTimers", JSON.stringify(timerObjects));
+				renderTimerEntries();
+			}, 1000);
+
+			renderTimerEntries();
 		}
 
-		function saveHistoryObj(historyObj){
-			const historyArray = JSON.parse(localStorage.getItem("toolHistory")) || [];
-			historyArray.unshift(historyObj);
-			localStorage.setItem("toolHistory", JSON.stringify(historyArray));
+		function stopTimer(projectId){
+			clearInterval(timerInterval);
+			timerInterval = null;
+			timerActiv = null;
+			renderTimerEntries();
 		}
 
-		function saveHistorySelect(){
-			const itemCount = historyItemCount.value;
-			store.commitHistorySelect = itemCount;
-			localStorage.setItem("toolStore", JSON.stringify(store));
-			renderHistoryList();
+		function resetTimer(projectId){
+			timerObjects[projectId].sessionTime = 0;
+			saveTimerObj(projectId, "sessionTime", 0);
+			renderTimerEntries();
 		}
 
-		function renderHistoryList(){
-			historyItemCount.value = store.commitHistorySelect;
-			const historyArray = JSON.parse(localStorage.getItem("toolHistory")) || [];
-			const itemCount = store.commitHistorySelect;
-			const historyItems = historyArray.slice(0, itemCount);
-			historyList.innerHTML = "";
-			historyItems.forEach(historyObj => {
-				historyList.appendChild(createHistoryListElement(historyObj));
+		function changePrio(projectId){
+			const obj = timerObjects[projectId];
+			const entry = document.getElementById(obj.id);
+			const prio = entry.querySelector('select');
+
+			saveTimerObj(projectId, "prio", prio.value);
+		}
+
+		function deleteProject(projectId){
+			delete timerObjects[projectId];
+			localStorage.setItem("toolTimers", JSON.stringify(timerObjects));
+			renderTimerEntries();
+		}
+
+		function saveTimerObj(timerId, attr, value){
+			const obj = timerObjects[timerId];
+			obj[attr] = value;
+			timerObjects[timerId] = obj;
+			localStorage.setItem("toolTimers", JSON.stringify(timerObjects));
+			renderTimerEntries();
+		}
+
+		/* Das Timerlayout muss für jedes Element generiert werden
+		*  Unter <script id="utility"> gibt es dafür ein paar Hilfsfunktionen
+		*  Nach dem Vorbild des Builder Pattern wird das Layout über mehrere fn aufgebaut
+		*  Die Datei aus dem LocalStorage wird in ein Array verwandelt und sortiert
+		*  nach Priorität (absteigend) und Erstellungsdatum (aufsteigend)
+		*/
+		function renderSortTimerBtn(){
+			const currentSortby = store.timerSort == "Date" ? "Date" : "Prio";
+			const newSortby = store.timerSort == "Date" ? "Prio" : "Date";
+
+			const span = document.getElementById("sortTimer");		
+			span.innerHTML = "Sort by";	
+			const sortBtn = createButton(currentSortby, "", ()=> setTimerSort(newSortby))
+
+			span.appendChild(sortBtn);
+		}
+
+		function renderTimerEntries(){
+			const list = document.getElementById("projectList");
+					list.innerHTML = "";
+					
+			let sortObjects = store.timerSort == "Date" ? sortByDate() : sortByPrio();	  
+
+			sortObjects.forEach(timerObj => {
+				list.appendChild(createTimerEntry(timerObj));
 			});
 		}
 
-		function createHistoryListElement(historyObj){
+		function setTimerSort(value){
+			store.timerSort = value;
+			localStorage.setItem("toolStore", JSON.stringify(store));
+			renderTimerEntries();
+			renderSortTimerBtn();
+		}
+
+		function sortByPrio() {
+			const timersArray = Object.values(timerObjects);
+			return timersArray.sort((a, b) => b.prio - a.prio);
+		}
+
+		function sortByDate() {
+			const timersArray = Object.values(timerObjects);
+			return timersArray.sort((a, b) => a.createdAt - b.createdAt);
+		}
+
+		/* Das Layout liegt in einem Listenelement und besteht aus einem Kontainer
+			* Indem links und recht nebeneinander ein weitere Kontainer liegt
+			* Im rechten Kontainer sind die beiden Stoppuhren
+			*/
+		function createTimerEntry(timerObj){
 			const li = document.createElement("li");
-			const span1 = document.createElement("span");
-				  span1.textContent = `${historyObj.createdAtDay} ${historyObj.createdAtTime}`;
-			const span2 = document.createElement("div");
-				  span2.textContent = historyObj.name;	  
-			const deleteBtn = createButton("X", "redBtn", () => deleteHistoryObject(historyObj.id));
-				  
-			li.insertBefore(deleteBtn, li.firstChild);
-			li.appendChild(span1);	
-			li.appendChild(span2); 	  
+			li.id = timerObj.id;
+			
+			const projectDiv = document.createElement('div');
+			projectDiv.className = `prio${timerObj.prio}`; 
+			if(timerObj.id == timerActiv) {
+				li.classList = 'pulsing-border';
+			}
+
+			const floatLeftDiv = document.createElement('div');
+			floatLeftDiv.classList = 'floatLeft timerLeft';
+			
+			const floatRightDiv = document.createElement('div');
+			floatRightDiv.classList = 'floatRight timerRight';
+
+			// Linke Seite mit Buttons und Textfeld
+			floatLeftDiv.appendChild(createButton('Go', 'greenBtn timerBtn', ()=> startTimer(timerObj.id)));
+			floatLeftDiv.appendChild(createButton('Stop', 'timerBtn', () => stopTimer(timerObj.id)));
+			floatLeftDiv.appendChild(createButton('Reset', 'timerBtn', () => resetTimer(timerObj.id)));
+			floatLeftDiv.appendChild(createSelect([1,2,3,4],timerObj.prio, () => changePrio(timerObj.id)));
+			floatLeftDiv.appendChild(createButton('Delete', 'redBtn timerBtn', () => deleteProject(timerObj.id)));
+			floatLeftDiv.appendChild(document.createElement("br"));
+			
+			const textNameSpan = createNameSpan(timerObj.name, timerObj.id);
+			floatLeftDiv.appendChild(textNameSpan);
+
+			// Rechte Seite mit Anzeige der Timer
+			const totalTime = formartTime(timerObj.totalTime);
+			const totalDec = secondsToHoursDecimal(timerObj.totalTime);
+			const sessionTime = formartTime(timerObj.sessionTime);
+			const sessionDec = secondsToHoursDecimal(timerObj.sessionTime);
+
+			floatRightDiv.appendChild(createSpan(`Total:`, ''));
+			floatRightDiv.appendChild(createSpan(totalTime, 'textTime'));
+			floatRightDiv.appendChild(createSpan(totalDec, 'textTime'));
+			floatRightDiv.appendChild(document.createElement("br"));
+			floatRightDiv.appendChild(createSpan(`Session:`, ''));	
+			floatRightDiv.appendChild(createSpan(sessionTime, 'textTime'));
+			floatRightDiv.appendChild(createSpan(sessionDec, 'textTime'));			
+			
+			// Fügt beide Divs zum Haupt-Div hinzu
+			projectDiv.appendChild(floatLeftDiv);
+			projectDiv.appendChild(floatRightDiv);
+
+			li.appendChild(projectDiv);
 			return li;
 		}
 
-		function deleteHistoryObject(historyId){
-			const historyArray = JSON.parse(localStorage.getItem("toolHistory")) || [];
-			const newHistoryArray = historyArray.filter(historyObj => historyObj.id !== historyId);
-			localStorage.setItem("toolHistory", JSON.stringify(newHistoryArray));
-			renderHistoryList();
+		function createNameSpan(text, id){
+			const input = createEditNameInput(text, id);
+			const span = document.createElement('span');
+					span.className = "textName";
+					span.id = "name" + id;
+					span.textContent = text;
+					span.addEventListener("dblclick", () => toggleElements(span, input));
+			return span;	  
+		}
+		function createEditNameInput(text, id){
+			const input = document.createElement("input");
+					input.className = "textName";
+					input.id = "name" + id;
+					input.value = text;
+					input.addEventListener("keyup", (e)=>{
+					if(e.key === "Enter"){
+						const span = createNameSpan(input.value, id);
+						saveTimerObj(id, "name", input.value);
+						toggleElements(input, span);
+					}
+					});
+					input.addEventListener("blur", ()=>{
+						const span = createNameSpan(text, id);
+						toggleElements(input, span);
+					});
+			return input;	  
+		}
+	</script> 
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+	<script id="commitJS"> 
+	// Die Werte aus dem Formular werden gesammelt, formatiert und in ein
+	// Textfeld geschrieben. Dieser Text kann dann kopiert werden.
+	// Beim Klick auf den Button "DE -> EN" wird der Text übersetzt
+	// Allerdings nur wenn eine Internetverbindung besteht
+	// Gleichzeitig wird der Commit mit seiner Beschreibung und dem Datum
+	// in der History gespeichert
+
+	const commitTypElement = document.getElementById("commitType");
+			commitTypElement.addEventListener("change", updateFormatedMessage);
+	const commitDomainElement = document.getElementById("commitDomain");
+			commitDomainElement.addEventListener("input", updateFormatedMessage);
+	const commitMessageElement = document.getElementById("commitMessage");
+			commitMessageElement.addEventListener("input", updateTextareaCounter);
+			commitMessageElement.addEventListener("input", updateFormatedMessage);
+	const commitDescriptionElement = document.getElementById("commitDescription");
+			commitDescriptionElement.addEventListener("input", updateFormatedMessage);
+	const commitFooterElement = document.getElementById("commitFooter");
+			commitFooterElement.addEventListener("input", updateFormatedMessage);
+			
+	const copyBtn = document.getElementById("copyBtn");
+	const deEnBtn = document.getElementById("deEnBtn");
+	const readyBtn = document.getElementById("readyBtn");
+	
+	function fillCommitTypeSelect(){
+		const commitTypes = ["build", "ci", "docs", "feat", "fix", "perf", "refactor", "revert", "style", "test"];
+		commitTypes.forEach(type => {
+			const option = document.createElement("option");
+			option.value = type;
+			option.textContent = type;
+			commitTypElement.appendChild(option);
+		});
+	}
+	fillCommitTypeSelect();
+
+	function getText(){
+		const commitType = commitTypElement.value;
+		const commitDomain = commitDomainElement.value;
+		const commitMessage = commitMessageElement.value;
+		const commitDescription = commitDescriptionElement.value;
+		const commitFooter = commitFooterElement.value;
+
+		const formatedMessage = `${commitType}(${commitDomain}): ${commitMessage}\n\n${commitDescription}\n\n${commitFooter}`;
+		return formatedMessage;
+	}
+
+	function updateFormatedMessage(){
+		const formatedCommitMessageElement = document.getElementById("formatedCommitMessage");
+		const formatedMessage = getText();
+		formatedCommitMessageElement.value = formatedMessage;
+	}
+
+	function updateTextareaCounter(){
+		const textCounterElement = document.getElementById("textCounter");
+		const textLength = commitMessageElement.value.length;
+		textCounterElement.value = 75 - textLength;
+	}
+
+	function copyToClipboard(){
+		const formatedMessage = getText();
+		navigator.clipboard.writeText(formatedMessage);
+	}
+
+	/** Da es in Vanilla keine Interfaces gibt, beschreibe ich hier das historyObjekt:
+	 *  {
+	 *    id: String               // generiert von generateID() in globalsJS
+	 *    name: String             // wird mit escapeHtml formatiert
+	 * 	  createdAtDay: String	   // Tag der Erstellung
+	 *    createdAtTime: String	   // Uhrzeit der Erstellung
+	 *  }
+	 */ 
+	const historyList = document.getElementById("historyList");
+	const historyItemCount = document.getElementById("historyItemCount");
+			historyItemCount.addEventListener("change", saveHistorySelect);
+			copyBtn.addEventListener("click", createHistoryObject);
+
+	// Wenn der copyBtn geklick wird, nimmt sich die Funktion den Text aus
+	// commitMessage und erstellt ein neues historyObjekt	
+	function createHistoryObject(){
+		const commitMessage = commitMessageElement.value;
+		const date = new Date();
+		const historyObj = {
+			id: generateId(),
+			name: escapeHtml(commitMessage),
+			createdAtDay: date.getDate().toString().padStart(2, "0") + "." + (date.getMonth() + 1).toString().padStart(2, "0"),
+			createdAtTime: date.getHours().toString().padStart(2, "0") + ":" + date.getMinutes().toString().padStart(2, "0") + " Uhr",
+		};
+		saveHistoryObj(historyObj);
+		renderHistoryList();
+	}
+
+	function saveHistoryObj(historyObj){
+		const historyArray = JSON.parse(localStorage.getItem("toolHistory")) || [];
+		historyArray.unshift(historyObj);
+		localStorage.setItem("toolHistory", JSON.stringify(historyArray));
+	}
+
+	function saveHistorySelect(){
+		const itemCount = historyItemCount.value;
+		store.commitHistorySelect = itemCount;
+		localStorage.setItem("toolStore", JSON.stringify(store));
+		renderHistoryList();
+	}
+
+	function renderHistoryList(){
+		historyItemCount.value = store.commitHistorySelect;
+		const historyArray = JSON.parse(localStorage.getItem("toolHistory")) || [];
+		const itemCount = store.commitHistorySelect;
+		const historyItems = historyArray.slice(0, itemCount);
+		historyList.innerHTML = "";
+		historyItems.forEach(historyObj => {
+			historyList.appendChild(createHistoryListElement(historyObj));
+		});
+	}
+
+	function createHistoryListElement(historyObj){
+		const li = document.createElement("li");
+		const span1 = document.createElement("span");
+				span1.textContent = `${historyObj.createdAtDay} ${historyObj.createdAtTime}`;
+		const span2 = document.createElement("div");
+				span2.textContent = historyObj.name;	  
+		const deleteBtn = createButton("X", "redBtn", () => deleteHistoryObject(historyObj.id));
+				
+		li.insertBefore(deleteBtn, li.firstChild);
+		li.appendChild(span1);	
+		li.appendChild(span2); 	  
+		return li;
+	}
+
+	function deleteHistoryObject(historyId){
+		const historyArray = JSON.parse(localStorage.getItem("toolHistory")) || [];
+		const newHistoryArray = historyArray.filter(historyObj => historyObj.id !== historyId);
+		localStorage.setItem("toolHistory", JSON.stringify(newHistoryArray));
+		renderHistoryList();
+	}
+
+	</script> 
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+	<script id="calendarJS">
+		let calendarObjects = JSON.parse(localStorage.getItem("toolCalendar")) || {};
+		const placeholder = "Doubleclick to add Note";
+
+		const calendarTh = document.getElementById("calendarTh");
+		const calendarTb = document.getElementById("calendarTb");
+		const input = document.getElementById("weeklySelection");
+		const days = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+
+		/* Die erste Zeile der Tabelle wird mit den Wochentagen und dem Datum gefüllt
+			* Dafür wird beim laden der Seite die Funktion updateTable() aufgerufen.
+			* Indem dieser die fillTable() Funktion liegt welche Tabellenzeilen und -spalten erstellt
+			* Dafür nutzt sie die Funktionen getDateHeadline(daysOffset)
+			* daysOffset: 0 = Montag der ausgewählten Woche, 1 = Dienstag, ...
+			* Um den Montag der ausgewählten Woche zu bekommen, wird die Funktion getLastMonday() aufgerufen
+			* Das Datum wird mit formatDate(date) formatiert um immer zwei Ziffern für Tag und Monat zu haben
+			* Mit der Funktion updateTable() wird die Tabelle aktualisiert, wenn der Nutzer eine neue Woche auswählt
+			*/
+
+		function setCurrentWeekToInput(currentDate = new Date()) {
+			// const currentDate = new Date();
+			const currentYear = currentDate.getFullYear();
+			const firstDayOfYear = new Date(currentYear, 0, 1);
+			const pastDaysOfYear = (currentDate - firstDayOfYear) / 86400000;
+
+			let currentWeek = Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+			// Muss folgendes Format haben: YYYY-WWW zum Beispiel 2024-W01
+			let weekValue = `${currentYear}-W${currentWeek < 10 ? "0" + currentWeek : currentWeek}`;
+
+			document.getElementById("weeklySelection").value = weekValue;
 		}
 
-		</script> 
+		function getLastMonday(date = new Date()) {
+			let resultDate = new Date(date); // Eine Kopie, um das Originaldatum nicht zu verändern
+			resultDate.setDate(resultDate.getDate() - (resultDate.getDay() || 7) + 1); // Korrektur für Sonntag
+			return resultDate;
+		}
+
+		function formatDate(date) {
+			return date.toLocaleDateString("de-DE", { year: '2-digit', month: '2-digit', day: '2-digit' });
+		}
+
+		// Oberhalb sind die Hilfsfunktionen, Unterhalb wird das HTML generiert
+
+		function updateTable(){
+			let newDate = input.valueAsDate || new Date(); 
+			newDate = getLastMonday(newDate);
+
+			calendarTh.innerHTML = "";
+			calendarTb.innerHTML = "";
+
+			fillTable(newDate);
+		}
+
+		function fillTable(startDate) {
+			calendarTh.innerHTML = '';
+			calendarTb.innerHTML = '';
+
+			for (let i = 0; i < 5; i++) {
+				let date = new Date(startDate.getTime()); 
+				date.setDate(date.getDate() + i); 
+
+				calendarTh.appendChild(createCalendarHeadline(date));           
+				calendarTb.appendChild(createCalendarDiv(date));    
+			}
+		}
+
+		// Da in Firefox das Inputfeld "week" nicht funktioniert, füge ich zwei Buttons hinzu
+		// Eine um zur letzten Woche zu gelangen (-1), eine für die nächste Woche (+1)
+		// Dafür nehme ich den Wert des Inputfeldes ...
+		function changeWeek(change){
+			const weeklySelection = document.getElementById('weeklySelection');
+			const value = weeklySelection.value;
+			const year = parseInt(value.substring(0, 4), 10);
+			const week = (parseInt(value.substring(6), 10))+change;
+
+			const currentDate = new Date(year, 0, 1 + (week - 1) * 7);
+			setCurrentWeekToInput(currentDate);
+			updateTable();
+		}
+
+		function createCalendarHeadline(date) {
+			const dateId = formatDate(date) + "headline";
+			const th = document.createElement("th");
+					th.textContent = `${days[date.getDay()]} (${formatDate(date)})`;
+			if(formatDate(date) === formatDate(new Date())){
+				th.id = "today";	
+			}
+			return th;
+		}
+
+		function createCalendarDiv(date) {
+			const td = document.createElement("td");
+			const div = createCalendarNotefield(date)
+			td.appendChild(div);
+			return td;
+		}
+
+		function createCalendarNotefield(date){
+			const dateId = formatDate(date);
+			const editfield = createCalendarEditfield(date);
+			const formatedText = getNote(dateId).replace(/\n/g, '<br>');
+			const div = document.createElement("div");
+					div.className = "noteArea";
+					div.id = dateId;
+					div.innerHTML = formatedText;
+					// editfield ist ein Array, 0=Ganzes Objekt 1=Element das Focus haben soll
+					div.addEventListener("dblclick", () => toggleElements(div, editfield[0], editfield[1]));
+			if(getNote(dateId) === placeholder){
+				div.classList = "grayText";
+			}
+			return div;
+		}
+
+		function createCalendarEditfield(date){
+			const dateId = formatDate(date);
+			const br = document.createElement("br");
+			const div = document.createElement("div");
+
+			const editfield = document.createElement("textarea");
+					editfield.value = getNote(dateId);
+					editfield.id = dateId;
+					editfield.className = "editfield";
+
+			adjustTextareaHeight(editfield); 
+			editfield.addEventListener("input", () => adjustTextareaHeight(editfield));
+			editfield.addEventListener("focus", () => adjustTextareaHeight(editfield));
+			
+			const saveBtn = document.createElement("button");
+					saveBtn.textContent = "Save";
+					saveBtn.className = "greenBtn";
+					saveBtn.addEventListener("click", ()=>{
+						const text = editfield.value;
+						saveCalendarObj(text, dateId);
+						const notefield = createCalendarNotefield(date);
+						toggleElements(div, notefield);
+					});
+
+			const cancelBtn = document.createElement("button");
+					cancelBtn.textContent = "Cancel";
+					cancelBtn.className = "redBtn";
+					cancelBtn.addEventListener("click", ()=>{
+						const notefield = createCalendarNotefield(date);
+						toggleElements(div, notefield);
+					});
+
+			div.append(editfield, br, saveBtn, cancelBtn);
+			// 0=Ganzes Objekt 1=Element das Focus haben soll
+			return [div, editfield];				
+		}
+
+		function getNote(id) {
+			const note = calendarObjects[id];
+			// Mit der Klasse im String ist unschön, das ließe sich sauberer lösen
+			return note ? note.text : placeholder;
+		}
+
+		function saveCalendarObj(text, id) {
+			const obj = { id, text };
+			calendarObjects[id] = obj;
+			localStorage.setItem("toolCalendar", JSON.stringify(calendarObjects));
+		}
+
+	</script>
 
 <!--------------------------------------------------------------------------------------------------------------------------->
 
 <!--------------------------------------------------------------------------------------------------------------------------->
-
-		<script id="calendarJS">
-			let calendarObjects = JSON.parse(localStorage.getItem("toolCalendar")) || {};
-			const placeholder = "Doubleclick to add Note";
-
-			const calendarTh = document.getElementById("calendarTh");
-			const calendarTb = document.getElementById("calendarTb");
-			const input = document.getElementById("weeklySelection");
-			const days = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
-
-			/* Die erste Zeile der Tabelle wird mit den Wochentagen und dem Datum gefüllt
-			 * Dafür wird beim laden der Seite die Funktion updateTable() aufgerufen.
-			 * Indem dieser die fillTable() Funktion liegt welche Tabellenzeilen und -spalten erstellt
-			 * Dafür nutzt sie die Funktionen getDateHeadline(daysOffset)
-			 * daysOffset: 0 = Montag der ausgewählten Woche, 1 = Dienstag, ...
-			 * Um den Montag der ausgewählten Woche zu bekommen, wird die Funktion getLastMonday() aufgerufen
-			 * Das Datum wird mit formatDate(date) formatiert um immer zwei Ziffern für Tag und Monat zu haben
-			 * Mit der Funktion updateTable() wird die Tabelle aktualisiert, wenn der Nutzer eine neue Woche auswählt
-			 */
-
-			function setCurrentWeekToInput(currentDate = new Date()) {
-				// const currentDate = new Date();
-				const currentYear = currentDate.getFullYear();
-				const firstDayOfYear = new Date(currentYear, 0, 1);
-				const pastDaysOfYear = (currentDate - firstDayOfYear) / 86400000;
-
-				let currentWeek = Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
-				// Muss folgendes Format haben: YYYY-WWW zum Beispiel 2024-W01
-				let weekValue = `${currentYear}-W${currentWeek < 10 ? "0" + currentWeek : currentWeek}`;
-
-				document.getElementById("weeklySelection").value = weekValue;
-			}
-
-			function getLastMonday(date = new Date()) {
-				let resultDate = new Date(date); // Eine Kopie, um das Originaldatum nicht zu verändern
-				resultDate.setDate(resultDate.getDate() - (resultDate.getDay() || 7) + 1); // Korrektur für Sonntag
-				return resultDate;
-			}
-
-			function formatDate(date) {
-				return date.toLocaleDateString("de-DE", { year: '2-digit', month: '2-digit', day: '2-digit' });
-			}
-
-			// Oberhalb sind die Hilfsfunktionen, Unterhalb wird das HTML generiert
-
-			function updateTable(){
-				let newDate = input.valueAsDate || new Date(); 
-				newDate = getLastMonday(newDate);
-
-				calendarTh.innerHTML = "";
-				calendarTb.innerHTML = "";
-
-				fillTable(newDate);
-			}
-
-			function fillTable(startDate) {
-				calendarTh.innerHTML = '';
-				calendarTb.innerHTML = '';
-
-				for (let i = 0; i < 5; i++) {
-					let date = new Date(startDate.getTime()); 
-					date.setDate(date.getDate() + i); 
-
-					calendarTh.appendChild(createCalendarHeadline(date));           
-					calendarTb.appendChild(createCalendarDiv(date));    
-				}
-			}
-
-			// Da in Firefox das Inputfeld "week" nicht funktioniert, füge ich zwei Buttons hinzu
-			// Eine um zur letzten Woche zu gelangen (-1), eine für die nächste Woche (+1)
-			// Dafür nehme ich den Wert des Inputfeldes ...
-			function changeWeek(change){
-				const weeklySelection = document.getElementById('weeklySelection');
-				const value = weeklySelection.value;
-				const year = parseInt(value.substring(0, 4), 10);
-    			const week = (parseInt(value.substring(6), 10))+change;
-
-				const currentDate = new Date(year, 0, 1 + (week - 1) * 7);
-				setCurrentWeekToInput(currentDate);
-				updateTable();
-			}
-
-			function createCalendarHeadline(date) {
-				const dateId = formatDate(date) + "headline";
-				const th = document.createElement("th");
-				      th.textContent = `${days[date.getDay()]} (${formatDate(date)})`;
-				if(formatDate(date) === formatDate(new Date())){
-					th.id = "today";	
-				}
-				return th;
-			}
-
-			function createCalendarDiv(date) {
-				const td = document.createElement("td");
-				const div = createCalendarNotefield(date)
-				td.appendChild(div);
-				return td;
-			}
-
-			function createCalendarNotefield(date){
-				const dateId = formatDate(date);
-				const editfield = createCalendarEditfield(date);
-				const formatedText = getNote(dateId).replace(/\n/g, '<br>');
-				const div = document.createElement("div");
-					  div.className = "noteArea";
-					  div.id = dateId;
-					  div.innerHTML = formatedText;
-					  // editfield ist ein Array, 0=Ganzes Objekt 1=Element das Focus haben soll
-					  div.addEventListener("dblclick", () => toggleElements(div, editfield[0], editfield[1]));
-				if(getNote(dateId) === placeholder){
-					div.classList = "grayText";
-				}
-				return div;
-			}
-
-			function createCalendarEditfield(date){
-				const dateId = formatDate(date);
-				const br = document.createElement("br");
-				const div = document.createElement("div");
-
-				const editfield = document.createElement("textarea");
-					  editfield.value = getNote(dateId);
-					  editfield.id = dateId;
-					  editfield.className = "editfield";
-
-				adjustTextareaHeight(editfield); 
-				editfield.addEventListener("input", () => adjustTextareaHeight(editfield));
-				editfield.addEventListener("focus", () => adjustTextareaHeight(editfield));
-				
-				const saveBtn = document.createElement("button");
-				      saveBtn.textContent = "Save";
-					  saveBtn.className = "greenBtn";
-					  saveBtn.addEventListener("click", ()=>{
-							const text = editfield.value;
-							saveCalendarObj(text, dateId);
-							const notefield = createCalendarNotefield(date);
-							toggleElements(div, notefield);
-					  });
-
-				const cancelBtn = document.createElement("button");
-				      cancelBtn.textContent = "Cancel";
-					  cancelBtn.className = "redBtn";
-					  cancelBtn.addEventListener("click", ()=>{
-						    const notefield = createCalendarNotefield(date);
-							toggleElements(div, notefield);
-					  });
-
-				div.append(editfield, br, saveBtn, cancelBtn);
-				// 0=Ganzes Objekt 1=Element das Focus haben soll
-				return [div, editfield];				
-			}
-
-			function getNote(id) {
-				const note = calendarObjects[id];
-				// Mit der Klasse im String ist unschön, das ließe sich sauberer lösen
-				return note ? note.text : placeholder;
-			}
-
-			function saveCalendarObj(text, id) {
-				const obj = { id, text };
-				calendarObjects[id] = obj;
-				localStorage.setItem("toolCalendar", JSON.stringify(calendarObjects));
-			}
-
-		</script>
+	
+	<script id="noteJS"> 
+	</script>
 
 <!--------------------------------------------------------------------------------------------------------------------------->
 
 <!--------------------------------------------------------------------------------------------------------------------------->
-		
-		<script id="noteJS"> 
-		</script>
+	
+	<script id="collectionJS"> 
+	</script>
 
 <!--------------------------------------------------------------------------------------------------------------------------->
 
 <!--------------------------------------------------------------------------------------------------------------------------->
-		
-		<script id="collectionJS"> 
-		</script>
+	
+	<script id="clipboardJS"> 
+	</script>	
 
 <!--------------------------------------------------------------------------------------------------------------------------->
 
 <!--------------------------------------------------------------------------------------------------------------------------->
-		
-		<script id="clipboardJS"> 
-		</script>	
-
-<!--------------------------------------------------------------------------------------------------------------------------->
-
-<!--------------------------------------------------------------------------------------------------------------------------->
-		
-		<script id="saveManagerJS"> 
-		</script>
+	
+	<script id="saveManagerJS"> 
+	</script>
 
 	</body>
 <html>
