@@ -33,40 +33,52 @@
 	- Save Manager:		Möglichkeit die Daten der Seite zu importieren, exportieren oder zu löschen
 
 	SPEICHERORT:
-	Die Werte der Tools werden im LocalStorage des Browsers unter "quickToolsSaves" gespeichert.
+	Die Werte der Tools werden im LocalStorage des Browsers unter "quickToolsStore" gespeichert.
 	Jede Eigenschaft des Objektes beeinhaltet die gespeicherten Daten eines Tools 
 	- toolStore
-		 *	<tool>Btn: boolean				// <tool> steht für die Namen der Tools
-		 *	timerSort: string				// Einträge nach Date oder Prio sortiert
-		 *	commitHistorySelect: number		// Anzahl der gezeigten Einträge
-		 *	cssMode: string					// Dark-Mode oder Light-Mode
-	- toolTimers (umbenennen in toolTimer)
-		 *  id: String           			// generiert von generateID() in globalsJS
-		 *  name: String         			// Kurze Beschreibung des Timers
-		 * 	createdAt: Date	   				// Erstellungsdatum, wird zum sortieren genutzt
-		 *  totalTime: Number    			// Sekunden
-		 *  sessionTime: Number  			// Sekunden
-		 *  prio: Number         			// [1-4] Zum sortieren und Farbdarstellung
-	- toolHistory (umbenennen in toolCommit)
-		 *  id: String             		    // generiert von generateID() in globalsJS
-		 *  name: String             		// Ist die Kurzbeschreibung des Commits
-		 * 	createdAtDay: String	   		// Tag der Erstellung
-		 *  createdAtTime: String	   		// Uhrzeit der Erstellung
+		<tool>Btn: boolean				// <tool> steht für die Namen der Tools
+		cssMode: string					// Dark-Mode oder Light-Mode
+	- toolTimer 
+		timerSort: string				// Einträge nach Date oder Prio sortiert
+		{
+		   id: String           		// generiert von generateID() in globalsJS
+		   name: String         		// Kurze Beschreibung des Timers
+		   createdAt: Date	   			// Erstellungsdatum, wird zum sortieren genutzt
+		   totalTime: Number    		// Sekunden
+		   sessionTime: Number  		// Sekunden
+		   prio: Number         		// [1-4] Zum sortieren und Farbdarstellung
+		} 
+	- toolCommit 
+		commitHistorySelect: number		// Anzahl der gezeigten Einträge
+		{
+		   id: String             		// generiert von generateID() in globalsJS
+		   name: String             	// Ist die Kurzbeschreibung des Commits
+		   createdAtDay: String	   		// Tag der Erstellung
+		   createdAtTime: String	   	// Uhrzeit der Erstellung
+		}
 	- toolCalendar
-		 *  id: String         				// Das Datum welches dem Text zugeordnet ist
-		 *  text: String         			// der Text/Note welches dem Datum zugeordnet ist
+		{
+		   id: String         			// Das Datum welches dem Text zugeordnet ist
+		   text: String         		// der Text/Note welches dem Datum zugeordnet ist
+		} 
 	- toolNote
-		 *  id: Date         				// Die genaue Uhrzeit und Datum
-		 *  name: String					// Überschrift zum Note (Default: "Note von <Date>")
-		 *  text: String         			// der Text/Note welches dem Note zugeordnet ist
-		 *  memory: boolean					// Ja/Nein ob zur Note eine Erinnerung gehört
+		{
+		   id: Date         			// Die genaue Uhrzeit und Datum
+		   name: String					// Überschrift zum Note (Default: "Note von <Date>")
+		   text: String         		// der Text/Note welches dem Note zugeordnet ist
+		   memory: boolean				// Ja/Nein ob zur Note eine Erinnerung gehört
+		} 
 	- toolCollection
-		 *  id: String         				// generiert von generateID() in globalsJS
-		 *  name: String         			// Überschrift der Collection (Default: "Collection <Number>")	
-		 *  list: Array[Object]				// {name: String, status: boolean} 	
+		{
+		   id: String         			// generiert von generateID() in globalsJS
+		   name: String         		// Überschrift der Collection (Default: "Collection <Number>")	
+		   list: Array[Object]			// {name: String, status: boolean} 	
+		} 
 	- toolClipboard
-		 *  id: String         				// generiert von generateID() in globalsJS
-		 *  text: String         			// der Text welche gespeichert wurde
+		{
+		   id: String         			// generiert von generateID() in globalsJS
+		   text: String         		// der Text welche gespeichert wurde
+		} 
 
 	TOOL EINBINDEN
 	Das Einbinden eines neuen Tools soll möglichst schnell, einfach und automatisch erfolgen. 
@@ -81,7 +93,7 @@
 				 Die Funktion "createToolHeader" erwartet <tool> und den Text der Überschrift
 	- Schritt 4: Das Objekt "tooltips" bekommt eine neue Eigenschaft mit dem Key "<tool>ToolTipp"
 				 Der Wert von "<tool>ToolTipp" ist ein String mit der Beschreibung des Tools
-	- Schritt 5: Die Daten des Tools werden unter "tool<Tool>" im Objekt "quickToolsSaves" gespeichert
+	- Schritt 5: Die Daten des Tools werden unter "tool<Tool>" im Objekt "quickToolsStore" gespeichert
 -->
 <html>
 	<head>
@@ -657,6 +669,16 @@
 <!--------------------------------------------------------------------------------------------------------------------------->
 		
 	<style id="saveManagerCSS">
+		#saveManager details{
+			background-color: var(--prio2);
+			border: 2px solid var(--background-2);
+			margin-top: 10px;
+			padding: 5px;
+		}
+
+		#saveManager summary:focus{
+			border: none;
+		}
 	</style>
 
 
@@ -664,8 +686,7 @@
 <!--------------------------------------------------------------------------------------------------------------------------->
 <!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
 
-
-	<script id="loadJS">  
+	<script id="storeJS">
 		let store = {};
 		
 		const allTools = {
@@ -677,7 +698,13 @@
 			clipboard: "Clipboard",
 			saveManager: "Save Manager",
 		}
+	</script>
 
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+	<script id="loadJS">  
 		window.addEventListener("load", () => {
 			loadStore();
 			loadCss();
