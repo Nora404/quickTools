@@ -109,7 +109,7 @@
 		--background-1: rgb(243, 248, 252);	/* Hintergrundfarbe von Modulen */
 
 		--text-3: rgb(43, 53, 66);				/* Normale Textfarbe */
-		--text-2: rgb(92, 94, 110);			/* Textfarbe von Überschriften */
+		--text-2: rgb(99, 105, 152);			/* Textfarbe von Überschriften */
 		--text-1: rgb(244, 244, 245);			/* Textfarbe von Tooltipps */
 
 		--gray-3: rgb(172, 172, 172);			/* Ränder von Formularen */
@@ -675,9 +675,16 @@
 			margin-top: 10px;
 			padding: 5px;
 		}
-
+		#saveManager summary{
+			color: var(--text-2);
+		}
 		#saveManager summary:focus{
 			border: none;
+			color: var(--text-2);
+		}
+		.saveDiv{
+			padding: 10px;
+			margin-left: 7px;
 		}
 	</style>
 
@@ -853,7 +860,7 @@
 			if(haveTools1.length < 1 && haveTools2.length >= 1){  // links nein / rechts ja
 				mainColumn1.classList.add("hidden");
 				mainColumn2.classList.remove("hidden")
-				main.style.maxWidth = '700px';
+				main.style.maxWidth = '1000px';
 				mainColumn2.style.flex = "1 0 auto";
 				mainColumn2.style.marginLeft = "0";
 			} 
@@ -861,7 +868,7 @@
 			if(haveTools1.length < 1 && haveTools2.length < 1){  // links nein / rechts nein
 				mainColumn1.classList.add("hidden");
 				mainColumn2.classList.add("hidden");
-				main.style.maxWidth = '500px';
+				main.style.maxWidth = '1000px';
 			}
 		}
 
@@ -1129,15 +1136,15 @@
 
 				<details>
 				<summary>Project Timer: toolTimers</summary>
-				<p>Save Manager</p>
+				<div class="saveDiv"><button class="redBtn">X</button> Manager</div>
 				</details>
 				<details>
 				<summary>Commit History: toolHistory</summary>
-				<p>Save Manager</p>
+				<div class="saveDiv">Save Manager</div>
 				</details>
 				<details>
 				<summary>Calendar Notes: toolCalendar</summary>
-				<p>Save Manager</p>
+				<div class="saveDiv">Save Manager</div>
 				</details>
 		</div>
 	</div>
