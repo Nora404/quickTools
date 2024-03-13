@@ -33,14 +33,14 @@
 	- Save Manager:		Möglichkeit die Daten der Seite zu importieren, exportieren oder zu löschen
 
 	SPEICHERORT:
-	Die Werte der Tools werden im LocalStorage des Browsers unter "quickToolsStore" gespeichert.
+	Die Werte der Tools werden im LocalStorage des Browsers unter "quickToolsSaves" gespeichert.
 	Jede Eigenschaft des Objektes beeinhaltet die gespeicherten Daten eines Tools 
-	- toolStore
+	- storeSaves
 		<tool>Btn: boolean				// <tool> steht für die Namen der Tools
 		cssMode: string					// Dark-Mode oder Light-Mode
-	- toolTimer 
+	- timerSaves
 		timerSort: string				// Einträge nach Date oder Prio sortiert
-		{
+		entries: {
 		   id: String           		// generiert von generateID() in globalsJS
 		   name: String         		// Kurze Beschreibung des Timers
 		   createdAt: Date	   			// Erstellungsdatum, wird zum sortieren genutzt
@@ -48,34 +48,34 @@
 		   sessionTime: Number  		// Sekunden
 		   prio: Number         		// [1-4] Zum sortieren und Farbdarstellung
 		} 
-	- toolCommit 
+	- commitSaves
 		commitHistorySelect: number		// Anzahl der gezeigten Einträge
-		{
+		entries: {
 		   id: String             		// generiert von generateID() in globalsJS
 		   name: String             	// Ist die Kurzbeschreibung des Commits
 		   createdAtDay: String	   		// Tag der Erstellung
 		   createdAtTime: String	   	// Uhrzeit der Erstellung
 		}
-	- toolCalendar
-		{
+	- calendarSaves
+		entries: {
 		   id: String         			// Das Datum welches dem Text zugeordnet ist
 		   text: String         		// der Text/Note welches dem Datum zugeordnet ist
 		} 
-	- toolNote
-		{
+	- noteSaves
+		entries: {
 		   id: Date         			// Die genaue Uhrzeit und Datum
 		   name: String					// Überschrift zum Note (Default: "Note von <Date>")
 		   text: String         		// der Text/Note welches dem Note zugeordnet ist
 		   memory: boolean				// Ja/Nein ob zur Note eine Erinnerung gehört
 		} 
-	- toolCollection
-		{
+	- collectionSaves
+		entries: {
 		   id: String         			// generiert von generateID() in globalsJS
 		   name: String         		// Überschrift der Collection (Default: "Collection <Number>")	
 		   list: Array[Object]			// {name: String, status: boolean} 	
 		} 
-	- toolClipboard
-		{
+	- clipboardSaves
+		entries: {
 		   id: String         			// generiert von generateID() in globalsJS
 		   text: String         		// der Text welche gespeichert wurde
 		} 
@@ -93,7 +93,18 @@
 				 Die Funktion "createToolHeader" erwartet <tool> und den Text der Überschrift
 	- Schritt 4: Das Objekt "tooltips" bekommt eine neue Eigenschaft mit dem Key "<tool>ToolTipp"
 				 Der Wert von "<tool>ToolTipp" ist ein String mit der Beschreibung des Tools
-	- Schritt 5: Die Daten des Tools werden unter "tool<Tool>" im Objekt "quickToolsStore" gespeichert
+	- Schritt 5: Die Daten des Tools werden unter "tool<Tool>" im Objekt "quickToolsSaves" gespeichert
+	Ein Tool sollte immer etwar gleich aufgebaut werden, ähnlich einem Tool-Interface
+	Mit dem store bzw dem Speicher soll nicht direkt interagiert werden 
+		Tool {
+			<tool>Obj = getToolObj(<tool>);
+			init<tool>(){...} 		
+			save<tool>Obj(){...}	
+			add<tool>Obj(){...}
+			remove<tool>Obj(){...}
+			create<tool><element>(){...}
+			render<tool>(){...}
+		}
 -->
 <html>
 	<head>
@@ -705,6 +716,45 @@
 			clipboard: "Clipboard",
 			saveManager: "Save Manager",
 		}
+
+		function loadStore() {
+			const storedData = localStorage.getItem("quickToolsSaves");
+			const toolNameArray = Object.keys(allTools);
+			let initVisibility = {}; 
+			
+			toolNameArray.forEach((key)=>{
+				initVisibility[key] = true;
+			});
+
+			store = storedData ? JSON.parse(storedData) : {};
+			if (!store || Object.keys(store).length === 0) {
+				store = {
+				visibility: initVisibility,
+				timerSort: "Date",
+				commitHistorySelect: 3,
+				cssMode: "default"
+				};
+				localStorage.setItem("quickToolsSaves", JSON.stringify(store));
+			}
+		}
+
+		// ganzer store speichern
+
+		// ein tool objekt speichern
+
+		// ein key/value speichern
+
+		// gesamten speicher löschen
+
+		// ein tool objekt löschen
+
+		// ein tool objekt ausgeben
+		// store.<tool>Saves.entries
+		function getToolObj(toolName){
+			let key = toolName + "Saves";
+			return store[key].entries || {};
+		}
+
 	</script>
 
 <!--------------------------------------------------------------------------------------------------------------------------->
@@ -724,28 +774,7 @@
 			renderSortTimerBtn();
 			renderHistoryList();
 		});
-
-		function loadStore() {
-			const storedData = localStorage.getItem("toolStore");
-			const toolNameArray = Object.keys(allTools);
-			let initVisibility = {}; 
-			
-			toolNameArray.forEach((key)=>{
-				initVisibility[key] = true;
-			});
-
-			store = storedData ? JSON.parse(storedData) : {};
-			if (!store || Object.keys(store).length === 0) {
-				store = {
-				visibility: initVisibility,
-				timerSort: "Date",
-				commitHistorySelect: 3,
-				cssMode: "default"
-				};
-				localStorage.setItem("toolStore", JSON.stringify(store));
-			}
-		}
-
+	
 		function loadCss(){
 			const cssMode = store.cssMode;
 			if(cssMode === "dark-mode"){
