@@ -769,25 +769,27 @@
 		// gesamten speicher löschen
 		function clearStore(){
 			store = {};
-			loadStorage.remove("quickToolsSaves");
+			localStorage.removeItem("quickToolsSaves");
 			initStore();
 		}
 
 		// löscht alle objekte eines tools
 		function removeToolSaves(toolName){
-			store[toolName][entries] = {};
+			store[toolName].entries = {};
 			saveQuickToolObjects();
 		}
 
 		// ein tool objekt löschen
-		function removeToolObj(){
-
+		function removeToolObj(toolName, objId){
+			if (store[toolName] && store[toolName].entries[objId]) {
+				delete store[toolName].entries[objId];
+				saveQuickToolObjects();
+			}
 		}
 
 		// gibt das gewünschte toolobjekt zurück 
 		function getToolSaves(toolName){
-			let key = toolName + "Saves";
-			return store[key] || {};
+			return store[toolName] ? store[toolName] : {};
 		}
 
 	</script>
