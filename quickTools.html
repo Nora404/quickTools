@@ -97,7 +97,7 @@
 	Ein Tool sollte immer etwar gleich aufgebaut werden, ähnlich einem Tool-Interface
 	Mit dem store bzw dem Speicher soll nicht direkt interagiert werden 
 		Tool {
-			<tool>Obj = getToolObj(<tool>);
+			<tool>Obj = getToolSaves(<tool>);
 			init<tool>(){...} 		
 			save<tool>Obj(){...}	
 			add<tool>Obj(){...}
@@ -717,6 +717,7 @@
 			saveManager: "Save Manager",
 		}
 
+		// erstellt das grundgerüst des stores 
 		function initStore(){
 			const toolNameArray = Object.keys(allTools);
 
@@ -738,6 +739,7 @@
 			saveQuickToolObjects();
 		}
 
+		// holt die daten aus dem localStore
 		function loadStore() {
 			const storedData = localStorage.getItem("quickToolsSaves");
 			
@@ -747,23 +749,45 @@
 			}
 		}
 
-		// ganzer store speichern
+		// speichert alle daten im localStore
 		function saveQuickToolObjects(){
 			localStorage.setItem("quickToolsSaves", JSON.stringify(store));
 		}
 
 		// ein tool objekt speichern
+		function saveToolObj(toolName, obj){
+			const objId = obj.id; 
+    		store[toolName].entries[objId] = obj;
+			saveQuickToolObjects();
+		}
 
 		// ein key/value speichern
+		function saveValue(toolName, key, value){
+			store[toolName][key] = value;
+		}
 
 		// gesamten speicher löschen
+		function clearStore(){
+			store = {};
+			loadStorage.remove("quickToolsSaves");
+			initStore();
+		}
+
+		// löscht alle objekte eines tools
+		function removeToolSaves(toolName){
+			store[toolName][entries] = {};
+			saveQuickToolObjects();
+		}
 
 		// ein tool objekt löschen
+		function removeToolObj(){
 
-		// ein tool objekt ausgeben
-		function getToolObj(toolName){
+		}
+
+		// gibt das gewünschte toolobjekt zurück 
+		function getToolSaves(toolName){
 			let key = toolName + "Saves";
-			return store[key].entries || {};
+			return store[key] || {};
 		}
 
 	</script>
