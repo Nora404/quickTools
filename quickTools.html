@@ -764,6 +764,7 @@
 		// ein key/value speichern
 		function saveValue(toolName, key, value){
 			store[toolName][key] = value;
+			saveQuickToolObjects();
 		}
 
 		// gesamten speicher löschen
@@ -807,6 +808,7 @@
 			setCurrentWeekToInput();
 			updateTable();
 			setToolTipText();
+			initTimer();
 			renderTimerEntries();
 			renderSortTimerBtn();
 			renderHistoryList();
@@ -1223,9 +1225,26 @@
 
 
 	<script id="timerJS">
-		let timerObjects = JSON.parse(localStorage.getItem("toolTimers")) || {};
+		let timerObjects = {};
 		let timerInterval = null;
 		let timerActiv = null;
+		let timerSort = "Date";
+
+		const addProjectBtn = document.getElementById("addProjectBtn");
+				  addProjectBtn.addEventListener("click", ()=>{
+					   addProject();
+					});
+
+		function initTimer(){
+			let timerObj = getToolSaves("timer");
+			console.log(timerObj);
+
+			if (!timerObj.timerSort) {
+				saveValue("timer", "timerSort", "Date");
+			} else {
+				timerSort = timerObj.timerSort;
+			}	
+		}
 
 		function addProject(){
 			const id = generateId();
@@ -1241,10 +1260,6 @@
 			localStorage.setItem("toolTimers", JSON.stringify(timerObjects));
 			renderTimerEntries();
 		}
-		const addProjectBtn = document.getElementById("addProjectBtn");
-				addProjectBtn.addEventListener("click", ()=>{
-				addProject();
-				})
 
 		function startTimer(projectId){
 			if(timerInterval) clearInterval(timerInterval);
@@ -1341,9 +1356,9 @@
 		}
 
 		/* Das Layout liegt in einem Listenelement und besteht aus einem Kontainer
-			* Indem links und recht nebeneinander ein weitere Kontainer liegt
-			* Im rechten Kontainer sind die beiden Stoppuhren
-			*/
+		 * Indem links und recht nebeneinander ein weitere Kontainer liegt
+		 * Im rechten Kontainer sind die beiden Stoppuhren
+		 */
 		function createTimerEntry(timerObj){
 			const li = document.createElement("li");
 			li.id = timerObj.id;
@@ -1402,6 +1417,7 @@
 					span.addEventListener("dblclick", () => toggleElements(span, input));
 			return span;	  
 		}
+		
 		function createEditNameInput(text, id){
 			const input = document.createElement("input");
 					input.className = "textName";
