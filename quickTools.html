@@ -35,10 +35,10 @@
 	SPEICHERORT:
 	Die Werte der Tools werden im LocalStorage des Browsers unter "quickToolsSaves" gespeichert.
 	Jede Eigenschaft des Objektes beeinhaltet die gespeicherten Daten eines Tools 
-	- storeSaves
+	- store
 		<tool>Btn: boolean				// <tool> steht für die Namen der Tools
 		cssMode: string					// Dark-Mode oder Light-Mode
-	- timerSaves
+	- timer
 		timerSort: string				// Einträge nach Date oder Prio sortiert
 		entries: {
 		   id: String           		// generiert von generateID() in globalsJS
@@ -48,7 +48,7 @@
 		   sessionTime: Number  		// Sekunden
 		   prio: Number         		// [1-4] Zum sortieren und Farbdarstellung
 		} 
-	- commitSaves
+	- commit
 		commitHistorySelect: number		// Anzahl der gezeigten Einträge
 		entries: {
 		   id: String             		// generiert von generateID() in globalsJS
@@ -56,25 +56,25 @@
 		   createdAtDay: String	   		// Tag der Erstellung
 		   createdAtTime: String	   	// Uhrzeit der Erstellung
 		}
-	- calendarSaves
+	- calendar
 		entries: {
 		   id: String         			// Das Datum welches dem Text zugeordnet ist
 		   text: String         		// der Text/Note welches dem Datum zugeordnet ist
 		} 
-	- noteSaves
+	- note
 		entries: {
 		   id: Date         			// Die genaue Uhrzeit und Datum
 		   name: String					// Überschrift zum Note (Default: "Note von <Date>")
 		   text: String         		// der Text/Note welches dem Note zugeordnet ist
 		   memory: boolean				// Ja/Nein ob zur Note eine Erinnerung gehört
 		} 
-	- collectionSaves
+	- collection
 		entries: {
 		   id: String         			// generiert von generateID() in globalsJS
 		   name: String         		// Überschrift der Collection (Default: "Collection <Number>")	
 		   list: Array[Object]			// {name: String, status: boolean} 	
 		} 
-	- clipboardSaves
+	- clipboard
 		entries: {
 		   id: String         			// generiert von generateID() in globalsJS
 		   text: String         		// der Text welche gespeichert wurde
@@ -84,16 +84,16 @@
 	Das Einbinden eines neuen Tools soll möglichst schnell, einfach und automatisch erfolgen. 
 	Der Name des Tools wird als Key verwendet, als Id für seinen Container, abgewandelt als Button oder Speicher.
 	Schritt 2 erfolgt automatisch
-	- Schritt 1: Den Namen als Key und die Überschrift als Value im Objekt "allTools" eintragen 
-	- Schritt 2: Der Button hat die Id "<tool>Btn" wobei <tool> der Name des Tools ist
+		- Schritt 1: Den Namen als Key und die Überschrift als Value im Objekt "allTools" eintragen 
+		- Schritt 2: Der Button hat die Id "<tool>Btn" wobei <tool> der Name des Tools ist
 				 Die Beschriftung des Buttons hat den Wert von allTools[<tool>]
 	             Der Button hat ein Klick-Event welches "changeVisibility('<tool>'')" aufruft.
-	- Schritt 3: Der Div-Kontainer hat die Id <tool> 
+		- Schritt 3: Der Div-Kontainer hat die Id <tool> 
 				 Der Span-Container <tool>Header umfasst die Tooltips und die Überschrift
 				 Die Funktion "createToolHeader" erwartet <tool> und den Text der Überschrift
-	- Schritt 4: Das Objekt "tooltips" bekommt eine neue Eigenschaft mit dem Key "<tool>ToolTipp"
+		- Schritt 4: Das Objekt "tooltips" bekommt eine neue Eigenschaft mit dem Key "<tool>ToolTipp"
 				 Der Wert von "<tool>ToolTipp" ist ein String mit der Beschreibung des Tools
-	- Schritt 5: Die Daten des Tools werden unter "tool<Tool>" im Objekt "quickToolsSaves" gespeichert
+		- Schritt 5: Die Daten des Tools werden unter "tool<Tool>" im Objekt "quickToolsSaves" gespeichert
 	Ein Tool sollte immer etwar gleich aufgebaut werden, ähnlich einem Tool-Interface
 	Mit dem store bzw dem Speicher soll nicht direkt interagiert werden 
 		Tool {
@@ -717,28 +717,40 @@
 			saveManager: "Save Manager",
 		}
 
-		function loadStore() {
-			const storedData = localStorage.getItem("quickToolsSaves");
+		function initStore(){
 			const toolNameArray = Object.keys(allTools);
-			let initVisibility = {}; 
-			
+
+			let initVisibility = {};
+			let initToolSaveObj = {};
+
 			toolNameArray.forEach((key)=>{
 				initVisibility[key] = true;
+				initToolSaveObj[key] = {entries:{}};
 			});
 
+			store = {
+				store: {
+					visibility: initVisibility,
+					cssMode: "default",
+				},
+				...initToolSaveObj,
+			}
+			saveQuickToolObjects();
+		}
+
+		function loadStore() {
+			const storedData = localStorage.getItem("quickToolsSaves");
+			
 			store = storedData ? JSON.parse(storedData) : {};
 			if (!store || Object.keys(store).length === 0) {
-				store = {
-				visibility: initVisibility,
-				timerSort: "Date",
-				commitHistorySelect: 3,
-				cssMode: "default"
-				};
-				localStorage.setItem("quickToolsSaves", JSON.stringify(store));
+				initStore();
 			}
 		}
 
 		// ganzer store speichern
+		function saveQuickToolObjects(){
+			localStorage.setItem("quickToolsSaves", JSON.stringify(store));
+		}
 
 		// ein tool objekt speichern
 
@@ -749,7 +761,6 @@
 		// ein tool objekt löschen
 
 		// ein tool objekt ausgeben
-		// store.<tool>Saves.entries
 		function getToolObj(toolName){
 			let key = toolName + "Saves";
 			return store[key].entries || {};
