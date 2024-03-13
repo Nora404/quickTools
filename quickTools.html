@@ -809,8 +809,6 @@
 			updateTable();
 			setToolTipText();
 			initTimer();
-			renderTimerEntries();
-			renderSortTimerBtn();
 			renderHistoryList();
 		});
 	
@@ -1237,13 +1235,15 @@
 
 		function initTimer(){
 			let timerObj = getToolSaves("timer");
-			console.log(timerObj);
 
 			if (!timerObj.timerSort) {
 				saveValue("timer", "timerSort", "Date");
 			} else {
 				timerSort = timerObj.timerSort;
 			}	
+
+			renderTimerEntries();
+			renderSortTimerBtn();
 		}
 
 		function addProject(){
