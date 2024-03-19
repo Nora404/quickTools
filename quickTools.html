@@ -35,7 +35,7 @@
 	SPEICHERORT:
 	Die Werte der Tools werden im LocalStorage des Browsers unter "quickToolsSaves" gespeichert.
 	Jede Eigenschaft des Objektes beeinhaltet die gespeicherten Daten eines Tools 
-	- store
+	- state
 		<tool>Btn: boolean				// <tool> steht für die Namen der Tools
 		cssMode: string					// Dark-Mode oder Light-Mode
 	- timer
@@ -730,7 +730,7 @@
 			});
 
 			store = {
-				store: {
+				state: {
 					visibility: initVisibility,
 					cssMode: "default",
 				},
@@ -813,7 +813,7 @@
 		});
 	
 		function loadCss(){
-			const cssMode = store.cssMode;
+			const cssMode = store.state.cssMode;
 			if(cssMode === "dark-mode"){
 				document.body.classList.toggle('dark-mode');
 			}
@@ -940,13 +940,12 @@
 
 		const toggleDarkMode = () => {
 			document.body.classList.toggle('dark-mode');
-			const currentCssMode = store.cssMode;
+			const currentCssMode = store.state.cssMode;
 			if(currentCssMode === "default"){
-				store.cssMode = "dark-mode";
+				saveValue("state","cssMode","dark-mode");
 			} else {
-				store.cssMode = "default";
+				saveValue("state","cssMode","default");
 			}
-			localStorage.setItem("toolStore", JSON.stringify(store));
 		};
 	</script> 
 
