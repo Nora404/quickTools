@@ -36,7 +36,8 @@
 	Die Werte der Tools werden im LocalStorage des Browsers unter "quickToolsSaves" gespeichert.
 	Jede Eigenschaft des Objektes beeinhaltet die gespeicherten Daten eines Tools 
 	- state
-		<tool>Btn: boolean				// <tool> steht für die Namen der Tools
+		visibility:
+			<tool>Btn: boolean			// <tool> steht für die Namen der Tools
 		cssMode: string					// Dark-Mode oder Light-Mode
 	- timer
 		timerSort: string				// Einträge nach Date oder Prio sortiert
@@ -762,8 +763,12 @@
 		}
 
 		// ein key/value speichern
-		function saveValue(toolName, key, value){
-			store[toolName][key] = value;
+		function saveValue(toolName, subToolName, key, value){
+			if(subToolName){
+				store[toolName][subToolName][key] = value;
+			} else {
+				store[toolName][key] = value;
+			}
 			saveQuickToolObjects();
 		}
 
@@ -820,8 +825,8 @@
 		}
 
 		function loadVisibility(){
-			for (const tool in store.visibility) {
-				if (store.visibility[tool] === false) {
+			for (const tool in store.state.visibility) {
+				if (store.state.visibility[tool] === false) {
 					changeVisibility(tool);
 				}
 			}
@@ -879,7 +884,7 @@
 				if(elementHr){
 					elementHr.classList.remove("hidden");
 				}
-				store.visibility[container] = true;
+				saveValue("state", "visibility", container, true);
 			} else {
 				element.classList.add("hidden");
 				elementBtn.classList.add("redBtn");
@@ -887,9 +892,8 @@
 				if(elementHr){
 					elementHr.classList.add("hidden");
 				}
-				store.visibility[container] = false;
+				saveValue("state", "visibility", container, false);
 			}
-			localStorage.setItem("toolStore", JSON.stringify(store));
 			changeMainWidth();
 		}
 
@@ -942,9 +946,9 @@
 			document.body.classList.toggle('dark-mode');
 			const currentCssMode = store.state.cssMode;
 			if(currentCssMode === "default"){
-				saveValue("state","cssMode","dark-mode");
+				saveValue("state","","cssMode","dark-mode");
 			} else {
-				saveValue("state","cssMode","default");
+				saveValue("state","","cssMode","default");
 			}
 		};
 	</script> 
@@ -1236,7 +1240,7 @@
 			let timerObj = getToolSaves("timer");
 
 			if (!timerObj.timerSort) {
-				saveValue("timer", "timerSort", "Date");
+				saveValue("timer","", "timerSort", "Date");
 			} else {
 				timerSort = timerObj.timerSort;
 			}	
