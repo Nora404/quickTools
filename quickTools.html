@@ -98,13 +98,20 @@
 	Ein Tool sollte immer etwar gleich aufgebaut werden, ähnlich einem Tool-Interface
 	Mit dem store bzw dem Speicher soll nicht direkt interagiert werden 
 		Tool {
-			<tool>Obj = getToolSaves(<tool>);
-			init<tool>(){...} 		
-			save<tool>Obj(){...}	
-			add<tool>Obj(){...}
-			remove<tool>Obj(){...}
-			create<tool><element>(){...}
-			render<tool>(){...}
+			---start---
+				<tool>Objs = getToolSaves(<tool>);
+				init<tool>	
+			---daten---	
+				save    <tool>Obj
+				add     <tool>Obj
+				remove  <tool>Obj
+				set     <tool>  <name?>  <element>
+				change  <tool>  <name>?  <element>
+			---zeichnen---
+				sort	<tool>By<name?>  <element>
+				create	<tool>  <name?>  <element>
+				build	<tool>  <name?>  <element>
+				render	<tool>  <name?>  <element>
 		}
 -->
 <html>
@@ -1226,30 +1233,36 @@
 
 
 	<script id="timerJS">
-		let timerObjects = {};
+		let timerObjs = getToolSaves("timer");
 		let timerInterval = null;
 		let timerActiv = null;
 		let timerSort = "Date";
 
-		const addProjectBtn = document.getElementById("addProjectBtn");
-				  addProjectBtn.addEventListener("click", ()=>{
-					   addProject();
-					});
-
 		function initTimer(){
 			let timerObj = getToolSaves("timer");
-
+			
 			if (!timerObj.timerSort) {
 				saveValue("timer","", "timerSort", "Date");
 			} else {
 				timerSort = timerObj.timerSort;
 			}	
-
+			
+			document.getElementById("addProjectBtn").addEventListener("click", ()=>{
+				addTimer();
+			});
 			renderTimerEntries();
-			renderSortTimerBtn();
+			renderTimerSortBtn();
 		}
-
-		function addProject(){
+		
+		function saveTimerObj(timerId, attr, value){
+			const obj = timerObjs[timerId];
+			obj[attr] = value;
+			timerObjs[timerId] = obj;
+			localStorage.setItem("toolTimers", JSON.stringify(timerObjs));
+			renderTimerEntries();
+		}
+		
+		function addTimerObj(){
 			const id = generateId();
 			const newTimerObj = {
 				id: id,
@@ -1259,8 +1272,14 @@
 				sessionTime: 0,
 				prio: 2,
 			};
-			timerObjects[id] = newTimerObj;
-			localStorage.setItem("toolTimers", JSON.stringify(timerObjects));
+			timerObjs[id] = newTimerObj;
+			localStorage.setItem("toolTimers", JSON.stringify(timerObjs));
+			renderTimerEntries();
+		}
+
+		function deleteTimerObj(projectId){
+			delete timerObjs[projectId];
+			localStorage.setItem("toolTimers", JSON.stringify(timerObjs));
 			renderTimerEntries();
 		}
 
@@ -1269,15 +1288,15 @@
 			
 			timerActiv = projectId;
 			timerInterval = setInterval(()=>{
-				timerObjects[projectId].totalTime++;
-				timerObjects[projectId].sessionTime++;
-				localStorage.setItem("toolTimers", JSON.stringify(timerObjects));
+				timerObjs[projectId].totalTime++;
+				timerObjs[projectId].sessionTime++;
+				localStorage.setItem("toolTimers", JSON.stringify(timerObjs));
 				renderTimerEntries();
 			}, 1000);
 
 			renderTimerEntries();
 		}
-
+		
 		function stopTimer(projectId){
 			clearInterval(timerInterval);
 			timerInterval = null;
@@ -1286,31 +1305,24 @@
 		}
 
 		function resetTimer(projectId){
-			timerObjects[projectId].sessionTime = 0;
+			timerObjs[projectId].sessionTime = 0;
 			saveTimerObj(projectId, "sessionTime", 0);
 			renderTimerEntries();
 		}
 
-		function changePrio(projectId){
-			const obj = timerObjects[projectId];
+		function changeTimerPrio(projectId){
+			const obj = timerObjs[projectId];
 			const entry = document.getElementById(obj.id);
 			const prio = entry.querySelector('select');
 
 			saveTimerObj(projectId, "prio", prio.value);
 		}
 
-		function deleteProject(projectId){
-			delete timerObjects[projectId];
-			localStorage.setItem("toolTimers", JSON.stringify(timerObjects));
+		function changeTimerSort(value){
+			store.timerSort = value;
+			localStorage.setItem("toolStore", JSON.stringify(store));
 			renderTimerEntries();
-		}
-
-		function saveTimerObj(timerId, attr, value){
-			const obj = timerObjects[timerId];
-			obj[attr] = value;
-			timerObjects[timerId] = obj;
-			localStorage.setItem("toolTimers", JSON.stringify(timerObjects));
-			renderTimerEntries();
+			renderTimerSortBtn();
 		}
 
 		/* Das Timerlayout muss für jedes Element generiert werden
@@ -1319,50 +1331,47 @@
 		*  Die Datei aus dem LocalStorage wird in ein Array verwandelt und sortiert
 		*  nach Priorität (absteigend) und Erstellungsdatum (aufsteigend)
 		*/
-		function renderSortTimerBtn(){
-			const currentSortby = store.timerSort == "Date" ? "Date" : "Prio";
-			const newSortby = store.timerSort == "Date" ? "Prio" : "Date";
 
-			const span = document.getElementById("sortTimer");		
-			span.innerHTML = "Sort by";	
-			const sortBtn = createButton(currentSortby, "", ()=> setTimerSort(newSortby))
-
-			span.appendChild(sortBtn);
-		}
-
-		function renderTimerEntries(){
-			const list = document.getElementById("projectList");
-					list.innerHTML = "";
-					
-			let sortObjects = store.timerSort == "Date" ? sortByDate() : sortByPrio();	  
-
-			sortObjects.forEach(timerObj => {
-				list.appendChild(createTimerEntry(timerObj));
-			});
-		}
-
-		function setTimerSort(value){
-			store.timerSort = value;
-			localStorage.setItem("toolStore", JSON.stringify(store));
-			renderTimerEntries();
-			renderSortTimerBtn();
-		}
-
-		function sortByPrio() {
-			const timersArray = Object.values(timerObjects);
+		function sortTimerByPrio() {
+			const timersArray = Object.values(timerObjs);
 			return timersArray.sort((a, b) => b.prio - a.prio);
 		}
 
-		function sortByDate() {
-			const timersArray = Object.values(timerObjects);
+		function sortTimerByDate() {
+			const timersArray = Object.values(timerObjs);
 			return timersArray.sort((a, b) => a.createdAt - b.createdAt);
 		}
-
-		/* Das Layout liegt in einem Listenelement und besteht aus einem Kontainer
-		 * Indem links und recht nebeneinander ein weitere Kontainer liegt
-		 * Im rechten Kontainer sind die beiden Stoppuhren
-		 */
-		function createTimerEntry(timerObj){
+		
+		function createTimerNameSpan(text, id){
+			const input = createTimerEditNameInput(text, id);
+			const span = document.createElement('span');
+					span.className = "textName";
+					span.id = "name" + id;
+					span.textContent = text;
+					span.addEventListener("dblclick", () => toggleElements(span, input));
+			return span;	  
+		}
+		
+		function createTimerEditNameInput(text, id){
+			const input = document.createElement("input");
+					input.className = "textName";
+					input.id = "name" + id;
+					input.value = text;
+					input.addEventListener("keyup", (e)=>{
+					if(e.key === "Enter"){
+						const span = createTimerNameSpan(input.value, id);
+						saveTimerObj(id, "name", input.value);
+						toggleElements(input, span);
+					}
+					});
+					input.addEventListener("blur", ()=>{
+						const span = createTimerNameSpan(text, id);
+						toggleElements(input, span);
+					});
+			return input;	  
+		}
+	
+		function buildTimerEntry(timerObj){
 			const li = document.createElement("li");
 			li.id = timerObj.id;
 			
@@ -1382,11 +1391,11 @@
 			floatLeftDiv.appendChild(createButton('Go', 'greenBtn timerBtn', ()=> startTimer(timerObj.id)));
 			floatLeftDiv.appendChild(createButton('Stop', 'timerBtn', () => stopTimer(timerObj.id)));
 			floatLeftDiv.appendChild(createButton('Reset', 'timerBtn', () => resetTimer(timerObj.id)));
-			floatLeftDiv.appendChild(createSelect([1,2,3,4],timerObj.prio, () => changePrio(timerObj.id)));
+			floatLeftDiv.appendChild(createSelect([1,2,3,4],timerObj.prio, () => changeTimerPrio(timerObj.id)));
 			floatLeftDiv.appendChild(createButton('Delete', 'redBtn timerBtn', () => deleteProject(timerObj.id)));
 			floatLeftDiv.appendChild(document.createElement("br"));
 			
-			const textNameSpan = createNameSpan(timerObj.name, timerObj.id);
+			const textNameSpan = createTimerNameSpan(timerObj.name, timerObj.id);
 			floatLeftDiv.appendChild(textNameSpan);
 
 			// Rechte Seite mit Anzeige der Timer
@@ -1411,34 +1420,28 @@
 			return li;
 		}
 
-		function createNameSpan(text, id){
-			const input = createEditNameInput(text, id);
-			const span = document.createElement('span');
-					span.className = "textName";
-					span.id = "name" + id;
-					span.textContent = text;
-					span.addEventListener("dblclick", () => toggleElements(span, input));
-			return span;	  
+		function renderTimerSortBtn(){
+			const currentSortby = store.timerSort == "Date" ? "Date" : "Prio";
+			const newSortby = store.timerSort == "Date" ? "Prio" : "Date";
+
+			const span = document.getElementById("sortTimer");		
+			span.innerHTML = "Sort by";	
+			const sortBtn = createButton(currentSortby, "", ()=> changeTimerSort(newSortby))
+
+			span.appendChild(sortBtn);
 		}
-		
-		function createEditNameInput(text, id){
-			const input = document.createElement("input");
-					input.className = "textName";
-					input.id = "name" + id;
-					input.value = text;
-					input.addEventListener("keyup", (e)=>{
-					if(e.key === "Enter"){
-						const span = createNameSpan(input.value, id);
-						saveTimerObj(id, "name", input.value);
-						toggleElements(input, span);
-					}
-					});
-					input.addEventListener("blur", ()=>{
-						const span = createNameSpan(text, id);
-						toggleElements(input, span);
-					});
-			return input;	  
+
+		function renderTimerEntries(){
+			const list = document.getElementById("projectList");
+					list.innerHTML = "";
+					
+			let sortObjects = store.timerSort == "Date" ? sortTimerByDate() : sortTimerByPrio();	  
+
+			sortObjects.forEach(timerObj => {
+				list.appendChild(buildTimerEntry(timerObj));
+			});
 		}
+
 	</script> 
 
 <!--------------------------------------------------------------------------------------------------------------------------->
