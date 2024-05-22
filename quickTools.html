@@ -123,7 +123,7 @@
 		--ground: rgb(255, 255, 255);			/* Allgemeine Hintergundfarbe */
 		--paper: rgb(233, 239, 247);			/* Papierlinien */
 		--input: rgb(241, 241, 241);			/* Hintergrund der Inputfelder */
-		--background-3: rgb(155, 169, 197);	/* Hintergundfarbe von Buttons */
+		--background-3: linear-gradient(to top, rgb(109, 123, 156), rgb(155, 169, 197));	/* Hintergundfarbe von Buttons */
 		--background-2: rgb(189, 201, 216);	/* Hintergundfarbe als Akzent */
 		--background-1: rgb(243, 248, 252);	/* Hintergrundfarbe von Modulen */
 
@@ -135,11 +135,12 @@
 		--gray-2: rgb(215, 216, 216);			/* Inaktiv oder nicht Interaktiv */
 		--gray-1: rgb(215, 216, 216);			/* Noch kein Einsatz */
 
-		--green: rgb(175, 196, 145);			/* Bestätigen oder Starten */
-		--red: rgb(221, 151, 151);				/* Warnung, Löschen oder Abbrechen */
+		--green: linear-gradient(to top, rgb(141, 165, 109), rgb(175, 196, 145));			/* Bestätigen oder Starten */
+		--red: linear-gradient(to top, rgb(189, 110, 110), rgb(221, 151, 151));				/* Warnung, Löschen oder Abbrechen */
 		--purple: rgb(187, 155, 197);			/* Sonderfarbe z.B bei der Prioanzeige */
 
 		--shadow: rgba(0, 0, 0, 0);			/* Schatten z.B bei der Animation */
+		--shadow2: rgb(156, 156, 156);			/* Schatten von Kontainern */
 		--shadow-glas: rgba(0, 0, 0, 0.2);		/* Durchsichtiger Schatten */
 		--glas: rgba(255, 255, 255, 0.75);		/* Durchsichtiger Hintergund wie Glas */
 
@@ -159,7 +160,7 @@
 		--ground: rgb(19, 19, 19);	
 		--paper: rgb(36, 36, 36);				
 		--input: rgb(68, 68, 68);
-		--background-3: rgb(103, 112, 108);	
+		--background-3: linear-gradient(to top, rgb(126, 148, 138), rgb(103, 112, 108));	
 		--background-2: rgb(38, 59, 65);		
 		--background-1: rgb(30, 33, 34);			
 
@@ -171,11 +172,12 @@
 		--gray-2: rgb(46, 46, 46);			
 		--gray-1: rgb(15, 15, 15);
 
-		--green: rgb(54, 73, 28);					
-		--red: rgb(88, 43, 43);						
+		--green: linear-gradient(to top, rgb(90, 122, 44), rgb(54, 73, 28));					
+		--red: linear-gradient(to top, rgb(133, 52, 52), rgb(88, 43, 43));						
 		--purple: rgb(72, 51, 78);			
 
 		--shadow: rgba(255, 255, 255, 0);
+		--shadow2: rgb(100, 107, 102);
 		--shadow-glas: rgba(255, 255, 255, 0.3);
 		--glas: rgba(0, 0, 0, 0.25);
 
@@ -235,12 +237,13 @@
 		h3 {
 			font-family: Arial, Helvetica, sans-serif;
 			font-weight: 500;
-			background-color: var(--glas);
 			color: var(--text-2);
 			font-size: 1.4em;
 			margin: 0 0 25px 0;
 			padding: 5px;
 		}
+		
+
 
 		hr {
 			height: 0;
@@ -249,28 +252,32 @@
 		}
 		
 		button {
-			background-color: var(--background-3);
+			background-image: var(--background-3);
 			border: 1px solid var(--gray-3);
+			border-radius: 7px;
+			box-shadow: 0px 2px 8px var(--shadow2);
 			color: var(--text-1);
 			font-family: "Courier New", Courier, monospace;
 			font-size: 1em;
 			margin: 5px 5px 5px 5px;
-			height: 25px;
+			height: 30px;
+			padding-left: 10px;
+			padding-right: 10px;
 		} button:hover {
 			filter: brightness(1.25);
 		} button:active {
-			background-color: var(--green);
+			background-image: var(--green);
 			border: 1px solid var(--gray-1);
 			color: var(--text-2);
 		}
 		
 		.greenBtn {
-			background-color: var(--green);
+			background-image: var(--green);
 			color: var(--text-3); 
 		}
 		
 		.redBtn {
-			background-color: var(--red);
+			background-image: var(--red);
 			color: var(--text-3); 
 		}
 
@@ -297,13 +304,32 @@
 			color: var(--text-3);
 			background-color: var(--input);
 			border: 2px solid var(--gray-3);
+			border-radius: 5px;
 		} 
 
 		.container {
 			box-sizing: border-box;
-			padding: 20px;
+			padding: 0 20px 20px 20px;
 			border: 1px solid var(--background-2);
 			background-color: var(--background-1);
+			border-radius: 25px;
+			box-shadow: 0px 3px 5px var(--shadow2);
+		}
+
+		.toolHeader{
+			position: relative;
+			display: inline-block;
+			left: -22px;
+			top: -2px;
+			width: calc(100% + 44px);
+			height: 60px;
+			margin: 0 0 14px 0;
+			padding: 10px 15px 0 15px;
+			box-sizing: border-box;
+			border: 2px solid var(--background-2);
+			background-color: var(--glas);
+			border-top-left-radius: 25px;
+			border-top-right-radius: 25px;
 		}
 
 		#mainColumn1 {
@@ -367,11 +393,9 @@
 		}
 	</style>
 
-
-<!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
 <!--------------------------------------------------------------------------------------------------------------------------->
-<!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
 
+<!--------------------------------------------------------------------------------------------------------------------------->
 
 	<style id="timerCSS">  
 		.timerBtn{
@@ -382,7 +406,8 @@
 		}
 		#timer select{
 			box-sizing: border-box;
-			background-color: var(--background-3);
+			background-image: var(--background-3);
+			box-shadow: 0px 2px 8px var(--shadow2);
 			border: 1px solid var(--gray-3);
 			color: var(--ground);
 			margin: 5px 1px 5px 1px;
@@ -393,10 +418,10 @@
 			font-family: Arial, Helvetica, sans-serif;
 		}
 
-		#timer span{
+		/* #timer span{
 			margin-top: 10px;
 			margin-bottom: 5px;
-		}
+		} */ 
 
 		#projectList {
 			list-style-type: none;
@@ -582,7 +607,8 @@
 		}
 		#historyItemCount{
 			box-sizing: border-box;
-			background-color: var(--background-3);
+			background-image: var(--background-3);
+			box-shadow: 0px 2px 8px var(--shadow2);
 			border: 1px solid var(--gray-3);
 			outline: 0;
 			color: var(--ground);
@@ -629,14 +655,16 @@
 		}
 		#weeklySelection {
 			box-sizing: border-box;
-			background-color: var(--background-3);
+			background-image: var(--background-3);
 			border: 1px solid var(--gray-3);
+			border-radius: 7px;
+			box-shadow: 0px 2px 8px var(--shadow2);
 			outline: 0;
 			color: var(--ground);
 			margin: 0 0 15px 0;
 			padding: 0 5px 0 5px;
 			font-size: 1em;
-			height: 25px;
+			height: 30px;
 			width: 19.9%;
 		} #weeklySelection:hover {
 			filter: brightness(1.15);
@@ -651,7 +679,6 @@
 			font-family: Arial, Helvetica, sans-serif;
 			width: 100%;
 			max-width: 100%;
-			min-height: 150px;
 			padding: 5px;
 			font-size: 1em;
 			font-weight: 500;
@@ -1115,7 +1142,7 @@
 	<div id="mainColumn1">	
 <!-- TIMER HTML --------------------------------------------------------------------------------------->			
 		<div id="timer" class="container"> 
-			<span id="timerHeader"></span>
+			<span id="timerHeader" class="toolHeader"></span>
 			<script>createToolHeader("timer", "Project Timer")</script>
 
 			<button id="addProjectBtn">Add Timer</button>
@@ -1128,7 +1155,7 @@
 <!-- COMMIT HTML -------------------------------------------------------------------------------------->			
 		<div id="commit"> 
 			<div id="commitEditor" class="container">
-				<span id="commitEditorHeader"></span>
+				<span id="commitEditorHeader" class="toolHeader"></span>
 				<script>createToolHeader("commitEditor", "Commit Message")</script>
 
 				<form id="commitForm">
@@ -1147,7 +1174,7 @@
 			</div>
 
 			<div id="commitHistory" class="container">
-				<span id="commitHistoryHeader"></span>
+				<span id="commitHistoryHeader" class="toolHeader"></span>
 				<script>createToolHeader("commitHistory", "Commit History")</script>
 
 				<select id="historyItemCount">
@@ -1162,7 +1189,7 @@
 
 <!-- CALENDAR HTML ------------------------------------------------------------------------------------>			
 		<div id="calendar" class="container"> 
-			<span id="calendarHeader"></span>
+			<span id="calendarHeader" class="toolHeader"></span>
 			<script>createToolHeader("calendar", "Calendar Notes")</script>
 
 				<button id="lastWeekBtn" onclick="changeWeek(-1)">Last</button>
@@ -1179,7 +1206,7 @@
 	<div id="mainColumn2">
 <!-- COLLECTION HTML ---------------------------------------------------------------------------------->			
 		<div id="note" class="container"> 
-			<span id="noteHeader"></span>
+			<span id="noteHeader" class="toolHeader"></span>
 			<script>createToolHeader("note", "Memory Note")</script>
 
 			<button id="addNote">Add Note</button>
@@ -1188,7 +1215,7 @@
 
 <!-- COLLECTION HTML ---------------------------------------------------------------------------------->			
 		<div id="collection" class="container"> 
-			<span id="collectionHeader"></span>
+			<span id="collectionHeader" class="toolHeader"></span>
 			<script>createToolHeader("collection", "Collection List")</script>
 
 			<button id="addList">Add List</button>
@@ -1197,7 +1224,7 @@
 
 <!-- CLIPBOARD HTML ----------------------------------------------------------------------------------->			
 		<div id="clipboard" class="container"> 
-			<span id="clipboardHeader"></span>
+			<span id="clipboardHeader" class="toolHeader"></span>
 			<script>createToolHeader("clipboard", "Clipboard")</script>
 
 			<button id="addSnippet">Add Snippet</button>
@@ -1207,7 +1234,7 @@
 
 <!-- SAVEMANAGER HTML --------------------------------------------------------------------------------->			
 		<div id="saveManager" class="container"> 
-			<span id="saveManagerHeader"></span>
+			<span id="saveManagerHeader" class="toolHeader"></span>
 			<script>createToolHeader("saveManager", "Save Manager")</script>
 
 				<details>
